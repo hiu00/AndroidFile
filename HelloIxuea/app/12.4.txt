@@ -1,9 +1,0 @@
-一、如何创建Android项目
-file->New->New Priject->Empty Activity->填写相应信息（文件名称、存储地址）->finish
-注意：看底部进度，要耐心等待项目编译成功，再进行下一步。
-如没有编译成功便中断了，选择顶部Build->Make Project 进行再次编译。
-编译出错的信息，显示在底部Build。
-二，如何将项目提交到Git版本控制
-右击项目名->Git->先Add再Commit->Commit Message里填写Git提交的命令语句（章节id Create project.）->右下角Commit
-三、在Android Studil上查看提交历史：
-左下角Version Control->Log
