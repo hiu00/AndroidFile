@@ -10,10 +10,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.EditText;
 
+import com.example.kanmeitu.MainActivity;
 import com.example.kanmeitu.R;
+import com.example.kanmeitu.util.PreferenceUtil;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
 
     //把子线程的东西转换成UI线程 子线程不能修改UI线程
@@ -35,7 +38,6 @@ public class SplashActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +58,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void next() {
-        Intent intent = new Intent(this,LoginActivity.class);
+        finish();
+        Intent intent;
+        if (sp.isLogin()) {
+            intent = new Intent(this, MainActivity.class);
+        }else {
+            intent = new Intent(this, LoginActivity.class);
+        }
         startActivity(intent);
-    }
 
+    }
 
 }

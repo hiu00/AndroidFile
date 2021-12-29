@@ -3,4 +3,6 @@
     <string name="email_hint">请输入邮箱</string>
     <string name="password">请输入密码（6~15位）</string>
     <string name="login">登陆</string>
+    <string name="error_email_format">邮箱格式不正确</string>
+    <string name="error_passord_format">密码格式不正确</string>
 </resources>
