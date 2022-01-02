@@ -1,18 +1,33 @@
+//应用Android插件
 plugins {
     id 'com.android.application'
 }
 
+//编译版本
 android {
-    compileSdk 31
+    compileSdk rootProject.ext.compileSdk
 
+    //默认配置
     defaultConfig {
+        //应用唯一标识
         applicationId "com.example.mycloudmusicandroidjava"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
+        //最小版本
+        minSdk rootProject.ext.minSdk
+
+        //目标版本
+        targetSdk rootProject.ext.targetSdkVersion
+
+        //版本号
+        versionCode rootProject.ext.versionCode
+
+        //版本名称
+        versionName rootProject.ext.versionName
+
+        //测试相关
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdk
     }
 
     buildTypes {
@@ -25,6 +40,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildToolsVersion
 }
 
 dependencies {
