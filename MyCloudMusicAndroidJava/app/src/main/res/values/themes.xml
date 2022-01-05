@@ -21,7 +21,7 @@
     </style>
 
     <!--去除ActionBar-->
-    <style name="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.MyCloudMusicAndroidJava.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
