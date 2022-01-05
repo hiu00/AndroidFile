@@ -1,7 +1,9 @@
-package com.example.mycloudmusicandroidjava;
+package com.example.mymusic;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.mymusic.R;
 
 public class MainActivity extends AppCompatActivity {
 

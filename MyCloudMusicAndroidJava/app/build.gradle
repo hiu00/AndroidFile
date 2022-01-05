@@ -10,7 +10,7 @@ android {
     //默认配置
     defaultConfig {
         //应用唯一标识
-        applicationId "com.example.mycloudmusicandroidjava"
+        applicationId "com.example.mymusic"
 
         //最小版本
         minSdk rootProject.ext.minSdk
