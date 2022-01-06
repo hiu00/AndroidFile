@@ -5,4 +5,7 @@
 
     <!--圆角相关-->
     <dimen name="radius_button">20dp</dimen>
+
+    <!--分割线相关-->
+    <dimen name="divider_small">1dp</dimen>
 </resources>
