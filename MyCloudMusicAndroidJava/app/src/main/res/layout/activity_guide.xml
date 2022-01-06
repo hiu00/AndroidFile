@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="这是一个手动创建的activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+<!--占位控件-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </View>
+
+<!--按钮容器-->
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
+
+        <Button
+            android:text="登陆/注册"
+            android:layout_width="130dp"
+            android:layout_height="40dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
+
+        <Button
+            android:text="立即体验"
+            android:layout_width="130dp"
+            android:layout_height="40dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
+    </LinearLayout>
 </LinearLayout>
