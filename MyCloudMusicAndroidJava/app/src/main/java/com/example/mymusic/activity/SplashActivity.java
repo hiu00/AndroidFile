@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.example.mymusic.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseCommonActivity {
 
     private static final String TAG = "SplashActivity";
 
@@ -89,23 +89,5 @@ public class SplashActivity extends AppCompatActivity {
                 handler.sendEmptyMessage(MESSAGE_NEXT);
             }
         },DEFAULT_DELAY_TIME);
-    }
-
-    /**
-     * 启动界面
-     * @param clazz
-     */
-    protected void startActivity(Class<?> clazz){
-        Intent intent = new Intent(this, clazz);
-        startActivity(intent);
-    }
-
-    /**
-     * 启动界面并关闭当前界面
-     * @param clazz
-     */
-    protected void startActivoityAfterFinishThis(Class<?> clazz){
-        startActivity(clazz);
-        finish();
     }
 }
