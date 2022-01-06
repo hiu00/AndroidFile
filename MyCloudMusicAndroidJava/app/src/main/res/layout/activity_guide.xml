@@ -26,7 +26,7 @@
             android:layout_weight="1"></View>
 
         <Button
-            android:background="@drawable/shape_color_primary"
+            android:background="@drawable/selector_color_primary"
             android:text="登陆/注册"
             android:layout_width="130dp"
             android:layout_height="40dp"/>
@@ -37,7 +37,7 @@
             android:layout_weight="1"></View>
 
         <Button
-            android:background="@drawable/shape_border_color_primary"
+            android:background="@drawable/selector_color_primary_reverse"
             android:text="立即体验"
             android:layout_width="130dp"
             android:layout_height="40dp"/>
