@@ -52,6 +52,7 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
         //设置点击事件
         //登陆注册按钮
         bt_login_or_register.setOnClickListener(this);
+
         //立即体验按钮
         bt_enter.setOnClickListener(this);
     }
@@ -68,6 +69,7 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
             case R.id.bt_login_or_register:
                 //点击登陆注册按钮
                 Log.d(TAG,"onClick login or register");
+                startActivoityAfterFinishThis(LoginOrRegisterActivity.class);
                 break;
             case R.id.bt_enter:
                 //点击立即体验按钮
