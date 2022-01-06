@@ -5,10 +5,21 @@ import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.example.mymusic.util.PreferenceUtil;
+
 /**
  * 通用界面逻辑
  */
 public class BaseCommonActivity extends BaseActivity{
+
+    //偏好设置实例
+    protected PreferenceUtil sp;
+
+    @Override
+    protected void initDatum() {
+        super.initDatum();
+        sp = PreferenceUtil.getInstance(getMainActivity());
+    }
 
     /**
      * 全屏

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mymusic.MainActivity;
 import com.example.mymusic.R;
+import com.example.mymusic.util.PreferenceUtil;
 
 /**
  * 引导界面
@@ -71,13 +72,23 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
                 //点击登陆注册按钮
                 Log.d(TAG,"onClick login or register");
                 startActivoityAfterFinishThis(LoginOrRegisterActivity.class);
+                setShowGuide();
                 break;
             case R.id.bt_enter:
                 //点击立即体验按钮
                 Log.d(TAG,"onClick enter");
                 startActivoityAfterFinishThis(MainActivity.class);
+                setShowGuide();
                 break;
         }
 
+    }
+
+    /**
+     * 设置不在显示了引导界面
+     */
+    private void setShowGuide() {
+        //PreferenceUtil.getInstance(getMainActivity()).setShowGuide(false);
+        sp.setShowGuide(false);
     }
 }

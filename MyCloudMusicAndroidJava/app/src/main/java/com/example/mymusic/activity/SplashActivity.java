@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.mymusic.R;
+import com.example.mymusic.util.PreferenceUtil;
 
 public class SplashActivity extends BaseCommonActivity {
 
@@ -53,8 +54,15 @@ public class SplashActivity extends BaseCommonActivity {
 //
 //        finish();
 
-        //使用重构后的方法
-        startActivoityAfterFinishThis(GuideActivity.class);
+        if(sp.isShowGuide()) {
+
+            //显示引导界面
+            startActivoityAfterFinishThis(GuideActivity.class);
+        }else {
+            //跳转到登录/注册页面
+            startActivoityAfterFinishThis(LoginOrRegisterActivity.class);
+
+        }
     }
 
     @Override
@@ -73,39 +81,12 @@ public class SplashActivity extends BaseCommonActivity {
             }
         }, DEFAULT_DELAY_TIME);
 
-        //上面的handler是一个异步线程  等待三面之后出发run（）方法
-
-        //actvity也有一个线程--->UI线程
-
-
-        //多个线程执行互不影响  你走你的阳关道，我走我的独木桥
-
-        //继承的意思
      }
 
     @Override
     protected void initDatum() {
         super.initDatum();
-        //测试使用偏好设置
-        //获取偏好设置对象
-        SharedPreferences preferences=getSharedPreferences("ixuea",MODE_PRIVATE);
 
-        //保存一个字符串"我们是爱学啊"
-        //存储的键为：username
-        preferences.edit().putString("username","我们是爱学啊").commit();
 
-        //通过键找到上面存储的值
-        String username = preferences.getString("username", null);
-
-        //打印出来，方便调试
-        Log.d(TAG, "initDatum: "+"第一次获取的值："+username);
-
-        //删除该key对应的值
-        preferences.edit().remove("username").commit();
-
-        //再次获取
-        username=preferences.getString("username",null);
-
-        Log.d(TAG, "initDatum: "+"删除后再次获取的值："+username);
     }
 }
