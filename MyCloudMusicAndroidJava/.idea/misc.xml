@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_color_primary.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_color_primary_reverse.xml" value="0.1" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_text_color_primary.xml" value="0.1" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_text_color_primary_reverse.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/shape_border_color_primary.xml" value="0.1175925925925926" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/shape_color_primary.xml" value="0.1925925925925926" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_guide.xml" value="0.1" />
