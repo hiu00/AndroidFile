@@ -2,4 +2,7 @@
 <resources>
     <dimen name="text_small">12sp</dimen>
     <dimen name="padding_large">20dp</dimen>
+
+    <!--圆角相关-->
+    <dimen name="radius_button">20dp</dimen>
 </resources>
