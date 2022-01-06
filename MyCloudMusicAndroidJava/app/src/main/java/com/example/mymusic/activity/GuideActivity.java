@@ -37,8 +37,7 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
         super.initViews();
 
         //隐藏状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        hideStatusBar();
 
         //找控件
         //找登陆注册按钮
