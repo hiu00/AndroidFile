@@ -9,6 +9,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mymusic.MainActivity;
 import com.example.mymusic.R;
 
 /**
@@ -74,6 +75,7 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
             case R.id.bt_enter:
                 //点击立即体验按钮
                 Log.d(TAG,"onClick enter");
+                startActivoityAfterFinishThis(MainActivity.class);
                 break;
         }
 
