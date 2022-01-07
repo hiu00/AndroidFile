@@ -17,7 +17,7 @@ import com.example.mymusic.util.Constant;
 /**
  * 引导界面Fragment
  */
-public class GuideFragment extends BaseFragment {
+public class GuideFragment extends BaseCommonFragment {
 
     private ImageView iv;
 
