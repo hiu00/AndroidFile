@@ -8,10 +8,12 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.mymusic.Fragment.GuideFragment;
 import com.example.mymusic.MainActivity;
 import com.example.mymusic.R;
+import com.example.mymusic.adapter.GuideAdapter;
 import com.example.mymusic.util.PreferenceUtil;
 
 /**
@@ -22,6 +24,8 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
     private static final String TAG = "GuideActivity";
     private Button bt_login_or_register;
     private Button bt_enter;
+    private ViewPager vp;
+    private GuideAdapter adapter;
 
     /**
      *当前界面创建的时候
@@ -43,16 +47,30 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
         hideStatusBar();
 
         //找控件
+
+        //找ViewPager控件
+        vp=findViewById(R.id.vp);
         //找登陆注册按钮
         bt_login_or_register = findViewById(R.id.bt_login_or_register);
         //找立即体验按钮
         bt_enter = findViewById(R.id.bt_enter);
 
         //测试显示Fragment
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container,GuideFragment.newInstance(R.drawable.guide1))
-                .commit();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.container,GuideFragment.newInstance(R.drawable.guide1))
+//                .commit();
+    }
+
+    @Override
+    protected void initDatum() {
+        super.initDatum();
+
+        //创建适配器
+        adapter = new GuideAdapter(getSupportFragmentManager());
+
+        //设置适配器到控件
+        vp.setAdapter(adapter);
     }
 
     @Override
