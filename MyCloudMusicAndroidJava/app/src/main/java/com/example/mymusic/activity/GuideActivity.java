@@ -19,6 +19,8 @@ import com.example.mymusic.util.PreferenceUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator;
+
 /**
  * 引导界面
  */
@@ -29,6 +31,7 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
     private Button bt_enter;
     private ViewPager vp;
     private GuideAdapter adapter;
+    private CircleIndicator ci;
 
     /**
      *当前界面创建的时候
@@ -50,6 +53,8 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
         hideStatusBar();
 
         //找控件
+        //找指示器
+        ci = findViewById(R.id.ci);
 
         //找ViewPager控件
         vp=findViewById(R.id.vp);
@@ -74,6 +79,12 @@ public class GuideActivity extends BaseCommonActivity implements View.OnClickLis
 
         //设置适配器到控件
         vp.setAdapter(adapter);
+
+        //让指示器根据列表控件配合工作
+        ci.setViewPager(vp);
+
+        //适配器注册数据源观察者
+        adapter.registerDataSetObserver(ci.getDataSetObserver());
 
         //准备数据
         List<Integer> datum=new ArrayList<>();
