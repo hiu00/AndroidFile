@@ -8,10 +8,22 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.mymusic.Fragment.GuideFragment;
 import com.example.mymusic.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 引导界面适配器
  */
 public class GuideAdapter extends FragmentPagerAdapter {
+    /**
+     * 列表数据源
+     */
+    protected List<Integer> datum=new ArrayList<>();
+
+    /**
+     * 构造方法
+     * @param fm
+     */
     public GuideAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
@@ -24,7 +36,16 @@ public class GuideAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return GuideFragment.newInstance(R.drawable.guide1);
+        return GuideFragment.newInstance(getData(position));
+    }
+
+    /**
+     * 获取当前位置方法
+     * @param position
+     * @return
+     */
+    private int getData(int position) {
+        return datum.get(position);
     }
 
     /**
@@ -33,6 +54,16 @@ public class GuideAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 10;
+        return datum.size();
+    }
+
+    public void setDatum(List<Integer> datum){
+        if (datum!=null&&datum.size()>0){
+            this.datum.clear();
+            this.datum.addAll(datum);
+
+            //通知数据改变了
+            notifyDataSetChanged();
+        }
     }
 }
