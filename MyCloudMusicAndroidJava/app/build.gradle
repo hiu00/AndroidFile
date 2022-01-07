@@ -58,6 +58,7 @@ dependencies {
     //请求网络相关
 	//okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Java测试依赖
     testImplementation 'junit:junit:4.+'
