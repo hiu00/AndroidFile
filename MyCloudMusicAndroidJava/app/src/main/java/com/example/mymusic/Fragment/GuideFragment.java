@@ -17,7 +17,7 @@ import com.example.mymusic.util.Constant;
 /**
  * 引导界面Fragment
  */
-public class GuideFragment extends Fragment {
+public class GuideFragment extends BaseFragment {
 
     private ImageView iv;
 
@@ -58,31 +58,27 @@ public class GuideFragment extends Fragment {
     }
 
     /**
-     * 返回要显示的view
+     * 返回要显示的View
      * @param inflater
      * @param container
      * @param savedInstanceState
      * @return
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    protected View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_guide, container, false);
     }
 
-    /**
-     * View创建完毕了
-     * @param view
-     * @param savedInstanceState
-     */
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    protected void initViews() {
+        super.initViews();
         //找控件
-        iv = getView().findViewById(R.id.iv);
+        iv = findViewById(R.id.iv);
+    }
 
+    @Override
+    protected void initDatum() {
+        super.initDatum();
         //取出传递的数据
         int id = getArguments().getInt(Constant.ID, -1);
 
@@ -97,4 +93,5 @@ public class GuideFragment extends Fragment {
         //显示图片
         iv.setImageResource(id);
     }
+
 }
