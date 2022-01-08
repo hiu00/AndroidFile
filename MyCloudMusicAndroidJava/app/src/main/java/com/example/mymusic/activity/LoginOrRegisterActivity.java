@@ -28,6 +28,8 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
     protected void initViews() {
         super.initViews();
 
+        //显示亮色状态栏
+        lightStatusBar();
         //找登陆控件
         bt_login = findViewById(R.id.bt_login);
         //找注册控件
@@ -54,8 +56,6 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
             case R.id.bt_login:
                 //登录按钮点击
                 Log.d(TAG, "onClick: login");
-
-
 
                 startActivity(LoginActivity.class);
                 break;
