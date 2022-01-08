@@ -54,6 +54,7 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
             case R.id.bt_login:
                 //登录按钮点击
                 Log.d(TAG, "onClick: login");
+                startActivity(LoginActivity.class);
                 break;
             case R.id.bt_register:
                 //注册按钮点击
