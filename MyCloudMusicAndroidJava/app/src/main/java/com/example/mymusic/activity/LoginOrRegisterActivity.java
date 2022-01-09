@@ -16,7 +16,7 @@ import butterknife.OnClick;
 /**
  * 登陆注册界面
  */
-public class LoginOrRegisterActivity extends BaseCommonActivity implements View.OnClickListener {
+public class LoginOrRegisterActivity extends BaseCommonActivity{
 
     private static final String TAG = "LoginOrRegisterActivity";
 
@@ -25,9 +25,9 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
      *
      * 字段不能申明为private
      */
-    @BindView(R.id.bt_login)
-    Button bt_login;
-    private Button bt_register;
+//    @BindView(R.id.bt_login)
+//    Button bt_login;
+//    private Button bt_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
         //找登陆控件
         //bt_login = findViewById(R.id.bt_login);
         //找注册控件
-        bt_register = findViewById(R.id.bt_register);
+        //bt_register = findViewById(R.id.bt_register);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
         //设置登录按钮监听器
         //bt_login.setOnClickListener(this);
         //设置注册按钮监听器
-        bt_register.setOnClickListener(this);
+        //bt_register.setOnClickListener(this);
     }
 
     /**
@@ -64,24 +64,24 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
      *
      * @param view
      */
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-//            case R.id.bt_login:
-//                //登录按钮点击
-//                Log.d(TAG, "onClick: login");
+    // @Override
+//    public void onClick(View view) {
+//        switch (view.getId()){
+////            case R.id.bt_login:
+////                //登录按钮点击
+////                Log.d(TAG, "onClick: login");
+////
+////                startActivity(LoginActivity.class);
+////                break;
+//            case R.id.bt_register:
+//                //注册按钮点击
+//                Log.d(TAG, "onClick: register");
 //
-//                startActivity(LoginActivity.class);
+//                startActivity(RegisterActivity.class);
 //                break;
-            case R.id.bt_register:
-                //注册按钮点击
-                Log.d(TAG, "onClick: register");
-
-                startActivity(RegisterActivity.class);
-                break;
-        }
-
-    }
+//        }
+//
+//    }
 
     /**
      * 登录按钮点击
@@ -89,5 +89,13 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
     @OnClick(R.id.bt_login)
     public void bt_login(){
         startActivity(LoginActivity.class);
+    }
+
+    /**
+     * 注册按钮点击
+     */
+    @OnClick(R.id.bt_register)
+    public void onRegisterClick(){
+        startActivity(RegisterActivity.class);
     }
 }

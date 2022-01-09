@@ -36,14 +36,14 @@ public class BaseCommonActivity extends BaseActivity{
      *
      * @return
      */
-    private boolean isBindView() {
+    protected boolean isBindView() {
         return true;
     }
 
     /**
      * 绑定View
      */
-    private void bindView() {
+    protected void bindView() {
         ButterKnife.bind(this);
     }
 
