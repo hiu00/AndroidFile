@@ -9,13 +9,9 @@ import com.example.mymusic.R;
 
 import butterknife.BindView;
 
-public class LoginActivity extends BaseCommonActivity {
+public class LoginActivity extends BaseTitleActivity {
 
-    /**
-     * Toolbar
-     */
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +19,4 @@ public class LoginActivity extends BaseCommonActivity {
         setContentView(R.layout.activity_login);
     }
 
-    @Override
-    protected void initViews() {
-        super.initViews();
-
-        //初始化toolbar
-        setSupportActionBar(toolbar);
-    }
 }
