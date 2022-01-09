@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_color_primary.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_color_primary_reverse.xml" value="0.1" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_edit_text.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_login_netease.xml" value="0.16458333333333333" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_text_color_primary.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_text_color_primary_reverse.xml" value="0.1" />
@@ -12,6 +13,8 @@
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/shape_circle_color_primary.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/shape_circle_light_grey.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/shape_color_primary.xml" value="0.1925925925925926" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/shape_edit_text.xml" value="0.1" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/shape_edit_text_selected.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_guide.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_login_or_register.xml" value="0.1" />
