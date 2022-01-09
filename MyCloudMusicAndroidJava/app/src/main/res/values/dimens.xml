@@ -2,6 +2,7 @@
 <resources>
     <dimen name="text_small">12sp</dimen>
     <dimen name="padding_large">20dp</dimen>
+    <dimen name="padding_meddle">10dp</dimen>
 
     <!--圆角相关-->
     <dimen name="radius_button">20dp</dimen>
@@ -10,4 +11,9 @@
     <dimen name="divider_small">1dp</dimen>
     <dimen name="guide_indicator_height">40dp</dimen>
     <dimen name="button_height">40dp</dimen>
+
+    <!---->
+    <dimen name="activity_margin">16dp</dimen>
+
+
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--登录，注册界面输入框样式-->
+    <style name="EditText">
+        <!--图标到内容的间距-->
+        <item name="android:drawablePadding">@dimen/padding_meddle</item>
+
+        <!--左侧图标-->
+        <item name="android:drawableLeft">@drawable/ic_phone</item>
+
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+
+        <!--最大显示一行-->
+        <item name="android:lines">1</item>
+
+        <!--<item name="android:layout_marginTop">@dimen/padding_meddle</item>-->
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+</resources>
