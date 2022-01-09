@@ -40,7 +40,7 @@ public class LoginOrRegisterActivity extends BaseCommonActivity implements View.
         super.initViews();
 
         //初始化ButterKnife
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
 
         //显示亮色状态栏
         lightStatusBar();
