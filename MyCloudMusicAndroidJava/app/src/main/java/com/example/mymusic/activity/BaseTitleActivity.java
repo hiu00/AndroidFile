@@ -24,7 +24,7 @@ public class BaseTitleActivity extends BaseCommonActivity{
         super.initViews();
 
         //初始化toolbar
-        setSupportActionBar(toolbar);
+        setSupportActionBar(findViewById(R.id.toolbar));
 
         //是否显示返回按钮
         if (isShowBackMenu()){
