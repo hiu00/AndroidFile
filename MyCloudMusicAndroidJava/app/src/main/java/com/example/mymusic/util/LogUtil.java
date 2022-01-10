@@ -25,4 +25,10 @@ public class LogUtil {
             Log.d(tag,value);
         }
     }
+
+    public static void w(String tag, String value) {
+        if (isDebug) {
+            Log.w(tag, value);
+        }
+    }
 }
