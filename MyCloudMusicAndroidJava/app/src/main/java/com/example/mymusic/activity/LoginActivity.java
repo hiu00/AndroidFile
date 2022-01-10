@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 import com.example.mymusic.R;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends BaseTitleActivity {
     private static final String TAG = "LoginActivity";
@@ -50,18 +52,24 @@ public class LoginActivity extends BaseTitleActivity {
         String username = et_username.getText().toString().trim();
         if (StringUtils.isBlank(username)){
             LogUtil.w(TAG,"onLoginClick user empty");
-            Toast.makeText(getMainActivity(), R.string.enter_username, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getMainActivity(), R.string.enter_username, Toast.LENGTH_SHORT).show();
+            //Toasty.error(getMainActivity(),R.string.enter_username,Toasty.LENGTH_SHORT).show();
+
+            ToastUtil.errorShortToast(getMainActivity(),R.string.enter_username);
             return;
         }
         //获取密码
         String password = et_password.getText().toString().trim();
         if (TextUtils.isEmpty(password)){
             LogUtil.w(TAG,"onLoginClick password empty");
-            Toast.makeText(getMainActivity(), R.string.enter_password, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getMainActivity(), R.string.enter_password, Toast.LENGTH_SHORT).show();
+
+            ToastUtil.errorLongToast(getMainActivity(),R.string.enter_password);
             return;
         }
 
         //TODO 调用登陆方法
+        ToastUtil.successLongToast(getMainActivity(),R.string.login_sucess);
     }
 
     /**

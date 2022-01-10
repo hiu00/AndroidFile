@@ -67,6 +67,10 @@ dependencies {
     //http://commons.apache.org/proper/commons-lang/
     implementation 'org.apache.commons:commons-lang3:3.9'
 
+    //toast工具类
+    //https://github.com/GrenderG/Toasty
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
     //圆形指示器
     //https://github.com/ongakuer/CircleIndicator
     implementation 'me.relex:circleindicator:2.1.4'
