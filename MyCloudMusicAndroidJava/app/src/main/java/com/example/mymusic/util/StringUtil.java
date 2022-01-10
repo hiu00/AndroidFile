@@ -1,5 +1,7 @@
 package com.example.mymusic.util;
 
+import static com.example.mymusic.util.Constant.REGEX_PHONE;
+
 /**
  * 字符串相关工具类
  */
@@ -12,6 +14,6 @@ public class StringUtil {
      */
     public static boolean isPhone(String value){
         //TODO 实现手机号格式判断
-        return false;
+        return value.matches(REGEX_PHONE);
     }
 }
