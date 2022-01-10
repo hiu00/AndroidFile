@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mymusic.R;
+import com.example.mymusic.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,7 +40,7 @@ public class LoginActivity extends BaseTitleActivity {
      */
     @OnClick(R.id.bt_login)
     public void onLoginClick(Button view) {
-        Log.d(TAG, "onLoginClick");
+        LogUtil.d(TAG, "onLoginClick");
     }
 
     /**
@@ -47,7 +48,6 @@ public class LoginActivity extends BaseTitleActivity {
      */
     @OnClick(R.id.bt_forget_password)
     public void onForgetPasswordClick() {
-        Log.d(TAG, "onForgetPasswordClick");
+        LogUtil.d(TAG, "onForgetPasswordClick");
     }
-
 }
