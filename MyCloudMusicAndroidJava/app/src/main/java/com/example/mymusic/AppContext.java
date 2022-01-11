@@ -2,6 +2,8 @@ package com.example.mymusic;
 
 import android.app.Application;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.example.mymusic.util.ToastUtil;
 
 import es.dmoral.toasty.Toasty;
@@ -9,7 +11,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * 全局Application
  */
-public class AppContext extends Application {
+public class AppContext extends MultiDexApplication {
     /**
      * 创建了
      */

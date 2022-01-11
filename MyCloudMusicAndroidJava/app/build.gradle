@@ -9,6 +9,10 @@ android {
 
     //默认配置
     defaultConfig {
+
+        //开启MultiDex
+        multiDexEnabled true
+
         //应用唯一标识
         applicationId "com.example.mymusic"
 
@@ -70,6 +74,9 @@ dependencies {
     //toast工具类
     //https://github.com/GrenderG/Toasty
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+
+    //MultiDex
+    implementation "androidx.multidex:multidex:2.0.0"
 
     //圆形指示器
     //https://github.com/ongakuer/CircleIndicator
