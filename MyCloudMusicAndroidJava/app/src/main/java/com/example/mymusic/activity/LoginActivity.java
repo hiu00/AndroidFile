@@ -56,7 +56,7 @@ public class LoginActivity extends BaseTitleActivity {
             //Toast.makeText(getMainActivity(), R.string.enter_username, Toast.LENGTH_SHORT).show();
             //Toasty.error(getMainActivity(),R.string.enter_username,Toasty.LENGTH_SHORT).show();
 
-            ToastUtil.errorShortToast(getMainActivity(),R.string.enter_username);
+            ToastUtil.errorShortToast(R.string.enter_username);
             return;
         }
 
@@ -65,7 +65,7 @@ public class LoginActivity extends BaseTitleActivity {
         //不是手机号也不是邮箱
         //就是格式错误
         if (!(StringUtil.isPhone(username)||StringUtil.isEmail(username))){
-            ToastUtil.errorShortToast(getMainActivity(),R.string.error_username_format);
+            ToastUtil.errorShortToast(R.string.error_username_format);
             return;
         }
         //获取密码
@@ -74,18 +74,18 @@ public class LoginActivity extends BaseTitleActivity {
             LogUtil.w(TAG,"onLoginClick password empty");
             //Toast.makeText(getMainActivity(), R.string.enter_password, Toast.LENGTH_SHORT).show();
 
-            ToastUtil.errorLongToast(getMainActivity(),R.string.enter_password);
+            ToastUtil.errorLongToast(R.string.enter_password);
             return;
         }
 
         //判断密码格式
         if(!(StringUtil.isPassword(password))){
-            ToastUtil.errorShortToast(getMainActivity(),R.string.error_password_format);
+            ToastUtil.errorShortToast(R.string.error_password_format);
             return;
         }
 
         //TODO 调用登陆方法
-        ToastUtil.successLongToast(getMainActivity(),R.string.login_sucess);
+        ToastUtil.successLongToast(R.string.login_sucess);
     }
 
     /**
