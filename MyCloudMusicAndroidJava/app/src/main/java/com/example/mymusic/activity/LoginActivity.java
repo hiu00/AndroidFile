@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.mymusic.R;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.StringUtil;
 import com.example.mymusic.util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
@@ -58,6 +59,15 @@ public class LoginActivity extends BaseTitleActivity {
             ToastUtil.errorShortToast(getMainActivity(),R.string.enter_username);
             return;
         }
+
+        //判断用户名格式
+        //如果用户名
+        //不是手机号也不是邮箱
+        //就是格式错误
+        if (!(StringUtil.isPhone(username)||StringUtil.isEmail(username))){
+            ToastUtil.errorShortToast(getMainActivity(),R.string.error_username_format);
+            return;
+        }
         //获取密码
         String password = et_password.getText().toString().trim();
         if (TextUtils.isEmpty(password)){
@@ -65,6 +75,12 @@ public class LoginActivity extends BaseTitleActivity {
             //Toast.makeText(getMainActivity(), R.string.enter_password, Toast.LENGTH_SHORT).show();
 
             ToastUtil.errorLongToast(getMainActivity(),R.string.enter_password);
+            return;
+        }
+
+        //判断密码格式
+        if(!(StringUtil.isPassword(password))){
+            ToastUtil.errorShortToast(getMainActivity(),R.string.error_password_format);
             return;
         }
 
