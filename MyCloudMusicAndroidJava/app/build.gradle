@@ -7,6 +7,25 @@ plugins {
 android {
     compileSdk rootProject.ext.compileSdk
 
+    //配置不同的环境
+    productFlavors{
+        //开发环境
+        dev {
+            //API端点
+            buildConfigField('String',"ENDPOINT",'"http://dev-my-cloud-music-api-rails.ixuea.com/"')
+
+            dimension = minSdk
+        }
+
+        //正式环境
+        prod {
+            //API端点
+            buildConfigField 'String','ENDPOINT','"http://api-courses-misuc.ixuea.com/"'
+
+            dimension = minSdk
+        }
+    }
+
     //默认配置
     defaultConfig {
 
@@ -30,6 +49,9 @@ android {
 
         //测试相关
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //渠道相关
+        flavorDimensions "versionCode"
         targetSdkVersion rootProject.ext.targetSdkVersion
         minSdkVersion rootProject.ext.minSdk
     }

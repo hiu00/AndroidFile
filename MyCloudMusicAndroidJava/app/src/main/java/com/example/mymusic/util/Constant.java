@@ -1,9 +1,19 @@
 package com.example.mymusic.util;
 
+import com.example.mymusic.BuildConfig;
+
 /**
  * 常量类
  */
 public class Constant {
+    /**
+     * 资源端点
+     */
+    public static final String ENDPOINT= BuildConfig.ENDPOINT;
+
+    /**
+     * ID常量
+     */
     public static final String ID = "ID";
 
     /**

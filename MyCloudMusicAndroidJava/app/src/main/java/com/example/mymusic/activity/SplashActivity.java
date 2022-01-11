@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.mymusic.R;
+import com.example.mymusic.util.Constant;
+import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.PreferenceUtil;
 
 public class SplashActivity extends BaseCommonActivity {
@@ -86,7 +88,9 @@ public class SplashActivity extends BaseCommonActivity {
     @Override
     protected void initDatum() {
         super.initDatum();
-
+        //测试productFlavors
+        //获取ENDPOINT常量
+        LogUtil.d(TAG, "initDatum:" + Constant.ENDPOINT);
 
     }
 }
