@@ -1,6 +1,7 @@
 package com.example.mymusic.api;
 
 import com.example.mymusic.domain.SheetDetailWrapper;
+import com.example.mymusic.domain.SheetListWrapper;
 import com.example.mymusic.util.Constant;
 
 import io.reactivex.Observable;
@@ -67,6 +68,17 @@ public class Api {
     }
 
     /**
+     * 歌单列表
+     *
+     * @return
+     */
+    public Observable<SheetListWrapper> sheets(){
+        return service.sheets()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
      * 歌单详情
      *
      * @param id
@@ -77,4 +89,6 @@ public class Api {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+
 }

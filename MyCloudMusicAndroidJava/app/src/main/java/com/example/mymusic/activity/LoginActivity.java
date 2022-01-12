@@ -17,6 +17,7 @@ import com.example.mymusic.R;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.api.Service;
 import com.example.mymusic.domain.SheetDetailWrapper;
+import com.example.mymusic.domain.SheetListWrapper;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LoadingUtil;
 import com.example.mymusic.util.LogUtil;
@@ -153,39 +154,65 @@ public class LoginActivity extends BaseTitleActivity {
 //                    }
 //                });
 
-        //使用重构后的Api
-        Api.getInstance()
-                .sheetDetail("1")
-                .subscribe(new Observer<SheetDetailWrapper>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                //显示对话框
-                LoadingUtil.showLoading(getMainActivity());
-            }
+//        //使用重构后的Api
+//        Api.getInstance()
+//                .sheetDetail("1")
+//                .subscribe(new Observer<SheetDetailWrapper>() {
+//            @Override
+//            public void onSubscribe(@NonNull Disposable d) {
+//                //显示对话框
+//                LoadingUtil.showLoading(getMainActivity());
+//            }
+//
+//            @Override
+//            public void onNext(@NonNull SheetDetailWrapper sheetDetailWrapper) {
+//                //请求成功
+//                LogUtil.d(TAG,"request sheet detail success:"+sheetDetailWrapper.getData().getTitle());
+//
+//                //隐藏对话框
+//                LoadingUtil.hideLoading();
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Throwable e) {
+//                //隐藏对话框
+//                LoadingUtil.hideLoading();
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+//
+//        //测试加载提示框
+//        LoadingUtil.showLoading(getMainActivity());
 
-            @Override
-            public void onNext(@NonNull SheetDetailWrapper sheetDetailWrapper) {
-                //请求成功
-                LogUtil.d(TAG,"request sheet detail success:"+sheetDetailWrapper.getData().getTitle());
+        //请求歌单列表
+        Api.getInstance().sheets()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SheetListWrapper>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-                //隐藏对话框
-                LoadingUtil.hideLoading();
-            }
+                    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                //隐藏对话框
-                LoadingUtil.hideLoading();
-            }
+                    @Override
+                    public void onNext(@NonNull SheetListWrapper sheetListWrapper) {
+                        LogUtil.d(TAG,"onNext:"+sheetListWrapper.getData().size());
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onError(@NonNull Throwable e) {
 
-            }
-        });
+                    }
 
-        //测试加载提示框
-        LoadingUtil.showLoading(getMainActivity());
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
         //3秒后自动隐藏
         //因为显示后无法点击后面的按钮
