@@ -153,43 +153,48 @@ public class LoginActivity extends BaseTitleActivity {
 //                    }
 //                });
 
-//        //使用重构后的Api
-//        Api.getInstance()
-//                .sheetDetail("1")
-//                .subscribe(new Observer<SheetDetailWrapper>() {
-//            @Override
-//            public void onSubscribe(@NonNull Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(@NonNull SheetDetailWrapper sheetDetailWrapper) {
-//                //请求成功
-//                LogUtil.d(TAG,"request sheet detail success:"+sheetDetailWrapper.getData().getTitle());
-//            }
-//
-//            @Override
-//            public void onError(@NonNull Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
+        //使用重构后的Api
+        Api.getInstance()
+                .sheetDetail("1")
+                .subscribe(new Observer<SheetDetailWrapper>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                //显示对话框
+                LoadingUtil.showLoading(getMainActivity());
+            }
+
+            @Override
+            public void onNext(@NonNull SheetDetailWrapper sheetDetailWrapper) {
+                //请求成功
+                LogUtil.d(TAG,"request sheet detail success:"+sheetDetailWrapper.getData().getTitle());
+
+                //隐藏对话框
+                LoadingUtil.hideLoading();
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                //隐藏对话框
+                LoadingUtil.hideLoading();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
 
         //测试加载提示框
         LoadingUtil.showLoading(getMainActivity());
 
         //3秒后自动隐藏
         //因为显示后无法点击后面的按钮
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                LoadingUtil.hideLoading();
-            }
-        },3000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                LoadingUtil.hideLoading();
+//            }
+//        },3000);
 
 //        //获取用户名
 //        String username = et_username.getText().toString().trim();
