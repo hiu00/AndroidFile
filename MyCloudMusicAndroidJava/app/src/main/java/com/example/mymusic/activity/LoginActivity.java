@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.example.mymusic.api.Api;
 import com.example.mymusic.api.Service;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.util.Constant;
+import com.example.mymusic.util.LoadingUtil;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.StringUtil;
 import com.example.mymusic.util.ToastUtil;
@@ -151,31 +153,43 @@ public class LoginActivity extends BaseTitleActivity {
 //                    }
 //                });
 
-        //使用重构后的Api
-        Api.getInstance()
-                .sheetDetail("1")
-                .subscribe(new Observer<SheetDetailWrapper>() {
+//        //使用重构后的Api
+//        Api.getInstance()
+//                .sheetDetail("1")
+//                .subscribe(new Observer<SheetDetailWrapper>() {
+//            @Override
+//            public void onSubscribe(@NonNull Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(@NonNull SheetDetailWrapper sheetDetailWrapper) {
+//                //请求成功
+//                LogUtil.d(TAG,"request sheet detail success:"+sheetDetailWrapper.getData().getTitle());
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+
+        //测试加载提示框
+        LoadingUtil.showLoading(getMainActivity());
+
+        //3秒后自动隐藏
+        //因为显示后无法点击后面的按钮
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
+            public void run() {
+                LoadingUtil.hideLoading();
             }
-
-            @Override
-            public void onNext(@NonNull SheetDetailWrapper sheetDetailWrapper) {
-                //请求成功
-                LogUtil.d(TAG,"request sheet detail success:"+sheetDetailWrapper.getData().getTitle());
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        },3000);
 
 //        //获取用户名
 //        String username = et_username.getText().toString().trim();
