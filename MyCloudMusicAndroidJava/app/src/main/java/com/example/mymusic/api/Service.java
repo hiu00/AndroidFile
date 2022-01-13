@@ -1,7 +1,9 @@
 package com.example.mymusic.api;
 
+import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
+import com.example.mymusic.domain.response.DetailResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -31,5 +33,5 @@ public interface Service {
      * @return
      */
     @GET("v1/sheets/{id}")
-    Observable<SheetDetailWrapper> sheetDetail(@Path("id") String id);
+    Observable<DetailResponse<Sheet>> sheetDetail(@Path("id") String id);
 }

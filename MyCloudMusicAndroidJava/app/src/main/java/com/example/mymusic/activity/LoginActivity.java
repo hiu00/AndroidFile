@@ -16,8 +16,10 @@ import android.widget.Toast;
 import com.example.mymusic.R;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.api.Service;
+import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
+import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LoadingUtil;
 import com.example.mymusic.util.LogUtil;
@@ -189,18 +191,42 @@ public class LoginActivity extends BaseTitleActivity {
 //        LoadingUtil.showLoading(getMainActivity());
 
         //请求歌单列表
-        Api.getInstance().sheets()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SheetListWrapper>() {
+//        Api.getInstance().sheets()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<SheetListWrapper>() {
+//                    @Override
+//                    public void onSubscribe(@NonNull Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(@NonNull SheetListWrapper sheetListWrapper) {
+//                        LogUtil.d(TAG,"onNext:"+sheetListWrapper.getData().size());
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+
+        //使用DetailResponse
+        Api.getInstance().sheetDetail("1")
+                .subscribe(new Observer<DetailResponse<Sheet>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(@NonNull SheetListWrapper sheetListWrapper) {
-                        LogUtil.d(TAG,"onNext:"+sheetListWrapper.getData().size());
+                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
+                        LogUtil.d(TAG,""+sheetDetailResponse.getData().getTitle());
                     }
 
                     @Override

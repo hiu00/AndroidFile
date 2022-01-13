@@ -1,7 +1,9 @@
 package com.example.mymusic.api;
 
+import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
+import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.util.Constant;
 
 import io.reactivex.Observable;
@@ -84,7 +86,7 @@ public class Api {
      * @param id
      * @return
      */
-    public Observable<SheetDetailWrapper> sheetDetail(String id) {
+    public Observable<DetailResponse<Sheet>> sheetDetail(String id) {
         return service.sheetDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
