@@ -21,6 +21,7 @@ import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
+import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.listener.ObserverAdapter;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LoadingUtil;
@@ -266,13 +267,23 @@ public class LoginActivity extends BaseTitleActivity {
 //                    }
 //                });
 
-        //使用ObserverAdapter
-        Api.getInstance().sheetDetail("1")
-                .subscribe(new ObserverAdapter<DetailResponse<Sheet>>(){
+//        //使用ObserverAdapter
+//        Api.getInstance().sheetDetail("1")
+//                .subscribe(new ObserverAdapter<DetailResponse<Sheet>>(){
+//                    @Override
+//                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
+//                        super.onNext(sheetDetailResponse);
+//                        LogUtil.d(TAG,"onNext:"+sheetDetailResponse.getData().getTitle());
+//                    }
+//                });
+
+        //使用HttpObserver
+        Api.getInstance()
+                .sheetDetail("1")
+                .subscribe(new HttpObserver<DetailResponse<Sheet>>() {
                     @Override
-                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
-                        super.onNext(sheetDetailResponse);
-                        LogUtil.d(TAG,"onNext:"+sheetDetailResponse.getData().getTitle());
+                    public void onSuccessed(DetailResponse<Sheet> data) {
+                        LogUtil.d(TAG,"onSuccessed:"+data.getData().getTitle());
                     }
                 });
 
