@@ -80,48 +80,56 @@ public abstract class HttpObserver<T> extends ObserverAdapter<T>{
      * @param e 错误信息
      */
     private void requestErrorHandler(T t, Throwable e) {
-        if (e!=null){
-            //判断错误类型
-            if (e instanceof UnknownHostException){
-                ToastUtil.errorShortToast(R.string.error_network_unknow_host);
-            }else if (e instanceof ConnectException){
-                ToastUtil.errorShortToast(R.string.error_network_connect);
-            }else if (e instanceof SocketTimeoutException){
-                ToastUtil.errorShortToast(R.string.error_network_timeout);
-            }else if (e instanceof HttpException){
-                HttpException exception= (HttpException) e;
+        if (onFailed(t,e)){
+            //回调了请求失败方法
+            //并且该方法返回了true
 
-                //获取响应码
-                int code=exception.code();
-                if (code==401){
-                    ToastUtil.errorShortToast(R.string.error_network_not_auth);
-                }else if (code == 403) {
-                    ToastUtil.errorShortToast(R.string.error_network_not_permission);
-                } else if (code == 404) {
-                    ToastUtil.errorShortToast(R.string.error_network_not_found);
-                } else if (code >= 500) {
-                    ToastUtil.errorShortToast(R.string.error_network_server);
-                } else {
+            //返回true就表示外部手动处理错误
+            //那我们框架内部就不用做任何事情了
+        }
+        else {
+            if (e!=null){
+                //判断错误类型
+                if (e instanceof UnknownHostException){
+                    ToastUtil.errorShortToast(R.string.error_network_unknow_host);
+                }else if (e instanceof ConnectException){
+                    ToastUtil.errorShortToast(R.string.error_network_connect);
+                }else if (e instanceof SocketTimeoutException){
+                    ToastUtil.errorShortToast(R.string.error_network_timeout);
+                }else if (e instanceof HttpException){
+                    HttpException exception= (HttpException) e;
+
+                    //获取响应码
+                    int code=exception.code();
+                    if (code==401){
+                        ToastUtil.errorShortToast(R.string.error_network_not_auth);
+                    }else if (code == 403) {
+                        ToastUtil.errorShortToast(R.string.error_network_not_permission);
+                    } else if (code == 404) {
+                        ToastUtil.errorShortToast(R.string.error_network_not_found);
+                    } else if (code >= 500) {
+                        ToastUtil.errorShortToast(R.string.error_network_server);
+                    } else {
+                        ToastUtil.errorShortToast(R.string.error_network_unknown);
+                    }
+                } else{
                     ToastUtil.errorShortToast(R.string.error_network_unknown);
                 }
-            } else{
-                ToastUtil.errorShortToast(R.string.error_network_unknown);
-            }
 
-        }else {
-            if (t instanceof BaseResponse) {//instanceof用作对象的判断
-                //判断具体的业务请求
-                BaseResponse baseResponse = (BaseResponse) t;
-                if (TextUtils.isEmpty(baseResponse.getMessage())){
-                    //没有错误提示信息
-                    ToastUtil.errorShortToast(R.string.error_network_unknown);
-                }else {
-                    //有错误提示信息
-                    ToastUtil.errorShortToast(baseResponse.getMessage());
+            }else {
+                if (t instanceof BaseResponse) {//instanceof用作对象的判断
+                    //判断具体的业务请求
+                    BaseResponse baseResponse = (BaseResponse) t;
+                    if (TextUtils.isEmpty(baseResponse.getMessage())){
+                        //没有错误提示信息
+                        ToastUtil.errorShortToast(R.string.error_network_unknown);
+                    }else {
+                        //有错误提示信息
+                        ToastUtil.errorShortToast(baseResponse.getMessage());
+                    }
                 }
             }
         }
-
     }
 
     @Override
