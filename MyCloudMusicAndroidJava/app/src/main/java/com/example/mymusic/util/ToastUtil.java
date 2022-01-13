@@ -28,6 +28,14 @@ public class ToastUtil {
     }
 
     /**
+     * 错误短时间Toast
+     * @param message
+     */
+    public static void errorShortToast(String message) {
+        Toasty.error(context,message,Toasty.LENGTH_SHORT).show();
+    }
+
+    /**
      * 错误长时间Toast
      * @param id
      */
@@ -50,4 +58,6 @@ public class ToastUtil {
     public static void init(Context context){
         ToastUtil.context=context;
     }
+
+
 }

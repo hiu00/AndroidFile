@@ -268,14 +268,14 @@ public class LoginActivity extends BaseTitleActivity {
 //                });
 
 //        //使用ObserverAdapter
-//        Api.getInstance().sheetDetail("1")
-//                .subscribe(new ObserverAdapter<DetailResponse<Sheet>>(){
-//                    @Override
-//                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
-//                        super.onNext(sheetDetailResponse);
-//                        LogUtil.d(TAG,"onNext:"+sheetDetailResponse.getData().getTitle());
-//                    }
-//                });
+        Api.getInstance().sheetDetail("1")
+                .subscribe(new ObserverAdapter<DetailResponse<Sheet>>(){
+                    @Override
+                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
+                        super.onNext(sheetDetailResponse);
+                        LogUtil.d(TAG,"onNext:"+sheetDetailResponse.getData().getTitle());
+                    }
+                });
 
         //使用HttpObserver
         Api.getInstance()
