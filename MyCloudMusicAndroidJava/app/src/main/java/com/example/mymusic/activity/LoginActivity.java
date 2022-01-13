@@ -20,6 +20,7 @@ import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
 import com.example.mymusic.domain.response.DetailResponse;
+import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LoadingUtil;
 import com.example.mymusic.util.LogUtil;
@@ -216,17 +217,41 @@ public class LoginActivity extends BaseTitleActivity {
 //                    }
 //                });
 
-        //使用DetailResponse
-        Api.getInstance().sheetDetail("1")
-                .subscribe(new Observer<DetailResponse<Sheet>>() {
+//        //使用DetailResponse
+//        Api.getInstance().sheetDetail("1")
+//                .subscribe(new Observer<DetailResponse<Sheet>>() {
+//                    @Override
+//                    public void onSubscribe(@NonNull Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
+//                        LogUtil.d(TAG,""+sheetDetailResponse.getData().getTitle());
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+
+        //使用ListResponse
+        Api.getInstance().sheets()
+                .subscribe(new Observer<ListResponse<Sheet>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
-                        LogUtil.d(TAG,""+sheetDetailResponse.getData().getTitle());
+                    public void onNext(@NonNull ListResponse<Sheet> sheetListResponse) {
+                        LogUtil.d(TAG,"onNext:"+sheetListResponse.getData().size());
                     }
 
                     @Override
