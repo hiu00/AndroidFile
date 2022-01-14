@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.multidex.MultiDexApplication;
 
 import com.example.mymusic.util.ToastUtil;
+import com.facebook.stetho.Stetho;
 
 import es.dmoral.toasty.Toasty;
 
@@ -25,5 +26,9 @@ public class AppContext extends MultiDexApplication {
 
         //初始化toast工具类
         ToastUtil.init(getApplicationContext());
+
+        //初始化Stetho抓包
+        //使用默认参数初始化
+        Stetho.initializeWithDefaults(this);
     }
 }

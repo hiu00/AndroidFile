@@ -7,6 +7,7 @@ import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LogUtil;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -64,6 +65,9 @@ public class Api {
 
             //添加到网络框架中
             OkHttpClientBuilder.addInterceptor(loggingInterceptor);
+
+            //添加Stetho抓包拦截器
+            OkHttpClientBuilder.addInterceptor(new StethoInterceptor());
         }
 
         //创建一个Retrofit
