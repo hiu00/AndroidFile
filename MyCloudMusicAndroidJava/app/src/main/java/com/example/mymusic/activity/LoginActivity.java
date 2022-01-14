@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mymusic.AppContext;
 import com.example.mymusic.R;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.api.Service;
@@ -370,6 +371,9 @@ public class LoginActivity extends BaseTitleActivity {
                     @Override
                     public void onSucceeded(DetailResponse<Session> data) {
                        LogUtil.d(TAG,"onLoginClick success:"+data.getData());
+
+                        //把登录成功的事件通知到AppContext
+                        AppContext.getInstance().login(sp,data.getData());
 
                         ToastUtil.successLongToast(R.string.login_sucess);
                     }

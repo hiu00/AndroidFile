@@ -18,6 +18,16 @@ public class PreferenceUtil {
      */
     private static final String SHOW_GUIDE = "SHOW_GUIDE";
 
+    /**
+     * 用户登录Session key
+     */
+    private static final String SESSION = "SESSION";
+
+    /**
+     * 用户登录Session key
+     */
+    private static final String USER_ID = "USER_ID";
+
 
     /**
      * 实例
@@ -72,5 +82,38 @@ public class PreferenceUtil {
      */
     public void setShowGuide(boolean value) {
         preference.edit().putBoolean(SHOW_GUIDE,value).commit();
+    }
+
+    /**
+     * 获取登录session
+     * @return
+     */
+    public String getSession() {
+       return preference.getString(SESSION,null);
+    }
+
+    /**
+     * 保存登录session
+     * @param value
+     */
+    public void setSession(String value) {
+        preference.edit().putString(SESSION,value).commit();
+    }
+
+    /**
+     * 获取用户Id
+     * @return
+     */
+    public String getUserId() {
+        return preference.getString(USER_ID,null);
+    }
+
+
+    /**
+     * 设置用户Id
+     * @param userId
+     */
+    public void setUserId(String userId) {
+        preference.edit().putString(USER_ID,userId).commit();
     }
 }

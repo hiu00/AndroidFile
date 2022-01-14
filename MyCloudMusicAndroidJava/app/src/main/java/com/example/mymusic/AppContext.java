@@ -5,6 +5,8 @@ import android.content.Context;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.example.mymusic.domain.Session;
+import com.example.mymusic.util.PreferenceUtil;
 import com.example.mymusic.util.ToastUtil;
 import com.facebook.stetho.Stetho;
 
@@ -18,13 +20,13 @@ public class AppContext extends MultiDexApplication {
     /**
      * 上下文
      */
-    private static Context context;
+    private static AppContext context;
 
     /**
      * 获取当前上下文
      * @return
      */
-    public static Context getContext() {
+    public static AppContext getInstance() {
         return context;
     }
 
@@ -46,5 +48,20 @@ public class AppContext extends MultiDexApplication {
         //初始化Stetho抓包
         //使用默认参数初始化
         Stetho.initializeWithDefaults(this);
+    }
+
+    public void login(PreferenceUtil sp, Session data){
+        //保存登录后的Session
+        sp.setSession(data.getSession());
+
+        //保存用户Id
+        sp.setUserId(data.getUser());
+
+        //初始化,其他登录后才需要初始化的内容
+        onLogin();
+    }
+
+    private void onLogin() {
+
     }
 }
