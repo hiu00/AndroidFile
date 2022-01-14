@@ -2,6 +2,7 @@ package com.example.mymusic.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 /**
  * 偏好设计工具类
@@ -138,4 +139,13 @@ public class PreferenceUtil {
         preference.edit().putBoolean(key,value).commit();
     }
     //end 辅助方法
+
+    /**
+     * 是否登录了
+     *
+     * @return
+     */
+    public boolean isLogin() {
+        return !TextUtils.isEmpty(getSession());
+    }
 }

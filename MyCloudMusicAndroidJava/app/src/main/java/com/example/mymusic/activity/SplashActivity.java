@@ -13,6 +13,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 
+import com.example.mymusic.MainActivity;
 import com.example.mymusic.R;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LogUtil;
@@ -60,6 +61,11 @@ public class SplashActivity extends BaseCommonActivity {
 
             //显示引导界面
               startActivoityAfterFinishThis(GuideActivity.class);
+        }else if(sp.isLogin()){
+            //已经登录了
+
+            //跳转到首页
+            startActivoityAfterFinishThis(MainActivity.class);
         }else {
             //跳转到登录/注册页面
             startActivoityAfterFinishThis(LoginOrRegisterActivity.class);

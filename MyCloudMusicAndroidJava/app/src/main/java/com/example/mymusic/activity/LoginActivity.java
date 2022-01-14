@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mymusic.AppContext;
+import com.example.mymusic.MainActivity;
 import com.example.mymusic.R;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.api.Service;
@@ -376,6 +377,9 @@ public class LoginActivity extends BaseTitleActivity {
                         AppContext.getInstance().login(sp,data.getData());
 
                         ToastUtil.successLongToast(R.string.login_sucess);
+
+                        //关闭当前界面并启动主界面
+                        startActivoityAfterFinishThis(MainActivity.class);
                     }
                 });
     }
