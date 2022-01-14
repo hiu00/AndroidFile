@@ -6,11 +6,13 @@ import com.example.mymusic.domain.SheetListWrapper;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.util.Constant;
+import com.example.mymusic.util.LogUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -46,9 +48,23 @@ public class Api {
         return instance;
     }
 
+
     public Api() {
         //初始化OkHttp
         OkHttpClient.Builder OkHttpClientBuilder=new OkHttpClient.Builder();
+
+        if (LogUtil.isDebug) {
+            //调试模式
+
+            //创建koHttp日志拦截器
+            HttpLoggingInterceptor loggingInterceptor=new HttpLoggingInterceptor();
+
+            //设置日志等级
+            loggingInterceptor.level(HttpLoggingInterceptor.Level.BASIC);
+
+            //添加到网络框架中
+            OkHttpClientBuilder.addInterceptor(loggingInterceptor);
+        }
 
         //创建一个Retrofit
         Retrofit retrofit=new Retrofit.Builder()

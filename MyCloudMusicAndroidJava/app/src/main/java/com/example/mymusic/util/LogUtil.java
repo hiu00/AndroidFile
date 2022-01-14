@@ -13,7 +13,7 @@ public class LogUtil {
     /**
      * 是否是调试状态
      */
-    private static boolean isDebug = BuildConfig.DEBUG;
+    public static boolean isDebug = BuildConfig.DEBUG;
 
     /**
      * 按钮点击了

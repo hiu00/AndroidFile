@@ -289,16 +289,16 @@ public class LoginActivity extends BaseTitleActivity {
 
         //3秒后自动隐藏
         //因为显示后无法点击后面的按钮
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                LoadingUtil.hideLoading();
-            }
-        },3000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                LoadingUtil.hideLoading();
+//            }
+//        },3000);
 
         //测试自动显示加载对话框
         Api.getInstance().sheetDetail("1")
-                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getMainActivity(),true) {
+                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getMainActivity(),false) {
                     @Override
                     public void onSucceeded(DetailResponse<Sheet> data) {
                         LogUtil.d(TAG, "onNext:" + data.getData().getTitle());
