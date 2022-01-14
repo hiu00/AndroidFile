@@ -81,7 +81,8 @@ public class PreferenceUtil {
      * @param value
      */
     public void setShowGuide(boolean value) {
-        preference.edit().putBoolean(SHOW_GUIDE,value).commit();
+        putBoolean(SHOW_GUIDE,value);
+
     }
 
     /**
@@ -97,8 +98,9 @@ public class PreferenceUtil {
      * @param value
      */
     public void setSession(String value) {
-        preference.edit().putString(SESSION,value).commit();
+        putString(SESSION,value);
     }
+
 
     /**
      * 获取用户Id
@@ -111,9 +113,29 @@ public class PreferenceUtil {
 
     /**
      * 设置用户Id
-     * @param userId
+     * @param value
      */
-    public void setUserId(String userId) {
-        preference.edit().putString(USER_ID,userId).commit();
+    public void setUserId(String value) {
+        putString(USER_ID,value);
     }
+
+    //辅助方法
+    /**
+     * 保存字符串
+     * @param key
+     * @param value
+     */
+    private void putString(String key, String value) {
+        preference.edit().putString(key, value).commit();
+    }
+
+    /**
+     * 保存boolen值
+     * @param key
+     * @param value
+     */
+    private void putBoolean(String key, boolean value) {
+        preference.edit().putBoolean(key,value).commit();
+    }
+    //end 辅助方法
 }
