@@ -6,9 +6,12 @@ import android.content.Context;
 import androidx.multidex.MultiDexApplication;
 
 import com.example.mymusic.domain.Session;
+import com.example.mymusic.domain.event.LoginSuccessEvent;
 import com.example.mymusic.util.PreferenceUtil;
 import com.example.mymusic.util.ToastUtil;
 import com.facebook.stetho.Stetho;
+
+import org.greenrobot.eventbus.EventBus;
 
 import es.dmoral.toasty.Toasty;
 
@@ -59,6 +62,10 @@ public class AppContext extends MultiDexApplication {
 
         //初始化,其他登录后才需要初始化的内容
         onLogin();
+
+        //发送登录成功通知
+        //目的是一些界面需要接收该事件
+        EventBus.getDefault().post(new LoginSuccessEvent());
     }
 
     private void onLogin() {
