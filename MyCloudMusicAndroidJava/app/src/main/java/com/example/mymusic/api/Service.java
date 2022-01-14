@@ -1,13 +1,17 @@
 package com.example.mymusic.api;
 
+import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
+import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -35,4 +39,12 @@ public interface Service {
      */
     @GET("v1/sheets/{id}")
     Observable<DetailResponse<Sheet>> sheetDetail(@Path("id") String id);
+
+    /**
+     * 登录接口
+     * @param data
+     * @return
+     */
+    @POST("v1/sessions")
+    Observable<DetailResponse<Session>> login(@Body User data);
 }

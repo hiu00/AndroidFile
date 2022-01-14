@@ -1,5 +1,7 @@
 package com.example.mymusic.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * 登录后模型
  */
@@ -28,5 +30,13 @@ public class Session {
 
     public void setSession(String session) {
         this.session = session;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("user", user)
+                .append("session", session)
+                .toString();
     }
 }

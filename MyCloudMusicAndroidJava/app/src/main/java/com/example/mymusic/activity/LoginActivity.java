@@ -16,9 +16,11 @@ import android.widget.Toast;
 import com.example.mymusic.R;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.api.Service;
+import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
+import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.listener.HttpObserver;
@@ -297,51 +299,81 @@ public class LoginActivity extends BaseTitleActivity {
 //        },3000);
 
         //测试自动显示加载对话框
-        Api.getInstance().sheetDetail("1")
-                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getMainActivity(),false) {
+//        Api.getInstance().sheetDetail("1")
+//                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getMainActivity(),false) {
+//                    @Override
+//                    public void onSucceeded(DetailResponse<Sheet> data) {
+//                        LogUtil.d(TAG, "onNext:" + data.getData().getTitle());
+//                    }
+//                });
+
+        //获取用户名
+        String username = et_username.getText().toString().trim();
+        if (StringUtils.isBlank(username)){
+            LogUtil.w(TAG,"onLoginClick user empty");
+            //Toast.makeText(getMainActivity(), R.string.enter_username, Toast.LENGTH_SHORT).show();
+            //Toasty.error(getMainActivity(),R.string.enter_username,Toasty.LENGTH_SHORT).show();
+
+            ToastUtil.errorShortToast(R.string.enter_username);
+            return;
+        }
+
+        //判断用户名格式
+
+        //如果用户名
+        //不是手机号也不是邮箱
+        //就是格式错误
+        if (!(StringUtil.isPhone(username)||StringUtil.isEmail(username))){
+            ToastUtil.errorShortToast(R.string.error_username_format);
+            return;
+        }
+
+        //获取密码
+        String password = et_password.getText().toString().trim();
+        if (TextUtils.isEmpty(password)){
+            LogUtil.w(TAG,"onLoginClick password empty");
+            //Toast.makeText(getMainActivity(), R.string.enter_password, Toast.LENGTH_SHORT).show();
+
+            ToastUtil.errorLongToast(R.string.enter_password);
+            return;
+        }
+
+        //判断密码格式
+        if(!(StringUtil.isPassword(password))){
+            ToastUtil.errorShortToast(R.string.error_password_format);
+            return;
+        }
+
+        //判断是手机号还是邮箱
+        String phone = null;
+        String email = null;
+
+        if(StringUtil.isPhone(username)){
+            //手机号
+            phone=username;
+        }else {
+            //邮箱
+            email=username;
+        }
+
+        User user = new User();
+
+        //这里虽然同时传递了手机号和邮箱
+        //但服务端登录的时候有先后顺序
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        //调用登录接口
+        Api.getInstance().login(user)
+                .subscribe(new HttpObserver<DetailResponse<Session>>() {
                     @Override
-                    public void onSucceeded(DetailResponse<Sheet> data) {
-                        LogUtil.d(TAG, "onNext:" + data.getData().getTitle());
+                    public void onSucceeded(DetailResponse<Session> data) {
+                       LogUtil.d(TAG,"onLoginClick success:"+data.getData());
+
+                        ToastUtil.successLongToast(R.string.login_sucess);
                     }
                 });
-
-//        //获取用户名
-//        String username = et_username.getText().toString().trim();
-//        if (StringUtils.isBlank(username)){
-//            LogUtil.w(TAG,"onLoginClick user empty");
-//            //Toast.makeText(getMainActivity(), R.string.enter_username, Toast.LENGTH_SHORT).show();
-//            //Toasty.error(getMainActivity(),R.string.enter_username,Toasty.LENGTH_SHORT).show();
-//
-//            ToastUtil.errorShortToast(R.string.enter_username);
-//            return;
-//        }
-//
-//        //判断用户名格式
-//        //如果用户名
-//        //不是手机号也不是邮箱
-//        //就是格式错误
-//        if (!(StringUtil.isPhone(username)||StringUtil.isEmail(username))){
-//            ToastUtil.errorShortToast(R.string.error_username_format);
-//            return;
-//        }
-//        //获取密码
-//        String password = et_password.getText().toString().trim();
-//        if (TextUtils.isEmpty(password)){
-//            LogUtil.w(TAG,"onLoginClick password empty");
-//            //Toast.makeText(getMainActivity(), R.string.enter_password, Toast.LENGTH_SHORT).show();
-//
-//            ToastUtil.errorLongToast(R.string.enter_password);
-//            return;
-//        }
-//
-//        //判断密码格式
-//        if(!(StringUtil.isPassword(password))){
-//            ToastUtil.errorShortToast(R.string.error_password_format);
-//            return;
-//        }
-//
-//        //TODO 调用登陆方法
-//        ToastUtil.successLongToast(R.string.login_sucess);
     }
 
     /**

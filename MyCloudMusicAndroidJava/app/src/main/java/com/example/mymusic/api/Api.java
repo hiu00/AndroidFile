@@ -2,9 +2,11 @@ package com.example.mymusic.api;
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import com.example.mymusic.AppContext;
+import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
+import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.util.Constant;
@@ -114,6 +116,12 @@ public class Api {
      */
     public Observable<DetailResponse<Sheet>> sheetDetail(String id) {
         return service.sheetDetail(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<DetailResponse<Session>> login(User data){
+        return service.login(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
