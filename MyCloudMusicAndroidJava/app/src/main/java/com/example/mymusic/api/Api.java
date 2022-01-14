@@ -1,5 +1,7 @@
 package com.example.mymusic.api;
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor;
+import com.example.mymusic.AppContext;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
@@ -67,7 +69,10 @@ public class Api {
             OkHttpClientBuilder.addInterceptor(loggingInterceptor);
 
             //添加Stetho抓包拦截器
-            OkHttpClientBuilder.addInterceptor(new StethoInterceptor());
+            OkHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());
+
+            //添加chucker实现应用内显示网络请求信息拦截器
+            OkHttpClientBuilder.addInterceptor(new ChuckerInterceptor(AppContext.getContext()));
         }
 
         //创建一个Retrofit
