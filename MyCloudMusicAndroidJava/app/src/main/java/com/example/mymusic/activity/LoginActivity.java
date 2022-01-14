@@ -268,33 +268,42 @@ public class LoginActivity extends BaseTitleActivity {
 //                });
 
 //        //使用ObserverAdapter
-        Api.getInstance().sheetDetail("1")
-                .subscribe(new ObserverAdapter<DetailResponse<Sheet>>(){
-                    @Override
-                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
-                        super.onNext(sheetDetailResponse);
-                        LogUtil.d(TAG,"onNext:"+sheetDetailResponse.getData().getTitle());
-                    }
-                });
-
-        //使用HttpObserver
-        Api.getInstance()
-                .sheetDetail("1")
-                .subscribe(new HttpObserver<DetailResponse<Sheet>>() {
-                    @Override
-                    public void onSuccessed(DetailResponse<Sheet> data) {
-                        LogUtil.d(TAG,"onSuccessed:"+data.getData().getTitle());
-                    }
-                });
+//        Api.getInstance().sheetDetail("1")
+//                .subscribe(new ObserverAdapter<DetailResponse<Sheet>>(){
+//                    @Override
+//                    public void onNext(@NonNull DetailResponse<Sheet> sheetDetailResponse) {
+//                        super.onNext(sheetDetailResponse);
+//                        LogUtil.d(TAG,"onNext:"+sheetDetailResponse.getData().getTitle());
+//                    }
+//                });
+//
+//        //使用HttpObserver
+//        Api.getInstance()
+//                .sheetDetail("1")
+//                .subscribe(new HttpObserver<DetailResponse<Sheet>>() {
+//                    @Override
+//                    public void onSuccessed(DetailResponse<Sheet> data) {
+//                        LogUtil.d(TAG,"onSuccessed:"+data.getData().getTitle());
+//                    }
+//                });
 
         //3秒后自动隐藏
         //因为显示后无法点击后面的按钮
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                LoadingUtil.hideLoading();
-//            }
-//        },3000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                LoadingUtil.hideLoading();
+            }
+        },3000);
+
+        //测试自动显示加载对话框
+        Api.getInstance().sheetDetail("1")
+                .subscribe(new HttpObserver<DetailResponse<Sheet>>(getMainActivity(),true) {
+                    @Override
+                    public void onSucceeded(DetailResponse<Sheet> data) {
+                        LogUtil.d(TAG, "onNext:" + data.getData().getTitle());
+                    }
+                });
 
 //        //获取用户名
 //        String username = et_username.getText().toString().trim();

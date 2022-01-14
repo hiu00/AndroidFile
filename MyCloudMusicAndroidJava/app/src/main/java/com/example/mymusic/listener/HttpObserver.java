@@ -4,9 +4,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.mymusic.activity.BaseCommonActivity;
 import com.example.mymusic.domain.response.BaseResponse;
 import com.example.mymusic.util.HttpUtil;
+import com.example.mymusic.util.LoadingUtil;
 import com.example.mymusic.util.LogUtil;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * 网络请求Observer
@@ -15,10 +19,88 @@ public abstract class HttpObserver<T> extends ObserverAdapter<T>{
     private static final String TAG = "HttpObserver";
 
     /**
+     * 是否显示加载对话框
+     */
+    private boolean isShowLoading;
+
+    /**
+     * 界面
+     */
+    private  BaseCommonActivity activity;
+
+    /**
+     * 无参构造方法
+     */
+    public HttpObserver(){
+
+    }
+
+    /**
+     * 可以控制是否显示的构造方法
+     * @param activity
+     * @param isShowLoading 是否显示加载对话框
+     */
+    public HttpObserver(BaseCommonActivity activity,boolean isShowLoading){
+        this.activity=activity;
+        this.isShowLoading=isShowLoading;
+    }
+
+    /**
      * 请求成功
      * @param data
      */
-    public abstract void onSuccessed(T data);
+    public abstract void onSucceeded(T data);
+
+    @Override
+    public void onSubscribe(@NonNull Disposable d) {
+        super.onSubscribe(d);
+        if (isShowLoading) {
+            //显示加载对话框
+            LoadingUtil.showLoading(activity);
+        }
+    }
+
+    @Override
+    public void onNext(@NonNull T t) {
+        super.onNext(t);
+        LogUtil.d(TAG,"onNext:"+t);
+
+        //检查是否需要隐藏加载提示框
+        checkHideLoading();
+
+        if (isSucceeded(t)) {
+            //请求正常
+            onSucceeded(t);
+        }else {
+            //有状态码
+            //表示请求出错了
+            handlerRequest(t, null);
+        }
+
+
+    }
+
+    @Override
+    public void onError(@NonNull Throwable e) {
+        super.onError(e);
+        Log.d(TAG, "onError: "+e.getLocalizedMessage());
+
+        //检查是否需要隐藏加载提示框
+        checkHideLoading();
+
+        //处理错误
+        handlerRequest(null,e);
+    }
+
+    /**
+     * 检查是否需要隐藏加载提示框
+     */
+    private void checkHideLoading() {
+        if (isShowLoading){
+            LoadingUtil.hideLoading();
+        }
+
+    }
 
     /**
      * 请求失败
@@ -28,23 +110,6 @@ public abstract class HttpObserver<T> extends ObserverAdapter<T>{
      */
     public boolean onFailed(T t,Throwable e){
         return false;
-    }
-
-    @Override
-    public void onNext(@NonNull T t) {
-        super.onNext(t);
-        LogUtil.d(TAG,"onNext:"+t);
-
-        if (isSucceeded(t)) {
-            //请求正常
-            onSuccessed(t);
-        }else {
-            //有状态码
-            //表示请求出错了
-            handlerRequest(t, null);
-        }
-
-
     }
 
     /**
@@ -82,14 +147,5 @@ public abstract class HttpObserver<T> extends ObserverAdapter<T>{
         else {
             HttpUtil.handlerRequest(t,e);
         }
-    }
-
-    @Override
-    public void onError(@NonNull Throwable e) {
-        super.onError(e);
-        Log.d(TAG, "onError: "+e.getLocalizedMessage());
-
-        //处理错误
-        handlerRequest(null,e);
     }
 }
