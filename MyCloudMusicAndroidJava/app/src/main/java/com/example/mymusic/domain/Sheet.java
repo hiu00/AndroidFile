@@ -3,11 +3,7 @@ package com.example.mymusic.domain;
 /**
  * 歌单详情
  */
-public class Sheet {
-    /**
-     * 歌单Id
-     */
-    private String id;
+public class Sheet extends BaseModel{
 
     /**
      * 标题
@@ -19,13 +15,6 @@ public class Sheet {
      */
     private String banner;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
