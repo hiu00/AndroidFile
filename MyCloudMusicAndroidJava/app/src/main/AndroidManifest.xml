@@ -16,6 +16,7 @@
         android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar">
         <activity
             android:name=".activity.RegisterActivity"
+            android:label="@string/register"
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
