@@ -52,7 +52,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends BaseTitleActivity {
+public class LoginActivity extends BaseLoginActivity {
     private static final String TAG = "LoginActivity";
     /**
      * 用户名输入框
@@ -358,30 +358,33 @@ public class LoginActivity extends BaseTitleActivity {
             email=username;
         }
 
-        User user = new User();
+//        User user = new User();
+//
+//        //这里虽然同时传递了手机号和邮箱
+//        //但服务端登录的时候有先后顺序
+//        user.setPhone(phone);
+//        user.setEmail(email);
+//        user.setPassword(password);
+//
+//        //调用登录接口
+//        Api.getInstance().login(user)
+//                .subscribe(new HttpObserver<DetailResponse<Session>>() {
+//                    @Override
+//                    public void onSucceeded(DetailResponse<Session> data) {
+//                       LogUtil.d(TAG,"onLoginClick success:"+data.getData());
+//
+//                        //把登录成功的事件通知到AppContext
+//                        AppContext.getInstance().login(sp,data.getData());
+//
+//                        ToastUtil.successLongToast(R.string.login_sucess);
+//
+//                        //关闭当前界面并启动主界面
+//                        startActivoityAfterFinishThis(MainActivity.class);
+//                    }
+//                });
 
-        //这里虽然同时传递了手机号和邮箱
-        //但服务端登录的时候有先后顺序
-        user.setPhone(phone);
-        user.setEmail(email);
-        user.setPassword(password);
-
-        //调用登录接口
-        Api.getInstance().login(user)
-                .subscribe(new HttpObserver<DetailResponse<Session>>() {
-                    @Override
-                    public void onSucceeded(DetailResponse<Session> data) {
-                       LogUtil.d(TAG,"onLoginClick success:"+data.getData());
-
-                        //把登录成功的事件通知到AppContext
-                        AppContext.getInstance().login(sp,data.getData());
-
-                        ToastUtil.successLongToast(R.string.login_sucess);
-
-                        //关闭当前界面并启动主界面
-                        startActivoityAfterFinishThis(MainActivity.class);
-                    }
-                });
+        //调用父类的登录方法
+        login(phone,email,password);
     }
 
     /**
