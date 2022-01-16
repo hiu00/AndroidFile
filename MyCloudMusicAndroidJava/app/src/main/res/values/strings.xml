@@ -23,9 +23,16 @@
     <string name="error_network_not_found">你访问内容不存在！</string>
     <string name="error_network_server">服务器错误，请稍后再试！</string>
     <string name="error_network_unknown">未知错误，请稍后再试！</string>
+
+    <!--注册相关-->
     <string name="enter_nickname">请输入昵称(2~10位)</string>
     <string name="enter_phone">请输入手机号</string>
     <string name="enter_email">请输入邮箱</string>
     <string name="enter_confirm_password">请确认密码</string>
+    <string name="error_nickname_format">昵称格式不正确！</string>
+    <string name="error_phone_format">手机号格式不正确！</string>
+    <string name="error_email_format">邮箱格式不正确！</string>
+    <string name="error_confirm_password_format">确认密码格式不正确！</string>
+    <string name="error_confirm_password">两次密码不一致！</string>
 
 </resources>
