@@ -56,10 +56,53 @@ android {
         minSdkVersion rootProject.ext.minSdk
     }
 
+    //签名配置
+    //要写到使用签名配置的前面
+    signingConfigs {
+        //以下两个版本都用的是同一个
+        //真实项目中可能会用多个
+
+        //debug版本
+        debug {
+            //签名文件路径
+            //E:/AndroidFile/sign/YL.jks
+            storeFile file('E:/AndroidFile/sign/YL.jks')
+            //key密码
+            storePassword "123456"
+
+            //别名
+            keyAlias "a1"
+
+            //签名密码
+            keyPassword "123456"
+        }
+
+        //正式版配置
+        release {
+            storeFile file('E:/AndroidFile/sign/YL.jks')
+            storePassword "123456"
+            keyAlias "a1"
+            keyPassword "123456"
+        }
+    }
+
     buildTypes {
+        //debug版本
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            //使用签名配置
+            signingConfig signingConfigs.debug
+        }
+
+        //正式版本
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            //使用签名配置
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
