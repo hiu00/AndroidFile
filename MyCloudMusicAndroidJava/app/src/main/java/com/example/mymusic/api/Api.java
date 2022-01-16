@@ -2,6 +2,7 @@ package com.example.mymusic.api;
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import com.example.mymusic.AppContext;
+import com.example.mymusic.domain.BaseModel;
 import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.User;
@@ -118,6 +119,24 @@ public class Api {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * 注册
+     *
+     * @param data
+     * @return
+     */
+    public Observable<DetailResponse<BaseModel>> register(User data){
+        return service.register(data)
+                .subscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    /**
+     * 登录
+     * @param data
+     * @return
+     */
     public Observable<DetailResponse<Session>> login(User data){
         return service.login(data)
                 .subscribeOn(Schedulers.io())

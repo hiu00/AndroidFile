@@ -1,5 +1,6 @@
 package com.example.mymusic.api;
 
+import com.example.mymusic.domain.BaseModel;
 import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
@@ -39,6 +40,15 @@ public interface Service {
      */
     @GET("v1/sheets/{id}")
     Observable<DetailResponse<Sheet>> sheetDetail(@Path("id") String id);
+
+    /**
+     * 注册
+     *
+     * @param data
+     * @return
+     */
+    @POST("v1/users")
+    Observable<DetailResponse<BaseModel>> register(@Body User user);
 
     /**
      * 登录接口

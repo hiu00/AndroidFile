@@ -7,6 +7,11 @@ import java.io.Serializable;
  */
 public class User extends BaseModel {
     /**
+     * 昵称
+     */
+    private String nickname;
+
+    /**
      * 手机号
      */
     private String phone;
@@ -20,6 +25,14 @@ public class User extends BaseModel {
      * 用户的密码，登录，注册向服务端传递
      */
     private String password;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public String getPhone() {
         return phone;

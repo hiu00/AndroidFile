@@ -6,6 +6,12 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.mymusic.R;
+import com.example.mymusic.api.Api;
+import com.example.mymusic.domain.BaseModel;
+import com.example.mymusic.domain.User;
+import com.example.mymusic.domain.response.DetailResponse;
+import com.example.mymusic.listener.HttpObserver;
+import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.StringUtil;
 import com.example.mymusic.util.ToastUtil;
 
@@ -15,6 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RegisterActivity extends BaseTitleActivity {
+    private static final String TAG = "RegisterActivity";
     /**
      * 昵称输入框
      */
@@ -127,7 +134,24 @@ public class RegisterActivity extends BaseTitleActivity {
             return;
         }
 
-        //TODO 调用注册接口完成用户注册
+        //调用注册接口完成用户注册
+        User data = new User();
 
+        //将输入框上的信息设置到对象上
+        data.setNickname(nickname);
+        data.setPhone(phone);
+        data.setEmail(email);
+        data.setPassword(password);
+
+        //调用注册接口
+        Api.getInstance().register(data)
+                .subscribe(new HttpObserver<DetailResponse<BaseModel>>() {
+                    @Override
+                    public void onSucceeded(DetailResponse<BaseModel> data) {
+                        LogUtil.d(TAG, "register success:" + data.getData().getId());
+
+                        //TODO 自动登录
+                    }
+                });
     }
 }
