@@ -3,6 +3,7 @@ package com.example.mymusic.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -67,6 +68,7 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
      * 邮箱
      */
     private String email;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,56 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
     @OnClick(R.id.bt_send_code)
     public void onSendCodeClick() {
         LogUtil.d(TAG, "onSendCodeClick");
+
+        //开始倒计时
+        startCountDown();
+    }
+
+    /**
+     * 开始倒计时
+     * 现在没有保存退出的状态
+     * 也就说，返回在进来就可以点击了
+     */
+    private void startCountDown() {
+        //倒计时的总时间,间隔
+        //单位是毫秒
+        countDownTimer = new CountDownTimer(60000, 1000) {
+            /**
+             * 每间隔时间调用
+             * @param l
+             */
+            @Override
+            public void onTick(long l) {
+                bt_send_code.setText(getString(R.string.count_second,l/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                bt_send_code.setText(R.string.send_code);
+
+                //启动按钮
+                bt_send_code.setEnabled(true);
+            }
+        };
+
+        //启动
+        countDownTimer.start();
+
+        //禁用按钮
+        bt_send_code.setEnabled(false);
+    }
+
+    /**
+     * 界面销毁时调用
+     */
+    @Override
+    protected void onDestroy() {
+        //销毁定时器
+        if (countDownTimer!=null){
+            countDownTimer.cancel();;
+            countDownTimer=null;
+        }
+        super.onDestroy();
     }
 
     /**
