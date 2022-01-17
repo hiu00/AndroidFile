@@ -1,5 +1,7 @@
 package com.example.mymusic.domain.response;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * 通用网络请求响应模型
  */
@@ -11,7 +13,7 @@ public class BaseResponse {
      *
      * 只有发生了错误才会有值
      */
-    private Integer status;
+    private int status;
 
     /**
      * 出错的提示信息
@@ -20,11 +22,11 @@ public class BaseResponse {
      */
     private String message;
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -34,5 +36,13 @@ public class BaseResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("status", status)
+                .append("message", message)
+                .toString();
     }
 }
