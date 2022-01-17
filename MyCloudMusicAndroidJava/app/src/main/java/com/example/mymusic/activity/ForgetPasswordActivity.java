@@ -9,8 +9,10 @@ import android.widget.EditText;
 
 import com.example.mymusic.R;
 import com.example.mymusic.api.Api;
+import com.example.mymusic.domain.BaseModel;
 import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.BaseResponse;
+import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.StringUtil;
@@ -86,8 +88,58 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
         LogUtil.d(TAG, "onSendCodeClick");
 
         //开始倒计时
-        startCountDown();
+        //startCountDown();
+
+        //获取用户名
+        String username = et_username.getText().toString().trim();
+        if (StringUtils.isBlank(username)) {
+            ToastUtil.errorShortToast(R.string.enter_username);
+            return;
+        }
+
+        //判断用户名格式
+        if (StringUtil.isPhone(username)) {
+            //手机号
+            sendSMSCode(username);
+        } else if (StringUtil.isEmail(username)) {
+            //邮箱
+            sendEmailCode(username);
+        } else {
+            ToastUtil.errorShortToast(R.string.error_username_format);
+        }
     }
+
+
+    /**
+     * 发送手机号验证码
+     * @param value
+     */
+    private void sendSMSCode(String value) {
+        User data = new User();
+        data.setPhone(value);
+
+        //调用接口
+        Api.getInstance().sendSMSCode(data)
+                .subscribe(new HttpObserver<DetailResponse<BaseModel>>() {
+                    @Override
+                    public void onSucceeded(DetailResponse<BaseModel> data) {
+                        //发送成功了
+
+                        //开始倒计时
+                        startCountDown();
+                    }
+                });
+    }
+
+    /**
+     * 发送邮箱验证码
+     * @param value
+     */
+    private void sendEmailCode(String value) {
+
+    }
+
+
 
     /**
      * 开始倒计时
