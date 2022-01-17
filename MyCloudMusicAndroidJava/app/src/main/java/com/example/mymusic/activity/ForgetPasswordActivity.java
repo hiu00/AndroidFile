@@ -136,6 +136,20 @@ public class ForgetPasswordActivity extends BaseLoginActivity {
      * @param value
      */
     private void sendEmailCode(String value) {
+        User user = new User();
+        user.setEmail(value);
+
+        //调用接口
+        Api.getInstance().sendEmailCode(user)
+                .subscribe(new HttpObserver<DetailResponse<BaseModel>>() {
+                    @Override
+                    public void onSucceeded(DetailResponse<BaseModel> data) {
+                        //发送成功
+
+                        //开始倒计时
+                        startCountDown();
+                    }
+                });
 
     }
 
