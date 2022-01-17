@@ -6,6 +6,7 @@ import com.example.mymusic.domain.BaseModel;
 import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.User;
+import com.example.mymusic.domain.response.BaseResponse;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.util.Constant;
@@ -143,5 +144,14 @@ public class Api {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-
+    /**
+     * 重置密码
+     * @param data
+     * @return
+     */
+    public Observable<BaseResponse> resetPassword(User data){
+        return service.resetPassword(data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

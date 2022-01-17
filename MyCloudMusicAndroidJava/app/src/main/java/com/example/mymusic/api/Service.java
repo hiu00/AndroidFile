@@ -6,6 +6,7 @@ import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
 import com.example.mymusic.domain.User;
+import com.example.mymusic.domain.response.BaseResponse;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 
@@ -44,7 +45,7 @@ public interface Service {
     /**
      * 注册
      *
-     * @param data
+     * @param user
      * @return
      */
     @POST("v1/users")
@@ -57,4 +58,12 @@ public interface Service {
      */
     @POST("v1/sessions")
     Observable<DetailResponse<Session>> login(@Body User data);
+
+    /**
+     * 重置密码
+     * @param data
+     * @return
+     */
+    @POST("v1/users/reset_password")
+    Observable<BaseResponse> resetPassword(@Body User data);
 }
