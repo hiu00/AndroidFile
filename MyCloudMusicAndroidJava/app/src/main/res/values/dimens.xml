@@ -14,6 +14,7 @@
 
     <!---->
     <dimen name="activity_margin">16dp</dimen>
+    <dimen name="button_width_large">130dp</dimen>
 
 
 </resources>

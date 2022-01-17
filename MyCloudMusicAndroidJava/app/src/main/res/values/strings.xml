@@ -37,5 +37,7 @@
 
     <!--Activity相关-->
     <string name="activity_forget_password">找回密码</string>
+    <string name="send_code">获取验证码</string>
+    <string name="enter_code">请输入验证码</string>
 
 </resources>
