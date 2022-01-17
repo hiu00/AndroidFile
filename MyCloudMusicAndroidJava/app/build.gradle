@@ -3,6 +3,7 @@ plugins {
     id 'com.android.application'
 }
 
+
 //编译版本
 android {
     compileSdk rootProject.ext.compileSdk
