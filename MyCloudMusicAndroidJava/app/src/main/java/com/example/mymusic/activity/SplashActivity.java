@@ -64,8 +64,11 @@ public class SplashActivity extends BaseCommonActivity {
         }else if(sp.isLogin()){
             //已经登录了
 
-            //跳转到首页
-            startActivoityAfterFinishThis(MainActivity.class);
+            //就显示广告页面；在广告页面再进入主界面
+            //可以根据自己的需求来更改
+            //同时只有用户登录了
+            //才显示也给用户有更好的体验
+            startActivoityAfterFinishThis(AdActivity.class);
         }else {
             //跳转到登录/注册页面
             startActivoityAfterFinishThis(LoginOrRegisterActivity.class);
