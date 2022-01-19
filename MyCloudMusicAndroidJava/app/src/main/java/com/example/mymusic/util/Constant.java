@@ -32,4 +32,10 @@ public class Constant {
     public static final String REGEX_EMAIL = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$";
     public static final String TITLE = "TITLE";
     public static final String URL = "URL";
+
+    /**
+     * 广告点击了
+     */
+    public static final String ACTION_AD = "com.example.mymusic.ACTION_AD";
+
 }
