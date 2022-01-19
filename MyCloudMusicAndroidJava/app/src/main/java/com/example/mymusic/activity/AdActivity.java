@@ -80,7 +80,9 @@ public class AdActivity extends BaseCommonActivity {
      * 跳转到主页面
      */
     private void next() {
-        startActivoityAfterFinishThis(MainActivity.class);
+        //startActivoityAfterFinishThis(MainActivity.class);
+        //显示网页
+        WebViewActivity.start(getMainActivity(),"活动详情","http://www.ixuea.com");
     }
 
     /**
@@ -89,6 +91,9 @@ public class AdActivity extends BaseCommonActivity {
     @OnClick(R.id.bt_ad)
     public void onAdClick() {
         LogUtil.d(TAG, "onAdClick");
+
+        //显示网页
+        //WebViewActivity.start(getMainActivity(),"活动详情","http://www.ixuea.com");
     }
 
     /**

@@ -14,6 +14,9 @@
         android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AdActivity"
             android:exported="false" />
         <activity

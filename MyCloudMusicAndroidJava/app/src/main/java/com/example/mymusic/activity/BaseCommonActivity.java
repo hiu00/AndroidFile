@@ -130,6 +130,19 @@ public class BaseCommonActivity extends BaseActivity{
         finish();
     }
 
+    /**
+     * 获取字符串
+     * @param key
+     * @return
+     */
+    protected String extraString(String key) {
+        return getIntent().getStringExtra(key);
+    }
+
+    /**
+     * 获取界面方法
+     * @return
+     */
     public BaseCommonActivity getMainActivity(){
         return this;
     }
