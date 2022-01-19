@@ -43,5 +43,6 @@
 
     <!--    %1:第一个参数   $d：表示是int类型  s：单位-->
     <string name="count_second">%1$ds</string>
+    <string name="hint_agreement">注册就代表同意《用户协议》</string>
 
 </resources>
