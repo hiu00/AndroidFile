@@ -6,10 +6,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mymusic.R;
 import com.example.mymusic.activity.BaseCommonActivity;
 import com.example.mymusic.activity.BaseTitleActivity;
@@ -113,7 +115,40 @@ public class MainActivity extends BaseTitleActivity {
      * @param data
      */
     private void next(User data) {
-        //TODO 显示头像
+        //显示头像
+
+        if (TextUtils.isEmpty(data.getAvatar())){
+            //没有头像
+
+            //显示默认头像
+            //iv_avatar.setImageResource(R.drawable.placeholder);
+
+            Glide
+                    .with(this)
+                    .load(R.drawable.placeholder)
+                    .into(iv_avatar);
+        }else {
+            //有头像
+
+            if (data.getAvatar().startsWith("http")){
+                //绝对路径
+                Glide
+                        .with(this)
+                        .load(data.getAvatar())
+                        .into(iv_avatar);
+            }else {
+                //相对路径(只有图片的名称)
+
+                //将图片地址转为绝对地址
+                String uri=String.format(Constant.RESOURCE_ENDPOINT,data.getAvatar());
+
+                //显示图片
+                Glide
+                        .with(this)
+                        .load(uri)
+                        .into(iv_avatar);
+            }
+        }
 
         //显示昵称
         tv_nickname.setText(data.getNickname());

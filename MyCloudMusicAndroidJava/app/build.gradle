@@ -408,6 +408,9 @@ android {
             //API端点
             buildConfigField('String',"ENDPOINT",'"http://dev-my-cloud-music-api-rails.ixuea.com/"')
 
+            //资源端点
+            buildConfigField 'String','RESOURCE_ENDPOINT', '"http://course-music-dev.ixuea.com/%s"'
+
             dimension = minSdk
         }
 
@@ -415,6 +418,9 @@ android {
         prod {
             //API端点
             buildConfigField 'String','ENDPOINT','"http://api-courses-misuc.ixuea.com/"'
+
+            //资源端点
+            buildConfigField 'String','RESOURCE_ENDPOINT', '"http://course-music-dev.ixuea.com/%s"'
 
             dimension = minSdk
         }

@@ -39,6 +39,11 @@ public class User extends BaseModel {
      */
     private String description;
 
+    /**
+     * 头像
+     */
+    private String Avatar;
+
     public String getNickname() {
         return nickname;
     }
@@ -85,6 +90,14 @@ public class User extends BaseModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAvatar() {
+        return Avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        Avatar = avatar;
     }
 
     //辅助方法

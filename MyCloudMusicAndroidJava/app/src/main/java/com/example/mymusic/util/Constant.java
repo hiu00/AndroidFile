@@ -7,9 +7,14 @@ import com.example.mymusic.BuildConfig;
  */
 public class Constant {
     /**
-     * 资源端点
+     * 端点
      */
     public static final String ENDPOINT= BuildConfig.ENDPOINT;
+
+    /**
+     * 资源端点
+     */
+    public static final String RESOURCE_ENDPOINT = "http://course-music-dev.ixuea.com/%s";
 
     /**
      * ID常量
@@ -39,4 +44,5 @@ public class Constant {
     public static final String ACTION_AD = "com.example.mymusic.ACTION_AD";
 
     public static final String NICKNAME = "NICKNAME";
+
 }
