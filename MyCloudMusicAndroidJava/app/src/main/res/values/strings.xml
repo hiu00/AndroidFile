@@ -45,4 +45,8 @@
     <string name="count_second">%1$ds</string>
     <string name="hint_agreement">注册就代表同意《用户协议》</string>
 
+    <!--侧滑相关-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>

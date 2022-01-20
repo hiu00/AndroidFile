@@ -17,7 +17,7 @@ public class BaseTitleActivity extends BaseCommonActivity{
      * Toolbar
      */
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    protected Toolbar toolbar;
 
     @Override
     protected void initViews() {
