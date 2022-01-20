@@ -79,7 +79,7 @@ public class AdActivity extends BaseCommonActivity {
     }
 
     /**
-     * 跳转到主页面
+     * 跳转到广告页面
      */
     private void next() {
         //startActivoityAfterFinishThis(MainActivity.class);
