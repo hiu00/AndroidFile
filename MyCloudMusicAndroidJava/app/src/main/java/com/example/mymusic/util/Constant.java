@@ -38,4 +38,5 @@ public class Constant {
      */
     public static final String ACTION_AD = "com.example.mymusic.ACTION_AD";
 
+    public static final String NICKNAME = "NICKNAME";
 }

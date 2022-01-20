@@ -1,5 +1,7 @@
 package com.example.mymusic.domain;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 /**
@@ -31,6 +33,11 @@ public class User extends BaseModel {
      * 找回密码时才会用到
      */
     private String code;
+
+    /**
+     * 描述
+     */
+    private String description;
 
     public String getNickname() {
         return nickname;
@@ -71,4 +78,21 @@ public class User extends BaseModel {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    //辅助方法
+    public String getDescriptionFormat(){
+        if (TextUtils.isEmpty(description)){
+            return "这个人很懒，没有填写个人介绍！";
+        }
+        return description;
+    }
+    //--end辅助方法
 }

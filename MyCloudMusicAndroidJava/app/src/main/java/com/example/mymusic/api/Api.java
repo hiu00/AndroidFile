@@ -13,6 +13,10 @@ import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LogUtil;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -175,5 +179,34 @@ public class Api {
         return service.sendEmailCode(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 用户详情接口
+     * @param id
+     * @param nickname
+     * @return
+     */
+    public Observable<DetailResponse<User>> userDetail(String id,String nickname){
+        //添加查询参数
+        HashMap<String,String> data=new HashMap<>();
+
+        if (StringUtils.isNotBlank(nickname)){
+            //如果昵称不为空才添加
+            data.put(Constant.NICKNAME,nickname);
+        }
+
+        return service.userDetail(id,data)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 用户详情
+     * @param id
+     * @return
+     */
+    public Observable<DetailResponse<User>> userDetail(String id){
+        return userDetail(id,null);
     }
 }

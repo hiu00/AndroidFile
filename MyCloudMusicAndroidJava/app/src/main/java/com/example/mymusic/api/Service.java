@@ -10,11 +10,14 @@ import com.example.mymusic.domain.response.BaseResponse;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 /**
  * 网络接口配置
@@ -82,4 +85,13 @@ public interface Service {
      */
     @POST("v1/codes/request_email_code")
     Observable<DetailResponse<BaseModel>> sendEmailCode(@Body User data);
+
+    /**
+     * 用户详情
+     * @param id
+     * @param data
+     * @return
+     */
+    @GET("v1/users/{id}")
+    Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String,String> data);
 }

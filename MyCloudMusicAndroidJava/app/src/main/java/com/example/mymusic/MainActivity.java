@@ -14,6 +14,10 @@ import com.example.mymusic.R;
 import com.example.mymusic.activity.BaseCommonActivity;
 import com.example.mymusic.activity.BaseTitleActivity;
 import com.example.mymusic.activity.WebViewActivity;
+import com.example.mymusic.api.Api;
+import com.example.mymusic.domain.User;
+import com.example.mymusic.domain.response.DetailResponse;
+import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LogUtil;
 
@@ -80,6 +84,43 @@ public class MainActivity extends BaseTitleActivity {
         toggle.syncState();
     }
 
+    @Override
+    protected void initDatum() {
+        super.initDatum();
+
+        //获取用户信息
+        //当然可以在用户要显示侧滑的时候
+        //才获取用户信息
+        //这样可以减少请求
+        fetchData();
+    }
+
+    /**
+     * 请求数据
+     */
+    private void fetchData() {
+        Api.getInstance().userDetail(sp.getUserId())
+                .subscribe(new HttpObserver<DetailResponse<User>>() {
+                    @Override
+                    public void onSucceeded(DetailResponse<User> data) {
+                        next(data.getData());
+                    }
+                });
+    }
+
+    /**
+     * 显示数据
+     * @param data
+     */
+    private void next(User data) {
+        //TODO 显示头像
+
+        //显示昵称
+        tv_nickname.setText(data.getNickname());
+
+        //显示描述
+        tv_description.setText(data.getDescriptionFormat());
+    }
     /**
      * 处理动作
      *
