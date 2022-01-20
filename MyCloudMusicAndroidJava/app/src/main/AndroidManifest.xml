@@ -57,6 +57,7 @@
         <activity
             android:name=".MainActivity"
             android:label=" "
+            android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar.StatusBarTransparent"
             android:launchMode="singleTask"
             android:exported="false" />
         <activity android:name=".activity.GuideActivity" /><!-- end 主界面 -->

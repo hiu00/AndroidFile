@@ -22,4 +22,8 @@
 
         <item name="android:background">@drawable/selector_edit_text</item>
     </style>
+
+    <!--状态栏透明-->
+    <style name="Theme.MyCloudMusicAndroidJava.NoActionBar.StatusBarTransparent">
+    </style>
 </resources>
