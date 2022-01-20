@@ -28,9 +28,11 @@
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_web_view.xml" value="0.16197916666666667" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/app_bar_home.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/content_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/divider_small.xml" value="0.2" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fill.xml" value="0.196875" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fragment_guide.xml" value="0.14351851851851852" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/tool_bar.xml" value="0.264" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/user_info.xml" value="0.2" />
       </map>
     </option>
   </component>

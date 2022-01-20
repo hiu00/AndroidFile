@@ -23,4 +23,6 @@
 
 
     <color name="transparent">@android:color/transparent</color>
+    <color name="divider_color">#e7e9e9</color>
+    <color name="text">#333</color>
 </resources>

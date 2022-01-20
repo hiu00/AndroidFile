@@ -7,6 +7,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.mymusic.R;
 import com.example.mymusic.activity.BaseCommonActivity;
@@ -16,6 +18,7 @@ import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LogUtil;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseTitleActivity {
 
@@ -24,6 +27,32 @@ public class MainActivity extends BaseTitleActivity {
      */
     @BindView(R.id.dl)
     DrawerLayout dl;
+
+    /**
+     * 头像
+     */
+    @BindView(R.id.iv_avatar)
+    ImageView iv_avatar;
+
+    /**
+     * 昵称
+     */
+    @BindView(R.id.tv_nickname)
+    TextView tv_nickname;
+
+    /**
+     * 描述
+     */
+    @BindView(R.id.tv_description)
+    TextView tv_description;
+
+    /**
+     * 用户容器点击
+     */
+    @OnClick(R.id.ll_user)
+    public void onUserClick() {
+        LogUtil.d(TAG,"onUserClick");
+    }
 
     private static final String TAG = "MainActivity";
 

@@ -37,10 +37,26 @@ tools:openDrawer:预览的时候开启方向
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:text="这是测试侧滑内容"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--滚动容器-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!--侧滑内容布局-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--引入用户布局-->
+                <include layout="@layout/user_info" />
+
+                <!--引入分割线布局-->
+                <include layout="@layout/divider_small" />
+
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout><!--end 这部分是侧滑内容-->
 
