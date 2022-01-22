@@ -71,6 +71,19 @@ public class AdActivity extends BaseCommonActivity {
                 //倒计时完成
                 //执行下一步
                 next();
+                //创建意图
+                Intent intent = new Intent(getMainActivity(), MainActivity.class);
+
+                //添加广告地址
+                intent.putExtra(Constant.URL,"http://www.ixuea.com");
+
+                intent.setAction(Constant.ACTION_AD);
+
+                //启动界面
+                startActivity(intent);
+
+                //关闭当前界面
+                finish();
             }
         };
 
@@ -127,7 +140,8 @@ public class AdActivity extends BaseCommonActivity {
         cancelCountDown();
 
         //跳转到首页
-        next();
+        //next();
+        startActivoityAfterFinishThis(MainActivity.class);
     }
 
     /**

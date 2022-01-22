@@ -21,6 +21,7 @@ import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.util.Constant;
+import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
 
 import butterknife.BindView;
@@ -116,39 +117,7 @@ public class MainActivity extends BaseTitleActivity {
      */
     private void next(User data) {
         //显示头像
-
-        if (TextUtils.isEmpty(data.getAvatar())){
-            //没有头像
-
-            //显示默认头像
-            //iv_avatar.setImageResource(R.drawable.placeholder);
-
-            Glide
-                    .with(this)
-                    .load(R.drawable.placeholder)
-                    .into(iv_avatar);
-        }else {
-            //有头像
-
-            if (data.getAvatar().startsWith("http")){
-                //绝对路径
-                Glide
-                        .with(this)
-                        .load(data.getAvatar())
-                        .into(iv_avatar);
-            }else {
-                //相对路径(只有图片的名称)
-
-                //将图片地址转为绝对地址
-                String uri=String.format(Constant.RESOURCE_ENDPOINT,data.getAvatar());
-
-                //显示图片
-                Glide
-                        .with(this)
-                        .load(uri)
-                        .into(iv_avatar);
-            }
-        }
+        ImageUtil.showAvatar(getMainActivity(),iv_avatar,data.getAvatar());
 
         //显示昵称
         tv_nickname.setText(data.getNickname());
