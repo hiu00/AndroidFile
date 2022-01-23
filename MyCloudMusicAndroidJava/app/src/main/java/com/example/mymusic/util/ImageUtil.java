@@ -28,18 +28,18 @@ public class ImageUtil {
             //没有头像
 
             //显示默认头像
-            //iv_avatar.setImageResource(R.drawable.placeholder);
+            //view.setImageResource(R.drawable.placeholder);
 
-            show(activity, view, R.drawable.placeholder);
+            showCircle(activity, view,R.drawable.placeholder);
         } else {
             //有头像
 
             if (uri.startsWith("http")) {
                 //绝对路径
-                showFull(activity, view, uri);
+                showCircleFull(activity, view, uri);
             } else {
                 //相对路径
-                show(activity, view, uri);
+                showCircle(activity, view, uri);
             }
         }
     }
@@ -84,7 +84,7 @@ public class ImageUtil {
      */
     public static void show(Activity activity, ImageView view, String uri) {
         //将图片地址转为绝对路径
-        uri = String.format(Constant.RESOURCE_ENDPOINT, uri);
+        uri = ResourceUtil.resourceUri(uri);
 
         showFull(activity, view, uri);
     }
@@ -104,6 +104,69 @@ public class ImageUtil {
                 .load(resourceId)
                 .apply(options)
                 .into(view);
+    }
+
+    /**
+     * 显示圆形相对路径图片
+     *
+     * @param activity
+     * @param view
+     * @param uri
+     */
+    public static void showCircle(Activity activity, ImageView view, String uri) {
+        //将图片地址转为绝对地址
+        uri=ResourceUtil.resourceUri(uri);
+
+        //显示图片
+        showCircleFull(activity, view, uri);
+    }
+
+    /**
+     * 显示圆形资源目录图片
+     *
+     * @param activity
+     * @param view
+     * @param resourceId
+     */
+    public static void showCircle(Activity activity, ImageView view, @RawRes @DrawableRes @Nullable int resourceId) {
+        //获取公共配置
+        RequestOptions options = getCircleCommentRequestOptions();
+
+        //显示图片
+        Glide.with(activity)
+                .load(resourceId)
+                .apply(options)
+                .into(view);
+    }
+
+
+    /**
+     * 显示圆形绝对路径图片
+     *
+     * @param activity
+     * @param view
+     * @param uri
+     */
+    public static void showCircleFull(Activity activity, ImageView view, String uri) {
+        //获取圆形图片通用的配置
+        RequestOptions options = getCircleCommentRequestOptions();
+
+        //显示图片
+        Glide.with(activity).load(uri).apply(options).into(view);
+    }
+
+    /**
+     * 获取圆形图片通用的配置
+     * @return
+     */
+    public static RequestOptions getCircleCommentRequestOptions(){
+        //获取通用的配置
+        RequestOptions options=getCommonRequestOptions();
+
+        //圆形裁剪
+        options.circleCrop();
+
+        return options;
     }
 
     /**
