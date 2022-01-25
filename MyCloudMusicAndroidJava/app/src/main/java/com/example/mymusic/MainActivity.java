@@ -2,6 +2,7 @@ package com.example.mymusic;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.mymusic.R;
 import com.example.mymusic.activity.BaseCommonActivity;
 import com.example.mymusic.activity.BaseTitleActivity;
+import com.example.mymusic.activity.SettingActivity;
 import com.example.mymusic.activity.WebViewActivity;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.domain.User;
@@ -59,6 +61,24 @@ public class MainActivity extends BaseTitleActivity {
     @OnClick(R.id.ll_user)
     public void onUserClick() {
         LogUtil.d(TAG,"onUserClick");
+    }
+
+    /**
+     * 设置点击了
+     */
+    @OnClick(R.id.ll_setting)
+    public void onSettingClick(){
+        startActivity(SettingActivity.class);
+
+        //关闭抽屉
+        closeDrawer();
+    }
+
+    /**
+     * 关闭侧滑抽屉
+     */
+    private void closeDrawer() {
+        dl.closeDrawer(GravityCompat.START);
     }
 
     private static final String TAG = "MainActivity";

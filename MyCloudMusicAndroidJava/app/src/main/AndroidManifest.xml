@@ -14,6 +14,9 @@
         android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.WebViewActivity"
             android:exported="false" />
         <activity
@@ -43,7 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <!--
             主界面
             launchMode:是Activity启动模式
@@ -53,16 +55,14 @@
             简单来说就是控制是否创建新界面
             而我们这里肯定不希望有多个主界面
             所以配置为singleTask
-            -->
+        -->
         <activity
             android:name=".MainActivity"
+            android:exported="false"
             android:label=" "
-            android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar.StatusBarTransparent"
             android:launchMode="singleTask"
-            android:exported="false" />
-        <activity android:name=".activity.GuideActivity" /><!-- end 主界面 -->
-
-
+            android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar.StatusBarTransparent" />
+        <activity android:name=".activity.GuideActivity" />
     </application>
 
 </manifest>
