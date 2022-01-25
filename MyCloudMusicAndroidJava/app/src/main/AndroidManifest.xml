@@ -15,6 +15,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".activity.SettingActivity"
+            android:label="@string/setting"
             android:exported="false" />
         <activity
             android:name=".activity.WebViewActivity"

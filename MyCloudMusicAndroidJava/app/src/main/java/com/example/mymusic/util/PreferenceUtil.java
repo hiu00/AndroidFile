@@ -120,6 +120,19 @@ public class PreferenceUtil {
         putString(USER_ID,value);
     }
 
+    /**
+     * 退出
+     */
+    public void logout() {
+        delete(USER_ID);
+        delete(SESSION);
+    }
+
+    //删除内容
+    private void delete(String key) {
+        preference.edit().remove(key).commit();
+    }
+
     //辅助方法
     /**
      * 保存字符串
@@ -148,4 +161,6 @@ public class PreferenceUtil {
     public boolean isLogin() {
         return !TextUtils.isEmpty(getSession());
     }
+
+
 }
