@@ -1,6 +1,4 @@
-package com.example.mycloudmusicandroidjava.util;
-
-import com.example.mymusic.util.FileUtil;
+package com.example.mymusic.util;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;

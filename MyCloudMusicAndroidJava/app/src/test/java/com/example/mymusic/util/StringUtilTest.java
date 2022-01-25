@@ -1,11 +1,9 @@
-package com.example.mycloudmusicandroidjava.util;
+package com.example.mymusic.util;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import com.example.mymusic.util.StringUtil;
 
 /**
  * 字符串工具类测试

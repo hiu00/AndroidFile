@@ -1,4 +1,4 @@
-package com.example.mycloudmusicandroidjava;
+package com.example.mymusic;
 
 import android.content.Context;
 
@@ -17,10 +17,15 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    /**
+     * 测试当前应用包名
+     */
     @Test
     public void useAppContext() {
-        // Context of the app under test.
+        // //app测试上下文
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.mycloudmusicandroidjava", appContext.getPackageName());
+
+        //测试包名
+        assertEquals("com.example.mymusic", appContext.getPackageName());
     }
 }
