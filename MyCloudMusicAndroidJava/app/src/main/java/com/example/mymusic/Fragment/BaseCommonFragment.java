@@ -6,12 +6,41 @@ import android.content.Intent;
 import com.example.mymusic.activity.BaseCommonActivity;
 import com.example.mymusic.util.PreferenceUtil;
 
+import butterknife.ButterKnife;
+
 /**
  * 通用公共Fragment
  */
 public abstract class BaseCommonFragment extends BaseFragment{
 
     private PreferenceUtil sp;
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        //初始化注解找控件
+        //绑定方法框架
+        if (isBindView()){
+            bindView();
+        }
+
+    }
+
+    /**
+     * 绑定view
+     */
+    protected void bindView() {
+        ButterKnife.bind(this,getView());
+    }
+
+    /**
+     * 是否绑定view
+     * @return
+     */
+    private boolean isBindView() {
+        return true;
+    }
 
     @Override
     protected void initDatum() {
