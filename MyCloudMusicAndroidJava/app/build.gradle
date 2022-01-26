@@ -596,6 +596,14 @@ dependencies {
     //https://github.com/hackware1993/MagicIndicator
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 
+    //recyclerview控件
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha03'
+
+    //封装了RecyclerView
+    //提供更高层次的接口
+    //https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+
     //提供通过注解的方式找控件
     //绑定方法
     //https://github.com/JakeWharton/butterknife
