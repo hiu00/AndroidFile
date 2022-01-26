@@ -25,4 +25,10 @@
     <color name="transparent">@android:color/transparent</color>
     <color name="divider_color">#e7e9e9</color>
     <color name="text">#333</color>
+
+
+    <!--首页toolbar按钮未选择的颜色
+    a:透明度
+    ff:完全不透明-->
+    <color name="tab_normal">#aaffffff</color>
 </resources>

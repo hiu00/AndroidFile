@@ -24,7 +24,7 @@ public abstract class BaseFragmentPagerAdapter<T> extends FragmentStatePagerAdap
     /**
      * 上下文
      */
-    private final Context context;
+    protected final Context context;
 
     /**
      * 列表数据源
