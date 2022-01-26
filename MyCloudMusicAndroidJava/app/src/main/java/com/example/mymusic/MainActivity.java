@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.example.mymusic.activity.BaseCommonActivity;
 import com.example.mymusic.activity.BaseTitleActivity;
 import com.example.mymusic.activity.SettingActivity;
 import com.example.mymusic.activity.WebViewActivity;
+import com.example.mymusic.adapter.MainAdapter;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.DetailResponse;
@@ -25,6 +27,8 @@ import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,6 +58,13 @@ public class MainActivity extends BaseTitleActivity {
      */
     @BindView(R.id.tv_description)
     TextView tv_description;
+
+    /**
+     * 滚动视图
+     */
+    @BindView(R.id.vp)
+    ViewPager vp;
+    private MainAdapter adapter;
 
     /**
      * 用户容器点击
@@ -105,6 +116,24 @@ public class MainActivity extends BaseTitleActivity {
 
         //同步状态
         toggle.syncState();
+
+        //缓存页面数量
+        //默认是缓存一个
+        vp.setOffscreenPageLimit(4);
+
+        //创建adapter
+        adapter = new MainAdapter(getMainActivity(), getSupportFragmentManager());
+        vp.setAdapter(adapter);
+
+        /**
+         * 创建占位数据
+         */
+        ArrayList<Integer> datum = new ArrayList<>();
+        datum.add(0);
+        datum.add(1);
+        datum.add(2);
+        datum.add(3);
+        adapter.setDatum(datum);
     }
 
     @Override

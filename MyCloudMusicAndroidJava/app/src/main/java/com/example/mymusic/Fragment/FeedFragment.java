@@ -13,18 +13,18 @@ import com.example.mymusic.R;
 /**
  * 首页-朋友 界面
  */
-public class FriendFragment extends BaseCommonFragment{
+public class FeedFragment extends BaseCommonFragment{
 
     /**
      * 构造方法
      * 固定写法
      * @return
      */
-    public static FriendFragment newInstance() {
+    public static FeedFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        FriendFragment fragment = new FriendFragment();
+        FeedFragment fragment = new FeedFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,6 +38,6 @@ public class FriendFragment extends BaseCommonFragment{
      */
     @Override
     protected View getLayoutView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_friend,null);
+        return inflater.inflate(R.layout.fragment_feed,null);
     }
 }
