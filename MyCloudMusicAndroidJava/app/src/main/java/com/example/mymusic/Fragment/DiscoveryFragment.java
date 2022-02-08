@@ -13,15 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.DiscoveryAdapter;
+import com.example.mymusic.api.Api;
 import com.example.mymusic.domain.BaseMultiItemEntity;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.Title;
+import com.example.mymusic.domain.response.ListResponse;
+import com.example.mymusic.listener.HttpObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 
 /**
  * 首页-发现 界面
@@ -113,19 +117,16 @@ public class DiscoveryFragment extends BaseCommonFragment{
         //添加标题
         datum.add(new Title("推荐歌单"));
 
-        //添加歌单数据
-        for (int i = 0; i < 9; i++) {
-            datum.add(new Sheet());
-        }
-        //添加标题
-        datum.add(new Title("推荐单曲"));
+        //歌单Api
+        Observable<ListResponse<Sheet>> sheets = Api.getInstance().sheets();
 
-        //添加单曲数据
-        for (int i = 0; i < 9; i++) {
-            datum.add(new Song());
-        }
-
-        //将数据设置（替换）到适配器
-        adapter.replaceData(datum);
+        //请求歌单数据
+        sheets.subscribe(new HttpObserver<ListResponse<Sheet>>() {
+            @Override
+            public void onSucceeded(ListResponse<Sheet> data) {
+                //添加歌单数据
+                datum.addAll(data.getData());
+            }
+        });
     }
 }
