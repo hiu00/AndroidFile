@@ -1,9 +1,11 @@
 package com.example.mymusic.domain;
 
+import static com.example.mymusic.util.Constant.TYPE_SHEET;
+
 /**
  * 歌单详情
  */
-public class Sheet extends BaseModel{
+public class Sheet extends BaseMultiItemEntity{
 
     /**
      * 标题
@@ -30,5 +32,20 @@ public class Sheet extends BaseModel{
 
     public void setBanner(String banner) {
         this.banner = banner;
+    }
+
+    @Override
+    public int getItemType() {
+        return TYPE_SHEET;
+    }
+
+    /**
+     * 一行占多少列
+     *
+     * @return
+     */
+    @Override
+    public int getSpanSize() {
+        return 1;
     }
 }

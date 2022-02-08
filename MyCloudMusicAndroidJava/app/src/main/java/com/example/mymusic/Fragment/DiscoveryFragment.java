@@ -58,10 +58,6 @@ public class DiscoveryFragment extends BaseCommonFragment{
 
         //高度固定
         //可以提交性能
-        //但由于这里是项目课程
-        //所以这里不讲解
-        //会在《详解RecyclerView》课程中讲解
-        //http://www.ixuea.com/courses/8
         rv.setHasFixedSize(true);
 
         //设置显示3列
