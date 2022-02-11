@@ -5,6 +5,7 @@ import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.SheetDetailWrapper;
 import com.example.mymusic.domain.SheetListWrapper;
+import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.BaseResponse;
 import com.example.mymusic.domain.response.DetailResponse;
@@ -94,4 +95,11 @@ public interface Service {
      */
     @GET("v1/users/{id}")
     Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String,String> data);
+
+    /**
+     * 单曲
+     * @return
+     */
+    @GET("v1/songs")
+    Observable<ListResponse<Song>> songs();
 }

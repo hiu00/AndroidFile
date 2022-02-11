@@ -1,6 +1,7 @@
 package com.example.mymusic.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.mymusic.domain.BaseMultiItemEntity;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.Title;
+import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.listener.HttpObserver;
 
@@ -87,28 +89,40 @@ public class DiscoveryFragment extends BaseCommonFragment{
         adapter = new DiscoveryAdapter();
 
         //设置列宽度
-//        adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-//                //在这里
-//                //获取模型上面的宽度
-//                return adapter.getItem(position).getSpanSize();
-//            }
-//        });
+        adapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+                //在这里
+                //获取模型上面的宽度
+                return adapter.getItem(position).getSpanSize();
+            }
+        });
 
         //设置列宽度
         //lambda写法
-        adapter.setSpanSizeLookup((gridLayoutManager, position) -> {
-            //在这里
-            //获取模型上面的宽度
-            return adapter.getItem(position).getSpanSize();
-        });
+//        adapter.setSpanSizeLookup((gridLayoutManager, position) -> {
+//            //在这里
+//            //获取模型上面的宽度
+//            return adapter.getItem(position).getSpanSize();
+//        });
+
+        //添加头部
+        adapter.addHeaderView(createHeaderView());
 
         //设置适配器
         rv.setAdapter(adapter);
 
         //请求数据
         fetchData();
+    }
+
+    //创建头部布局
+    private View createHeaderView() {
+        //把XML创建为View
+        View view = getLayoutInflater().inflate(R.layout.header_discovery, (ViewGroup) rv.getParent(), false);
+
+        //返回控件
+        return view;
     }
 
     private void fetchData() {
@@ -119,6 +133,8 @@ public class DiscoveryFragment extends BaseCommonFragment{
 
         //歌单Api
         Observable<ListResponse<Sheet>> sheets = Api.getInstance().sheets();
+        //单曲API
+        Observable<ListResponse<Song>> songs = Api.getInstance().songs();
 
         //请求歌单数据
         sheets.subscribe(new HttpObserver<ListResponse<Sheet>>() {
@@ -126,7 +142,24 @@ public class DiscoveryFragment extends BaseCommonFragment{
             public void onSucceeded(ListResponse<Sheet> data) {
                 //添加歌单数据
                 datum.addAll(data.getData());
-            }
-        });
+                Log.i("loveYan", "我是数据大小 : " + data.getData().size());
+                //请求单曲
+                songs.subscribe(new HttpObserver<ListResponse<Song>>() {
+                    @Override
+                    public void onSucceeded(ListResponse<Song> data) {
+
+                        //添加标题
+                        datum.add(new Title("推荐单曲"));
+
+                        //添加单曲
+                        datum.addAll(data.getData());
+
+                        //设置数据到适配器
+                        adapter.replaceData(datum);
+                    }
+                });
+    }
+});
     }
 }
+

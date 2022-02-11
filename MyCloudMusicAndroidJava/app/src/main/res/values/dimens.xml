@@ -22,6 +22,13 @@
     <dimen name="menu_item_height">50dp</dimen>
     <dimen name="divider_meddle">10dp</dimen>
     <dimen name="padding_small">5dp</dimen>
+    <dimen name="item_title_height">50dp</dimen>
+    <dimen name="radius_small">5dp</dimen>
+    <dimen name="song_banner_width">90dp</dimen>
+    <dimen name="avatar_width_small">25dp</dimen>
+    <dimen name="discovery_header_background_height">100dp</dimen>
+    <dimen name="banner_height">130dp</dimen>
 
-
+    <!--行高比例-->
+    <item name="line_spacing_multiplier" type="dimen" format="float">1.2</item>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.mymusic.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.mymusic.R;
 import com.example.mymusic.domain.response.BaseResponse;
@@ -47,6 +48,7 @@ public class HttpUtil {
                     ToastUtil.errorShortToast(R.string.error_network_unknown);
                 }
             } else{
+                Log.e("loveYan", "网络请求错误--》HttpUtil--》52行 " + e.getMessage() );
                 ToastUtil.errorShortToast(R.string.error_network_unknown);
             }
 

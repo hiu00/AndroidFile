@@ -5,6 +5,7 @@ import com.example.mymusic.AppContext;
 import com.example.mymusic.domain.BaseModel;
 import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
+import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.User;
 import com.example.mymusic.domain.response.BaseResponse;
 import com.example.mymusic.domain.response.DetailResponse;
@@ -208,5 +209,15 @@ public class Api {
      */
     public Observable<DetailResponse<User>> userDetail(String id){
         return userDetail(id,null);
+    }
+
+    /**
+     * 单曲
+     * @return
+     */
+    public Observable<ListResponse<Song>> songs(){
+        return service.songs()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }
