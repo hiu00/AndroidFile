@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.listener.HttpObserver;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -121,6 +123,17 @@ public class DiscoveryFragment extends BaseCommonFragment{
         //把XML创建为View
         View view = getLayoutInflater().inflate(R.layout.header_discovery, (ViewGroup) rv.getParent(), false);
 
+        //找到日期文本控件
+        TextView tv_day = view.findViewById(R.id.tv_day);
+
+        //设置日期
+        //获取日历对象
+        Calendar calendar = Calendar.getInstance();
+
+        //获取当前月的天
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        tv_day.setText(String.valueOf(day));
         //返回控件
         return view;
     }
