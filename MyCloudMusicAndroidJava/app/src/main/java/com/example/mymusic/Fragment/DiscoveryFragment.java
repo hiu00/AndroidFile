@@ -1,10 +1,12 @@
 package com.example.mymusic.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +26,10 @@ import com.example.mymusic.domain.Title;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.listener.HttpObserver;
+import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
+import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +41,7 @@ import io.reactivex.Observable;
 /**
  * 首页-发现 界面
  */
-public class DiscoveryFragment extends BaseCommonFragment{
+public class DiscoveryFragment extends BaseCommonFragment {
 
     private static final String TAG = "DiscoveryFragment";
     /**
@@ -45,11 +50,26 @@ public class DiscoveryFragment extends BaseCommonFragment{
     @BindView(R.id.rv)
     RecyclerView rv;
     private GridLayoutManager layoutManager;
+
+    /**
+     * 适配器
+     */
     private DiscoveryAdapter adapter;
+
+    /**
+     * 轮播图组件
+     */
+    private Banner banner;
+
+    /**
+     * 轮播图数据
+     */
+    private List<Ad> bannerData;
 
     /**
      * 构造方法
      * 固定写法
+     *
      * @return
      */
     public static DiscoveryFragment newInstance() {
@@ -63,6 +83,7 @@ public class DiscoveryFragment extends BaseCommonFragment{
 
     /**
      * 返回布局文件
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -70,7 +91,7 @@ public class DiscoveryFragment extends BaseCommonFragment{
      */
     @Override
     protected View getLayoutView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_discovery,null);
+        return inflater.inflate(R.layout.fragment_discovery, null);
     }
 
     @Override
@@ -137,11 +158,58 @@ public class DiscoveryFragment extends BaseCommonFragment{
     }
 
     /**
-     * 显示banner
+     * 显示轮播图数据
+     *
      * @param data
      */
     private void showBanner(List<Ad> data) {
-        LogUtil.d(TAG,"showBanner:"+data.size());
+        LogUtil.d(TAG, "showBanner:" + data.size());
+
+        this.bannerData=data;
+
+        //设置到轮播图组件
+        banner.setImages(data);
+
+        //显示数据
+        banner.start();
+
+        //第一次也要滚动
+        startBannerScroll();
+    }
+
+    /**
+     * 第一次也要滚动
+     */
+    private void startBannerScroll() {
+        banner.startAutoPlay();
+    }
+
+    /**
+     * 生命周期方法
+     * 当界面展示了
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(bannerData!=null){
+            //有数据才开始滚动
+            startBannerScroll();
+        }
+    }
+
+    /**
+     * 生命周期方法
+     * 当界面看不见了
+     *
+     * 包括开启新界面，弹窗，后台
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //结束轮播图滚动
+        banner.stopAutoPlay();
     }
 
     //创建头部布局
@@ -149,6 +217,11 @@ public class DiscoveryFragment extends BaseCommonFragment{
         //把XML创建为View
         View view = getLayoutInflater().inflate(R.layout.header_discovery, (ViewGroup) rv.getParent(), false);
 
+        //赵轮播图组件
+        banner = view.findViewById(R.id.banner);
+
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
         //找到日期文本控件
         TextView tv_day = view.findViewById(R.id.tv_day);
 
@@ -197,8 +270,29 @@ public class DiscoveryFragment extends BaseCommonFragment{
                         adapter.replaceData(datum);
                     }
                 });
+            }
+        });
     }
-});
+
+    /**
+     * Banner框架显示图片的实现类
+     */
+    public class GlideImageLoader extends ImageLoader{
+
+        /**
+         * 加载图片的方法
+         * @param context
+         * @param path
+         * @param imageView
+         */
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            //将对象转为广告对象
+            Ad banner=(Ad) path;
+
+            //使用工具类方法显示图片
+            ImageUtil.show(getMainActivity(),imageView,banner.getBanner());
+        }
     }
 }
 
