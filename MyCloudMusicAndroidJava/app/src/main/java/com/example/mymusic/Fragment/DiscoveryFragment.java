@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
+import com.example.mymusic.activity.WebViewActivity;
 import com.example.mymusic.adapter.DiscoveryAdapter;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.domain.Ad;
@@ -29,6 +30,7 @@ import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ import io.reactivex.Observable;
 /**
  * 首页-发现 界面
  */
-public class DiscoveryFragment extends BaseCommonFragment {
+public class DiscoveryFragment extends BaseCommonFragment implements OnBannerListener {
 
     private static final String TAG = "DiscoveryFragment";
     /**
@@ -217,8 +219,11 @@ public class DiscoveryFragment extends BaseCommonFragment {
         //把XML创建为View
         View view = getLayoutInflater().inflate(R.layout.header_discovery, (ViewGroup) rv.getParent(), false);
 
-        //赵轮播图组件
+        //添加轮播图组件
         banner = view.findViewById(R.id.banner);
+
+        //设置点击监听器
+        banner.setOnBannerListener(this);
 
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
@@ -272,6 +277,19 @@ public class DiscoveryFragment extends BaseCommonFragment {
                 });
             }
         });
+    }
+
+    /**
+     * 轮播图点击回调
+     * @param position
+     */
+    @Override
+    public void OnBannerClick(int position) {
+        //获取到点击的广告对象
+        Ad ad = bannerData.get(position);
+
+        //使用通用的WebView界面显示
+        WebViewActivity.start(getMainActivity(),"活动详情",ad.getUri());
     }
 
     /**
