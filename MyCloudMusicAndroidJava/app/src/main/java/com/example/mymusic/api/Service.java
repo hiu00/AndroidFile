@@ -1,5 +1,6 @@
 package com.example.mymusic.api;
 
+import com.example.mymusic.domain.Ad;
 import com.example.mymusic.domain.BaseModel;
 import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
@@ -102,4 +103,11 @@ public interface Service {
      */
     @GET("v1/songs")
     Observable<ListResponse<Song>> songs();
+
+    /**
+     * 广告列表
+     * @return
+     */
+    @GET("v1/ads")
+    Observable<ListResponse<Ad>> ads();
 }

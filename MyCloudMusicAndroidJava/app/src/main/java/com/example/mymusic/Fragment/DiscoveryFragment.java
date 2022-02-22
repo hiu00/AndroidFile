@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.DiscoveryAdapter;
 import com.example.mymusic.api.Api;
+import com.example.mymusic.domain.Ad;
 import com.example.mymusic.domain.BaseMultiItemEntity;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.Song;
@@ -23,6 +24,7 @@ import com.example.mymusic.domain.Title;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.listener.HttpObserver;
+import com.example.mymusic.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +38,7 @@ import io.reactivex.Observable;
  */
 public class DiscoveryFragment extends BaseCommonFragment{
 
+    private static final String TAG = "DiscoveryFragment";
     /**
      * 列表控件
      */
@@ -116,6 +119,29 @@ public class DiscoveryFragment extends BaseCommonFragment{
 
         //请求数据
         fetchData();
+
+        //请求轮播图数据
+        fetchBannerData();
+    }
+
+    private void fetchBannerData() {
+        Api
+                .getInstance()
+                .ads()
+                .subscribe(new HttpObserver<ListResponse<Ad>>() {
+                    @Override
+                    public void onSucceeded(ListResponse<Ad> data) {
+                        showBanner(data.getData());
+                    }
+                });
+    }
+
+    /**
+     * 显示banner
+     * @param data
+     */
+    private void showBanner(List<Ad> data) {
+        LogUtil.d(TAG,"showBanner:"+data.size());
     }
 
     //创建头部布局

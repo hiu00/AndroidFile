@@ -2,6 +2,7 @@ package com.example.mymusic.api;
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import com.example.mymusic.AppContext;
+import com.example.mymusic.domain.Ad;
 import com.example.mymusic.domain.BaseModel;
 import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.Sheet;
@@ -16,6 +17,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
@@ -217,6 +219,16 @@ public class Api {
      */
     public Observable<ListResponse<Song>> songs(){
         return service.songs()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 广告列表
+     * @return
+     */
+    public Observable<ListResponse<Ad>> ads(){
+        return service.ads()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
