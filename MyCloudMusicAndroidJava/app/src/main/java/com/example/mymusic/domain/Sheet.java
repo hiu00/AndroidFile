@@ -54,6 +54,12 @@ public class Sheet extends BaseMultiItemEntity{
      */
     private List<Song> songs;
 
+    /**
+     * 是否收藏
+     * 有值就表示收藏了
+     */
+    private Integer collection_id;
+
     public String getTitle() {
         return title;
     }
@@ -126,6 +132,17 @@ public class Sheet extends BaseMultiItemEntity{
         this.songs = songs;
     }
 
+    public Integer getCollection_id() {
+        return collection_id;
+    }
+
+    public void setCollection_id(Integer collection_id) {
+        this.collection_id = collection_id;
+    }
+
+    //使用BaseRecyclerViewAdapterHelper框架
+    //实现多类型列表
+    //需要实现该接口返回类型
     @Override
     public int getItemType() {
         return TYPE_SHEET;
