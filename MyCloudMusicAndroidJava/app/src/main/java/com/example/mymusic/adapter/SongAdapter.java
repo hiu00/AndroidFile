@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 
 /**
@@ -21,10 +22,17 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
     /**
      * 显示数据
      * @param helper
-     * @param item
+     * @param data
      */
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, Song item) {
+    protected void convert(@NonNull BaseViewHolder helper, Song data) {
+        //显示位置
+        helper.setText(R.id.tv_position,String.valueOf(helper.getAdapterPosition()+1));
 
+        //显示标题
+        helper.setText(R.id.tv_title,data.getTitle());
+
+        //显示歌手信息
+        helper.setText(R.id.tv_info,data.getSinger().getNickname());
     }
 }
