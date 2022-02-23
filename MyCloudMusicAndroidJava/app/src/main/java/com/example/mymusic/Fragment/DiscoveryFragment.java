@@ -1,6 +1,7 @@
 package com.example.mymusic.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
+import com.example.mymusic.activity.SheetDetailActivity;
 import com.example.mymusic.activity.WebViewActivity;
 import com.example.mymusic.adapter.DiscoveryAdapter;
 import com.example.mymusic.api.Api;
@@ -27,6 +29,7 @@ import com.example.mymusic.domain.Title;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.listener.HttpObserver;
+import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
 import com.youth.banner.Banner;
@@ -147,9 +150,38 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
         fetchBannerData();
     }
 
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+
+        //设置Item点击事件
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                //获取点击的数据
+                Object data = adapter.getItem(position);
+
+                //判断数据类型
+                if (data instanceof Sheet){
+                    Sheet sheet=((Sheet) data);
+
+                    //创建Intent
+                    Intent intent=new Intent(getMainActivity(), SheetDetailActivity.class);
+
+                    //传递id
+                    //这样详情界面才知道点击的是那个歌单
+                    intent.putExtra(Constant.ID,sheet.getId());
+
+                    //启动Intent里面的activity
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
     private void fetchBannerData() {
-        Api
-                .getInstance()
+        Api.getInstance()
                 .ads()
                 .subscribe(new HttpObserver<ListResponse<Ad>>() {
                     @Override
