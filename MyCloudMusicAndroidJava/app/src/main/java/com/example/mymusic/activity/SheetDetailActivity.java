@@ -25,6 +25,9 @@ public class SheetDetailActivity extends BaseTitleActivity {
         super.initDatum();
 
         //获取传递的参数
-        id = getIntent().getStringExtra(Constant.ID);
+        //id = getIntent().getStringExtra(Constant.ID);
+
+        //使用重构后的方法
+        id=extraId();
     }
 }

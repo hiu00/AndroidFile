@@ -3,10 +3,12 @@ package com.example.mymusic.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.PreferenceUtil;
 
 import butterknife.ButterKnife;
@@ -122,12 +124,40 @@ public class BaseCommonActivity extends BaseActivity{
     }
 
     /**
+     * 启动界面，可以传递一个字符串参数
+     * @param clazz
+     * @param id
+     */
+    protected void startActivityExtraId(Class<?> clazz,String id){
+        //创建Intent
+        Intent intent = new Intent(getMainActivity(), clazz);
+
+        //传递数据
+        if (!TextUtils.isEmpty(id)) {
+            //不为空才传递
+            intent.putExtra(Constant.ID, id);
+        }
+
+        //启动界面
+        startActivity(intent);
+    }
+
+    /**
      * 启动界面并关闭当前界面
      * @param clazz
      */
     protected void startActivoityAfterFinishThis(Class<?> clazz) {
         startActivity(clazz);
         finish();
+    }
+
+    /**
+     * 获取字符串类型Id
+     *
+     * @return
+     */
+    protected String extraId(){
+        return extraString(Constant.ID);
     }
 
     /**

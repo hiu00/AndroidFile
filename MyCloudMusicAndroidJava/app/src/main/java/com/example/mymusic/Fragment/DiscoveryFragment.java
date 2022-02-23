@@ -166,15 +166,18 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
                 if (data instanceof Sheet){
                     Sheet sheet=((Sheet) data);
 
-                    //创建Intent
-                    Intent intent=new Intent(getMainActivity(), SheetDetailActivity.class);
+//                    //创建Intent
+//                    Intent intent=new Intent(getMainActivity(), SheetDetailActivity.class);
+//
+//                    //传递id
+//                    //这样详情界面才知道点击的是那个歌单
+//                    intent.putExtra(Constant.ID,sheet.getId());
+//
+//                    //启动Intent里面的activity
+//                    startActivity(intent);
 
-                    //传递id
-                    //这样详情界面才知道点击的是那个歌单
-                    intent.putExtra(Constant.ID,sheet.getId());
-
-                    //启动Intent里面的activity
-                    startActivity(intent);
+                    //使用重构后的方法
+                    startActivityExtraId(SheetDetailActivity.class,sheet.getId());
                 }
             }
         });
