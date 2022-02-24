@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.mymusic.R;
@@ -56,6 +58,18 @@ public class SheetDetailActivity extends BaseTitleActivity {
         rv.setLayoutManager(layoutManager);
     }
 
+    /**
+     * 创建头部
+     * @return
+     */
+    private View createHeaderView(){
+        //从XML创建View
+        View view = getLayoutInflater().inflate(R.layout.header_sheet_detail, (ViewGroup) rv.getParent(), false);
+
+        //返回View
+        return view;
+    }
+
     @Override
     protected void initDatum() {
         super.initDatum();
@@ -68,6 +82,9 @@ public class SheetDetailActivity extends BaseTitleActivity {
 
         //创建适配器
         adapter = new SongAdapter(R.layout.item_song_detail);
+
+        //添加头部
+        adapter.addHeaderView(createHeaderView());
 
         //设置适配器
         rv.setAdapter(adapter);
