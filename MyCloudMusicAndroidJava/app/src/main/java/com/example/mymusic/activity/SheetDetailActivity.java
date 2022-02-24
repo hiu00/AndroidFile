@@ -1,18 +1,28 @@
 package com.example.mymusic.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.SongAdapter;
 import com.example.mymusic.api.Api;
@@ -22,6 +32,7 @@ import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.ResourceUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -169,15 +180,94 @@ public class SheetDetailActivity extends BaseTitleActivity {
             adapter.replaceData(data.getSongs());
         }
 
-        if (StringUtils.isBlank(data.getBanner())) {
-            //如果图片为空
+//        显示封面
+//        if (StringUtils.isBlank(data.getBanner())) {
+//            //如果图片为空
+//
+//            //就用默认图片
+//            iv_banner.setImageResource(R.drawable.placeholder);
+//        } else {
+//            //有图片
+//
+//            ImageUtil.show(getMainActivity(), iv_banner, data.getBanner());
+//        }
 
-            //就用默认图片
+        //使用Palette获取封面颜色
+        if (StringUtils.isBlank(data.getBanner())) {
+            //图片为空
+
+            //使用默认图片
             iv_banner.setImageResource(R.drawable.placeholder);
         } else {
             //有图片
+            Glide.with(this)
+                    .asBitmap()
+                    .load(ResourceUtil.resourceUri(data.getBanner()))
 
-            ImageUtil.show(getMainActivity(), iv_banner, data.getBanner());
+                    //加载图片到自定义目标
+                    .into(new CustomTarget<Bitmap>() {
+
+                        /**
+                         * 资源加载完成调用
+                         * @param resource
+                         * @param transition
+                         */
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+
+                            //显示封面
+                            iv_banner.setImageBitmap(resource);
+
+                            Palette.from(resource)
+                                    .generate(new Palette.PaletteAsyncListener() {
+                                        /**
+                                         * 颜色计算完成了
+                                         * @param palette
+                                         */
+                                        @Override
+                                        public void onGenerated(@Nullable Palette palette) {
+                                            //获取 有活力 的颜色
+                                            Palette.Swatch swatch = palette.getVibrantSwatch();
+
+                                            //可能没有值所以要判断
+                                            if (swatch != null) {
+                                                //获取颜色的rgb
+                                                int rgb = swatch.getRgb();
+
+                                                //设置标题颜色
+                                                toolbar.setBackgroundColor(rgb);
+
+                                                //设置头部容器颜色
+                                                ll_header.setBackgroundColor(rgb);
+
+                                                //这些api只有高版本才有
+                                                //所以说要判断
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                    //设置状态栏颜色
+                                                    Window window = getWindow();
+
+                                                    window.setStatusBarColor(rgb);
+
+                                                    //设置导航栏颜色
+                                                    window.setNavigationBarColor(rgb);
+                                                }
+                                            }
+                                        }
+                                    });
+
+                            }
+
+                        /**
+                         * 加载任务取消了
+                         * 可以在这里释放我们定义的一些资源
+                         *
+                         * @param placeholder
+                         */
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                        }
+                    });
         }
 
         //显示标题

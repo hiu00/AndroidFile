@@ -632,4 +632,7 @@ dependencies {
     //https://github.com/youth5201314/banner
     implementation 'com.youth.banner:banner:1.4.10'
 
+    //palette（调色板）
+    implementation 'androidx.palette:palette:1.0.0'
+
 }
