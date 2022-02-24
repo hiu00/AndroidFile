@@ -218,6 +218,7 @@
 
         <!--收藏按钮-->
         <Button
+            android:id="@+id/bt_collection"
             android:background="@null"
             android:layout_marginRight="@dimen/padding_meddle"
             android:text="收藏"
