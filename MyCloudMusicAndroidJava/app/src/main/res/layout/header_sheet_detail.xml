@@ -1,11 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
-    <TextView
-        android:text="这是歌单详情头部"
+    <!--垂直方向上容器-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="@dimen/activity_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <!--水平容器-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--圆角-->
+            <androidx.cardview.widget.CardView
+                app:cardElevation="@dimen/elevation"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="@dimen/radius_small"
+                android:layout_width="@dimen/song_detail_banner_width"
+                android:layout_height="@dimen/song_detail_banner_width">
+
+                <!--封面图-->
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </androidx.cardview.widget.CardView>
+
+            <!--右侧容器-->
+            <LinearLayout
+                android:layout_marginLeft="@dimen/padding_large"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--标题-->
+                <TextView
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_large"
+                    tools:text="这是歌单名称，这是歌单名称这是歌单名称这是歌单名称这是歌单名称这是歌单名称这是歌单名称"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!--作者容器-->
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/padding_meddle"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/placeholder"
+                        android:scaleType="centerCrop"
+                        android:layout_width="@dimen/avatar_width_meddle"
+                        android:layout_height="@dimen/avatar_width_meddle"/>
+
+                    <TextView
+                        tools:text="这是昵称这是昵称"
+                        android:layout_marginLeft="@dimen/padding_meddle"
+                        android:textColor="@color/tab_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--第二个水平容器-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--按钮容器-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/ic_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <!--文本-->
+                <TextView
+                    android:textColor="@color/white"
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!--按钮容器-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/ic_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <!--文本-->
+                <TextView
+                    android:textColor="@color/white"
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!--按钮容器-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/ic_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <!--文本-->
+                <TextView
+                    android:textColor="@color/white"
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!--按钮容器-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <!--图标-->
+                <ImageView
+                    android:src="@drawable/ic_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <!--文本-->
+                <TextView
+                    android:textColor="@color/white"
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--第三个水平容器-->
+    <LinearLayout
+        android:layout_marginTop="@dimen/padding_small"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_song_height">
+
+        <!--图标-->
+        <ImageView
+            android:layout_marginLeft="@dimen/padding_meddle"
+            android:src="@drawable/ic_play_grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!--播放全部按钮-->
+        <TextView
+            android:textColor="@color/text"
+            android:layout_marginLeft="@dimen/padding_meddle"
+            android:text="@string/play_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!--音乐数量-->
+        <TextView
+            android:text="@string/music_count"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <!--收藏按钮-->
+        <Button
+            android:text="收藏"
+            android:layout_marginRight="@dimen/padding_meddle"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_small"/>
+
+    </LinearLayout>
+
+    <!--分割线-->
+    <include layout="@layout/divider_small"/>
 
 </LinearLayout>
