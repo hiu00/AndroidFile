@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/ll_header">
 
     <!--垂直方向上容器-->
     <LinearLayout
@@ -31,7 +32,7 @@
 
                 <!--封面图-->
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/iv_banner"
                     android:scaleType="centerCrop"
                     android:src="@drawable/placeholder"
                     android:layout_width="match_parent"
@@ -47,6 +48,7 @@
 
                 <!--标题-->
                 <TextView
+                    android:id="@+id/tv_title"
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:textColor="@color/white"
@@ -64,12 +66,14 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        android:id="@+id/iv_avatar"
                         android:src="@drawable/placeholder"
                         android:scaleType="centerCrop"
                         android:layout_width="@dimen/avatar_width_meddle"
                         android:layout_height="@dimen/avatar_width_meddle"/>
 
                     <TextView
+                        android:id="@+id/tv_nickname"
                         tools:text="这是昵称这是昵称"
                         android:layout_marginLeft="@dimen/padding_meddle"
                         android:textColor="@color/tab_normal"
@@ -87,6 +91,7 @@
 
             <!--按钮容器-->
             <LinearLayout
+                android:id="@+id/ll_comment_container"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_weight="1"
@@ -101,6 +106,7 @@
 
                 <!--文本-->
                 <TextView
+                    android:id="@+id/tv_comment_count"
                     android:textColor="@color/white"
                     android:text="0"
                     android:layout_width="wrap_content"
@@ -146,7 +152,7 @@
                 <!--文本-->
                 <TextView
                     android:textColor="@color/white"
-                    android:text="0"
+                    android:text="@string/download"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -168,7 +174,7 @@
                 <!--文本-->
                 <TextView
                     android:textColor="@color/white"
-                    android:text="0"
+                    android:text="@string/select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -179,6 +185,7 @@
 
     <!--第三个水平容器-->
     <LinearLayout
+        android:id="@+id/ll_play_all_container"
         android:layout_marginTop="@dimen/padding_small"
         android:orientation="horizontal"
         android:background="@color/white"
@@ -203,6 +210,7 @@
 
         <!--音乐数量-->
         <TextView
+            android:id="@+id/tv_count"
             android:text="@string/music_count"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -210,11 +218,11 @@
 
         <!--收藏按钮-->
         <Button
-            android:text="收藏"
-            android:layout_marginRight="@dimen/padding_meddle"
             android:background="@null"
+            android:layout_marginRight="@dimen/padding_meddle"
+            android:text="收藏"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_small"/>
+            android:layout_height="@dimen/button_height_small" />
 
     </LinearLayout>
 
