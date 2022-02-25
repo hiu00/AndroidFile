@@ -42,7 +42,7 @@ import butterknife.BindView;
 /**
  * 歌单详情界面
  */
-public class SheetDetailActivity extends BaseTitleActivity {
+public class SheetDetailActivity extends BaseTitleActivity implements View.OnClickListener {
 
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -150,6 +150,34 @@ public class SheetDetailActivity extends BaseTitleActivity {
 
         //请求数据
         fetchData();
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+        //收藏按钮单击事件
+        bt_collection.setOnClickListener(this);
+    }
+
+    /**
+     * 按钮点击回调方法
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_collection:
+                //收藏歌单按钮点击了
+                processCollectionClick();
+                break;
+        }
+    }
+
+    /**
+     * 处理收藏和取消收藏逻辑
+     */
+    private void processCollectionClick() {
+        LogUtil.d(TAG,"processCollectionClick");
     }
 
     //请求数据
@@ -293,7 +321,7 @@ public class SheetDetailActivity extends BaseTitleActivity {
     /**
      * 显示收藏状态
      */
-    @SuppressLint("ResourceType")
+    @SuppressLint({"ResourceType", "StringFormatInvalid"})
     private void showCollectionStatus() {
         if (data.isCollection()){
             //收藏了
@@ -312,14 +340,15 @@ public class SheetDetailActivity extends BaseTitleActivity {
             //没有收藏
 
             //将按钮文字改为收藏
-            bt_collection.setText(getResources().getString(R.string.cancel_collection_all,data.getCollections_count()));
+            bt_collection.setText(getResources().getString(R.string.collection_all,data.getCollections_count()));
 
             //设置按钮颜色为主色调
             bt_collection.setBackgroundResource(R.drawable.selector_color_primary);
 
             //将文字颜色设置为白色
-            bt_collection.setTextColor(getResources().getColorStateList(R.drawable.selector_text_color_primary_reverse));
+            bt_collection.setTextColor(getResources().getColorStateList(R.drawable.selector_text_color_primary));
         }
     }
+
 
 }

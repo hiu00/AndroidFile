@@ -164,7 +164,7 @@ public class Sheet extends BaseMultiItemEntity{
      * @return true:收藏；false:没有收藏
      */
     public boolean isCollection(){
-        return collection_id!=null;
+        return collection_id !=null;
     }
 
     //使用BaseRecyclerViewAdapterHelper框架
