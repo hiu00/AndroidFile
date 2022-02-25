@@ -13,6 +13,7 @@ import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.PreferenceUtil;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -34,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 对外部提供一个和框架无关的接口
  */
 public class Api {
+    private static final String TAG = "Api";
     /**
      * 实例
      */
@@ -65,6 +68,35 @@ public class Api {
         //初始化OkHttp
         OkHttpClient.Builder OkHttpClientBuilder=new OkHttpClient.Builder();
 
+        //公共请求参数
+        OkHttpClientBuilder.addNetworkInterceptor(chain -> {
+            //获取到偏好设置工具类
+            PreferenceUtil sp = PreferenceUtil.getInstance(AppContext.getInstance());
+
+            //获取到request
+            Request request = chain.request();
+
+            if (sp.isLogin()) {
+                //登录了
+
+                //获取出用户Id和token
+                String user = sp.getUserId();
+                String session = sp.getSession();
+
+                //打印日志是方便调试
+                LogUtil.d(TAG, "Api user:" + user + "," + session);
+
+                //将用户id和token设置到请求头
+                request.newBuilder()
+                        .addHeader("User", user)
+                        .addHeader("Authorization", session)
+                        .build();
+            }
+
+            //继续执行网络请求
+            return chain.proceed(request);
+        });
+
         if (LogUtil.isDebug) {
             //调试模式
 
@@ -83,6 +115,8 @@ public class Api {
             //添加chucker实现应用内显示网络请求信息拦截器
             OkHttpClientBuilder.addInterceptor(new ChuckerInterceptor(AppContext.getInstance()));
         }
+
+
 
         //创建一个Retrofit
         Retrofit retrofit=new Retrofit.Builder()
