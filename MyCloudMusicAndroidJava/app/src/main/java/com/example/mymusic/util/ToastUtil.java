@@ -20,7 +20,7 @@ public class ToastUtil {
     private static Context context;
 
     /**
-     * 错误短时间Toast
+     * 错误长时间Toast
      * @param id
      */
     public static void errorShortToast(@StringRes int id) {
@@ -44,11 +44,21 @@ public class ToastUtil {
     }
 
     /**
-     * 成功短时间Toast
+     * 显示短时间正确toast
+     *
      * @param id
      */
-    public static void successLongToast(@StringRes int id) {
-        Toasty.success(context,id,Toasty.LENGTH_SHORT).show();
+    public static void successShortToast(@StringRes int id) {
+        Toasty.success(context, id, Toasty.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 显示短时间正确toast
+     *
+     * @param data
+     */
+    public static void successShortToast(String data) {
+        Toasty.success(context, data, Toasty.LENGTH_SHORT).show();
     }
 
     /**

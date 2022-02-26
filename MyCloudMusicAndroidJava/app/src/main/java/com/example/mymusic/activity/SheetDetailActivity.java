@@ -34,10 +34,12 @@ import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ResourceUtil;
+import com.example.mymusic.util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
+import retrofit2.Response;
 
 /**
  * 歌单详情界面
@@ -178,6 +180,37 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
      */
     private void processCollectionClick() {
         LogUtil.d(TAG,"processCollectionClick");
+
+        if (data.isCollection()) {
+            //已经收藏了
+
+            //取消收藏
+            Api.getInstance()
+                    .deleteCollect(data.getId())
+                    .subscribe(new HttpObserver<Response<Void>>() {
+                        @Override
+                        public void onSucceeded(Response<Void> data) {
+                            ToastUtil.errorShortToast(R.string.cancel_success);
+                        }
+                    });
+        } else {
+            //没有收藏
+
+            //收藏
+            Api.getInstance()
+                    .collect(data.getId())
+                    .subscribe(new HttpObserver<Response<Void>>() {
+                        @Override
+                        public void onSucceeded(Response<Void> data) {
+                            //弹出提示
+                            ToastUtil.successShortToast(R.string.collection_success);
+
+                            //重新加载数据
+                            //目的是显示新的收藏状态
+                            fetchData();
+                        }
+                    });
+        }
     }
 
     //请求数据

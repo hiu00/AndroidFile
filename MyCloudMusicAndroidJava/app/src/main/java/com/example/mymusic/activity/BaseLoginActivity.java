@@ -42,7 +42,7 @@ public class BaseLoginActivity extends BaseTitleActivity{
                         //把登录成功的事件通知到AppContext
                         AppContext.getInstance().login(sp,data.getData());
 
-                        ToastUtil.successLongToast(R.string.login_sucess);
+                        ToastUtil.successShortToast(R.string.login_sucess);
 
                         //关闭当前界面并启动主界面
                         startActivoityAfterFinishThis(MainActivity.class);

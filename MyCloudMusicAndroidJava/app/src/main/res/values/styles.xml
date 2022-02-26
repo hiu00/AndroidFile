@@ -24,7 +24,7 @@
     </style>
 
     <!--状态栏透明-->
-    <style name="Theme.MyCloudMusicAndroidJava.NoActionBar.StatusBarTransparent">
+    <style name="AppTheme.NoActionBar.StatusBarTransparent">
     </style>
 
     <!--侧滑界面Item容器-->

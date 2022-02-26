@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar"
+        android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".activity.SheetDetailActivity"
@@ -67,7 +67,7 @@
             android:exported="false"
             android:label=" "
             android:launchMode="singleTask"
-            android:theme="@style/Theme.MyCloudMusicAndroidJava.NoActionBar.StatusBarTransparent" />
+            android:theme="@style/AppTheme.NoActionBar.StatusBarTransparent" />
         <activity android:name=".activity.GuideActivity" />
     </application>
 
