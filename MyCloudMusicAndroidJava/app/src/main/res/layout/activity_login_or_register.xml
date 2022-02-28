@@ -51,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 android:background="@drawable/selector_color_primary_reverse"
-                android:text="@string/login"
-                android:textColor="@drawable/selector_text_color_primary_reverse" />
+                android:textColor="@drawable/selector_text_color_primary_reverse"
+                android:text="@string/login" />
 
             <!--注册按钮-->
             <Button
@@ -61,8 +61,8 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/padding_large"
                 android:background="@drawable/selector_color_primary_reverse"
-                android:text="注 册"
-                android:textColor="@drawable/selector_text_color_primary_reverse" />
+                android:textColor="@drawable/selector_text_color_primary_reverse"
+                android:text="注 册"/>
 
         </LinearLayout><!--end 登录注册按钮-->
 
