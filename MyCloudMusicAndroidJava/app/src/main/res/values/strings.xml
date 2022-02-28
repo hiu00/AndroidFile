@@ -84,6 +84,7 @@
     <string name="cancel_success">取消成功！</string>
     <string name="collection_success">收藏成功！</string>
     <string name="activity_comment">评论</string>
+    <string name="activity_user_detail">用户详情</string>
 
 
 </resources>

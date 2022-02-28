@@ -59,6 +59,7 @@
 
                 <!--作者容器-->
                 <LinearLayout
+                    android:id="@+id/ll_user"
                     android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/padding_meddle"
                     android:orientation="horizontal"
