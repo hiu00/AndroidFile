@@ -15,9 +15,13 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.SheetDetailActivity"
-            android:label="@string/activity_sheet_detail"
+            android:name=".activity.CommentActivity"
+            android:label="@string/activity_comment"
             android:exported="false" />
+        <activity
+            android:name=".activity.SheetDetailActivity"
+            android:exported="false"
+            android:label="@string/activity_sheet_detail" />
         <activity
             android:name=".activity.SettingActivity"
             android:exported="false"

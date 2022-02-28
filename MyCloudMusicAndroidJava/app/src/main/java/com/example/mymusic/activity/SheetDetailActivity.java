@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -159,6 +160,9 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
         super.initListeners();
         //收藏按钮单击事件
         bt_collection.setOnClickListener(this);
+
+        //评论点击事件
+        ll_comment_container.setOnClickListener(this);
     }
 
     /**
@@ -171,6 +175,16 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
             case R.id.bt_collection:
                 //收藏歌单按钮点击了
                 processCollectionClick();
+                break;
+            case R.id.ll_comment_container:
+                //评论容器点击了
+                Intent intent = new Intent(getMainActivity(), CommentActivity.class);
+
+                //添加歌单id
+                intent.putExtra(Constant.SHEET_ID,data.getId());
+
+                //启动界面
+                startActivity(intent);
                 break;
         }
     }
