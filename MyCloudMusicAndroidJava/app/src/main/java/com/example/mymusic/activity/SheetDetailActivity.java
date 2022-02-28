@@ -14,6 +14,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -439,5 +441,46 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
         }
     }
 
+    /**
+     * 创建菜单方法
+     * 有点类似显示布局要在onCreate方法中
+     * 使用setContentView设置布局
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        //加载按钮布局
+        getMenuInflater().inflate(R.menu.menu_sheet_detail,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    /**
+     *  菜单点击了回调
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //获取点击的菜单id
+        int id = item.getItemId();
+
+        if (R.id.action_search==id){
+            //搜索按钮点击了
+            LogUtil.d(TAG,"search menu click");
+        }else if (R.id.action_sort == id) {
+            //排序按钮点击了
+            LogUtil.d(TAG, "sort menu click");
+
+            return true;
+        } else if (R.id.action_report == id) {
+            //举报按钮点击了
+            LogUtil.d(TAG, "report menu click");
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

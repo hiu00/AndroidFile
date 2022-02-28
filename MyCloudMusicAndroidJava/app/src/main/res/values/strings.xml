@@ -85,6 +85,9 @@
     <string name="collection_success">收藏成功！</string>
     <string name="activity_comment">评论</string>
     <string name="activity_user_detail">用户详情</string>
+    <string name="search">搜索</string>
+    <string name="sort">排序</string>
+    <string name="report">举报</string>
 
 
 </resources>
