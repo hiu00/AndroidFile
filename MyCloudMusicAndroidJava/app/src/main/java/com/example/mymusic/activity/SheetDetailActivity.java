@@ -179,7 +179,7 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
      * 处理收藏和取消收藏逻辑
      */
     private void processCollectionClick() {
-        LogUtil.d(TAG,"processCollectionClick");
+        LogUtil.d(TAG,"processCollectionClick"+ data.isCollection());
 
         if (data.isCollection()) {
             //已经收藏了
@@ -189,8 +189,22 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
                     .deleteCollect(data.getId())
                     .subscribe(new HttpObserver<Response<Void>>() {
                         @Override
-                        public void onSucceeded(Response<Void> data) {
+                        public void onSucceeded(Response<Void> d) {
+                            //弹出提示
                             ToastUtil.errorShortToast(R.string.cancel_success);
+
+                            //重新加载数据
+                            //目的是显示新的收藏状态
+                            //fetchData();
+
+                            //取消收藏成功
+                            data.setCollection_id(null);
+
+                            //收藏数-1
+                            data.setCollections_count(data.getCollections_count() - 1);
+
+                            //刷新状态
+                            showCollectionStatus();
                         }
                     });
         } else {
@@ -201,13 +215,27 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
                     .collect(data.getId())
                     .subscribe(new HttpObserver<Response<Void>>() {
                         @Override
-                        public void onSucceeded(Response<Void> data) {
+                        public void onSucceeded(Response<Void> d) {
                             //弹出提示
                             ToastUtil.successShortToast(R.string.collection_success);
 
                             //重新加载数据
                             //目的是显示新的收藏状态
-                            fetchData();
+                            //fetchData();
+
+                            //收藏状态变更后
+                            //可以重新调用歌单详情界面接口
+                            //获取收藏状态
+                            //但对于收藏来说
+                            //收藏数可能没那么重要
+                            //所以不用及时刷新
+                            data.setCollection_id(1);
+
+                            //收藏数+1
+                            data.setCollections_count(data.getComments_count()+1);
+
+                            //刷新状态
+                            showCollectionStatus();
                         }
                     });
         }

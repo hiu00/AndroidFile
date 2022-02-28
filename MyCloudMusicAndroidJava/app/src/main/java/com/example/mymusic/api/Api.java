@@ -93,6 +93,7 @@ public class Api {
                         .addHeader("User", user)
                         .addHeader("Authorization", session)
                         .build();
+                LogUtil.d("jason","我是token "+session);
             }
 
             //继续执行网络请求
@@ -106,7 +107,7 @@ public class Api {
             HttpLoggingInterceptor loggingInterceptor=new HttpLoggingInterceptor();
 
             //设置日志等级
-            loggingInterceptor.level(HttpLoggingInterceptor.Level.BASIC);
+            loggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
 
             //添加到网络框架中
             OkHttpClientBuilder.addInterceptor(loggingInterceptor);
