@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable-anydpi/ic_search.xml" value="0.11481481481481481" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_button_color_primary_light_grey.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_color_primary.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/drawable/selector_color_primary_reverse.xml" value="0.1" />
@@ -32,6 +33,7 @@
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_register.xml" value="0.1828125" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_setting.xml" value="0.22395833333333334" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_sheet_detail.xml" value="0.1" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_simple_player.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_splash.xml" value="0.176" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_user_detail.xml" value="0.15715579710144928" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_web_view.xml" value="0.16197916666666667" />

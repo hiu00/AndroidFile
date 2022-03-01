@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.SongAdapter;
 import com.example.mymusic.api.Api;
@@ -172,6 +173,14 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
 
         //评论点击事件
         ll_comment_container.setOnClickListener(this);
+
+        //点击歌曲跳转的点击事件
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SimplePlayerActivity.start(getMainActivity());
+            }
+        });
     }
 
     /**
