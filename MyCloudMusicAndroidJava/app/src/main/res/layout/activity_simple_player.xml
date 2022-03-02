@@ -83,7 +83,7 @@
 
                 <!--上一曲按钮-->
                 <Button
-                    tools:text="上一曲"
+                    android:text="上一曲"
                     android:id="@+id/bt_previous"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -91,7 +91,7 @@
 
                 <!--播放按钮-->
                 <Button
-                    tools:text="播放"
+                    android:text="播放"
                     android:id="@+id/bt_play"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -99,7 +99,7 @@
 
                 <!--下一曲按钮-->
                 <Button
-                    tools:text="下一曲"
+                    android:text="下一曲"
                     android:id="@+id/bt_next"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -117,7 +117,7 @@
                 <!--循环模式-->
                 <Button
                     android:id="@+id/bt_loop_model"
-                    tools:text="列表循环"
+                    android:text="列表循环"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
