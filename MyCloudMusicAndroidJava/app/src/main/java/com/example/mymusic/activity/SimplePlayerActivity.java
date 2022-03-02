@@ -70,6 +70,15 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     }
 
     @Override
+    protected void initDatum() {
+        super.initDatum();
+
+        //使用MusicPlayerService获取播放管理器
+
+
+    }
+
+    @Override
     protected void initListeners() {
         super.initListeners();
         //设置进度条监听器
