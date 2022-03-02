@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.mymusic.R;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.NotificationUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -130,6 +134,20 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     @OnClick(R.id.bt_play)
     public void onPlayClick() {
         LogUtil.d(TAG, "onPlayClick");
+
+        //测试通知渠道
+        //该通知没有任何实际意义
+
+        //获取通知
+        Notification notification= NotificationUtil.getServiceForeground(getApplicationContext());
+
+        //或者通知管理器
+        NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        //显示通知
+        //Id没什么实际意义
+        //只是相同Id的通知会被替换
+        NotificationUtil.showNotification(100,notification);
     }
 
     /**
