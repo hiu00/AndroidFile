@@ -14,6 +14,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.mymusic.R;
+import com.example.mymusic.domain.Song;
+import com.example.mymusic.listener.MusicPlayerListener;
+import com.example.mymusic.manager.MusicPlayerManager;
+import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.NotificationUtil;
 
@@ -23,7 +27,7 @@ import butterknife.OnClick;
 /**
  * 简单播放器
  */
-public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.OnSeekBarChangeListener {
+public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.OnSeekBarChangeListener, MusicPlayerListener {
     private static final String TAG = "SimplePlayerActivity";
     /**
      * 列表
@@ -67,6 +71,11 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     @BindView(R.id.bt_loop_model)
     Button bt_loop_model;
 
+    /**
+     * 音乐播放管理器
+     */
+    private MusicPlayerManager musicPlayerManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +86,17 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     protected void initDatum() {
         super.initDatum();
 
-        //使用MusicPlayerService获取播放管理器
+        //使用MusicPlayerService获取音乐播放管理器
+        musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getApplicationContext());
 
+        //测试播放音乐
+        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s1.mp3";
 
+        Song song = new Song();
+        song.setUri(songUrl);
+
+        //播放音乐
+        musicPlayerManager.play(songUrl,song);
     }
 
     @Override
@@ -148,6 +165,48 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
         //Id没什么实际意义
         //只是相同Id的通知会被替换
         NotificationUtil.showNotification(100,notification);
+
+        playOrPause();
+    }
+
+    /**
+     * 播放或者暂停
+     */
+    private void playOrPause() {
+        if (musicPlayerManager.isPlaying()) {
+            musicPlayerManager.pause();
+        } else {
+            musicPlayerManager.resume();
+
+        }
+    }
+
+    /**
+     * 进入了前台(即界面可见)
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.d(TAG, "onResume");
+
+        //设置播放监听器
+        musicPlayerManager.addMusicPlayerListener(this);
+
+        //显示播放状态
+        showMusicPlayStatus();;
+
+    }
+
+    /**
+     * 进入了后台(即界面不可见了)
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtil.d(TAG,"onPause");
+
+        //取消播放器监听器
+        musicPlayerManager.removeMusicPlayerListener(this);
     }
 
     /**
@@ -181,4 +240,43 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     }
 
 
+    //播放管理器监听器
+    @Override
+    public void onPaused(Song data) {
+        LogUtil.d(TAG, "onPaused");
+        showPlayStatus();
+    }
+
+    /**
+     * 显示播放状态
+     */
+    private void showPlayStatus() {
+        bt_play.setText("播放");
+
+    }
+
+    //第一次进入界面时播放按钮显示状态
+    private void showMusicPlayStatus(){
+        if(musicPlayerManager.isPlaying() ) {
+            showPauseStatus();
+        } else {
+            showPlayStatus();
+        }
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+        LogUtil.d(TAG, "onPlaying");
+
+        showPauseStatus();
+    }
+
+    /**
+     * 显示暂停状态
+     */
+    private void showPauseStatus() {
+        bt_play.setText("暂停");
+
+    }
+    //--end播放管理器监听器
 }

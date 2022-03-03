@@ -4,9 +4,12 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 播放管理器默认实现
@@ -27,6 +30,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
      * 当前播放的音乐对象
      */
     private Song data;
+
+    /**
+     * 播放器状态监听器
+     */
+    private List<MusicPlayerListener> listeners = new ArrayList<>();
 
     /**
      * 私有构造方法
@@ -77,10 +85,23 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
 
             //开始播放
             player.start();
+
+            //回调监听器
+            publishPlayingStatus();
         } catch (IOException e) {
             e.printStackTrace();
             //发生错误了
             //TODO 处理错误
+        }
+    }
+
+    /**
+     * 发布播放中状态
+     */
+    private void publishPlayingStatus(){
+        for (MusicPlayerListener listener:
+                listeners) {
+            listener.onPlaying(data);
         }
     }
 
@@ -98,6 +119,12 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         if (isPlaying()) {
             //如果在播放就暂停
             player.pause();
+
+            //回调监听器
+            for (MusicPlayerListener listener:
+                    listeners) {
+                listener.onPaused(data);
+            }
         }
     }
 
@@ -106,6 +133,21 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         if (!isPlaying()) {
             //如果没有播放就播放
             player.start();
+
+            //回调监听器
+            publishPlayingStatus();
         }
+    }
+
+    @Override
+    public void addMusicPlayerListener(MusicPlayerListener listener) {
+        if (!listeners.contains(listener)){
+            listeners.add(listener);
+        }
+    }
+
+    @Override
+    public void removeMusicPlayerListener(MusicPlayerListener listener) {
+        listeners.remove(listener);
     }
 }
