@@ -8,6 +8,7 @@ import com.example.mymusic.listener.Consumer;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.util.ListUtil;
+import com.example.mymusic.util.LogUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
  * 播放管理器默认实现
  */
 public class MusicPlayerManagerImpl implements MusicPlayerManager {
+    private static final String TAG = "MusicPlayerManagerImpl";
     /**
      * 单例实例对象
      */
@@ -52,6 +54,33 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
         //初始化播放器
         player = new MediaPlayer();
 
+        //设置播放器监听器
+        initListener();
+    }
+
+    /**
+     * 设置播放器监听器
+     */
+    private void initListener() {
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            /**
+             * 播放器准备开始播放
+             *
+             * 这里可以获取到音乐时长
+             * 如果是视频还能获取到视频宽高等信息
+             * @param mediaPlayer
+             */
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                LogUtil.d(TAG,"onPrepared");
+
+                //将音乐总时长保存到音乐对象
+                data.setDuration(mediaPlayer.getDuration());
+
+                //回调监听器
+                ListUtil.eachListener(listeners,listener -> listener.onPrepared(mediaPlayer,data));
+            }
+        });
     }
 
     /**
@@ -162,5 +191,10 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
     @Override
     public void removeMusicPlayerListener(MusicPlayerListener listener) {
         listeners.remove(listener);
+    }
+
+    @Override
+    public Song getData() {
+        return data;
     }
 }
