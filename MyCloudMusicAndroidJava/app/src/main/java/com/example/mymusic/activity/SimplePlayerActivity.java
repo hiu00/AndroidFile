@@ -200,6 +200,8 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
         //显示播放状态
         showMusicPlayStatus();;
 
+        //显示播放进度
+        showProgress();
     }
 
     /**
@@ -282,6 +284,32 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
 
         //显示时长
         showDuration();
+    }
+
+    /**
+     * 播放进度回调方法
+     * @param data
+     */
+    @Override
+    public void onProgress(Song data) {
+        LogUtil.d(TAG, "onProgress:" + data.getProgress() + "," + data.getDuration());
+
+        //显示播放进度
+        showProgress();
+    }
+
+    /**
+     * 显示播放进度
+     */
+    private void showProgress(){
+        //获取播放进度
+        long progress = musicPlayerManager.getData().getProgress();
+
+        //格式化进度
+        tv_start.setText(TimeUtil.formatMinuteSecond((int) progress));
+
+        //设置到进度条
+        sb_progress.setProgress((int) progress);
     }
 
     /**

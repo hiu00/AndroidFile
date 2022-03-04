@@ -65,4 +65,8 @@ public class Constant {
      */
     public static final String SHEET_ID = "SHEET_ID";
 
+    public static final int MESSAGE_PROGRESS = 0;
+
+    public static final long DEFAULT_TIME = 16;
+
 }
