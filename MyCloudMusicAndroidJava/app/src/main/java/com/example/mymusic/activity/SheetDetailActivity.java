@@ -32,8 +32,12 @@ import com.example.mymusic.R;
 import com.example.mymusic.adapter.SongAdapter;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.domain.Sheet;
+import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.listener.HttpObserver;
+import com.example.mymusic.listener.ListManager;
+import com.example.mymusic.manager.impl.ListManagerImpl;
+import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
@@ -75,6 +79,11 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
     private View ll_play_all_container;
     private TextView tv_count;
     private View ll_user;
+
+    /**
+     * 列表管理器
+     */
+    private ListManager listManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +151,8 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
     @Override
     protected void initDatum() {
         super.initDatum();
+        //初始化列表管理器
+        listManager = MusicPlayerService.getListManager(getApplicationContext());
 
         //获取传递的参数
         //id = getIntent().getStringExtra(Constant.ID);
@@ -174,13 +185,31 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
         //评论点击事件
         ll_comment_container.setOnClickListener(this);
 
-        //点击歌曲跳转的点击事件
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SimplePlayerActivity.start(getMainActivity());
-            }
+        //设置Item点击事件
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            //SimplePlayerActivity.start(getMainActivity());
+
+            //播放当前位置的音乐
+            play(position);
         });
+    }
+
+    /**
+     * 播放当前位置音乐
+     * @param position
+     */
+    private void play(int position){
+        //获取当前位置播放的音乐
+        Song data = adapter.getItem(position);
+
+        //把当前歌单所有音乐设置到播放列表
+        listManager.setDatum(adapter.getData());
+
+        //播放当前音乐
+        listManager.play(data);
+
+        //跳转到简单播放器界面
+        SimplePlayerActivity.start(getMainActivity());
     }
 
     /**
