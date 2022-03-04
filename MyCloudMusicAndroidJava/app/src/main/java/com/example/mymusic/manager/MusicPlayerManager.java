@@ -49,4 +49,10 @@ public interface MusicPlayerManager {
      * @return
      */
     Song getData();
+
+    /**
+     * 从指定位置播放
+     * @param progress 单位：毫秒
+     */
+    void seekTo(int progress);
 }
