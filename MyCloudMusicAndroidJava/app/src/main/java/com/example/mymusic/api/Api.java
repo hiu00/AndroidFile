@@ -1,5 +1,7 @@
 package com.example.mymusic.api;
 
+import androidx.annotation.NonNull;
+
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import com.example.mymusic.AppContext;
 import com.example.mymusic.domain.Ad;
@@ -18,12 +20,15 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Headers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -51,16 +56,16 @@ public class Api {
 
     /**
      * 返回当前对象的唯一实例
-     *
+     * <p>
      * 单例设计模式
      * 由于移动端很少有高并发
      * 所以这个就是简单判断
      *
      * @return
      */
-    public static Api getInstance(){
-        if(instance==null){
-            instance=new Api();
+    public static Api getInstance() {
+        if (instance == null) {
+            instance = new Api();
         }
         return instance;
     }
@@ -68,9 +73,8 @@ public class Api {
 
     public Api() {
         //初始化OkHttp
-        OkHttpClient.Builder OkHttpClientBuilder=new OkHttpClient.Builder();
-
-        //公共请求参数
+        OkHttpClient.Builder OkHttpClientBuilder = new OkHttpClient.Builder();
+//公共请求参数
         OkHttpClientBuilder.addNetworkInterceptor(chain -> {
             //获取到偏好设置工具类
             PreferenceUtil sp = PreferenceUtil.getInstance(AppContext.getInstance());
@@ -89,22 +93,46 @@ public class Api {
                 LogUtil.d(TAG, "Api user:" + user + "," + session);
 
                 //将用户id和token设置到请求头
-                request.newBuilder()
+                request = request.newBuilder()
                         .addHeader("User", user)
                         .addHeader("Authorization", session)
                         .build();
-                LogUtil.d("jason","我是token "+session);
             }
 
             //继续执行网络请求
             return chain.proceed(request);
         });
+//        OkHttpClientBuilder.addNetworkInterceptor((Interceptor.Chain chain) -> {
+//            //获取到偏好设置工具类
+//            PreferenceUtil sp = PreferenceUtil.getInstance(AppContext.getInstance());
+//            //获取到request
+//            Request request = chain.request();
+//            if (sp.isLogin()) {
+//                //登录了
+//                //获取出用户Id和token
+//                String user = sp.getUserId();
+//                String session = sp.getSession();
+//                //打印日志是方便调试
+//                LogUtil.d(TAG, "Api user:" + user + "," + session);
+//                //将用户id和token设置到请求头
+//                Headers headers=request.headers()
+//                        .newBuilder()
+//                        .add("User", user)
+//                        .add("Authorization", session)
+//                        .build();
+//                request.newBuilder().headers(headers)
+//                        .build();
+//            }
+//            //继续执行网络请求
+//            return chain.proceed(request);
+//        });
+
 
         if (LogUtil.isDebug) {
             //调试模式
 
             //创建koHttp日志拦截器
-            HttpLoggingInterceptor loggingInterceptor=new HttpLoggingInterceptor();
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 
             //设置日志等级
             loggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
@@ -120,9 +148,8 @@ public class Api {
         }
 
 
-
         //创建一个Retrofit
-        Retrofit retrofit=new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 //让Retrofit使用OkHttp请求网络
                 .client(OkHttpClientBuilder.build())
 
@@ -137,6 +164,7 @@ public class Api {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         //创建一个service
         service = retrofit.create(Service.class);
     }
@@ -146,7 +174,7 @@ public class Api {
      *
      * @return
      */
-    public Observable<ListResponse<Sheet>> sheets(){
+    public Observable<ListResponse<Sheet>> sheets() {
         return service.sheets()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -170,7 +198,7 @@ public class Api {
      * @param data
      * @return
      */
-    public Observable<DetailResponse<BaseModel>> register(User data){
+    public Observable<DetailResponse<BaseModel>> register(User data) {
         return service.register(data)
                 .subscribeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread());
@@ -179,10 +207,11 @@ public class Api {
 
     /**
      * 登录
+     *
      * @param data
      * @return
      */
-    public Observable<DetailResponse<Session>> login(User data){
+    public Observable<DetailResponse<Session>> login(User data) {
         return service.login(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -190,10 +219,11 @@ public class Api {
 
     /**
      * 重置密码
+     *
      * @param data
      * @return
      */
-    public Observable<BaseResponse> resetPassword(User data){
+    public Observable<BaseResponse> resetPassword(User data) {
         return service.resetPassword(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -201,10 +231,11 @@ public class Api {
 
     /**
      * 发送短信验证码
+     *
      * @param data
      * @return
      */
-    public Observable<DetailResponse<BaseModel>> sendSMSCode(User data){
+    public Observable<DetailResponse<BaseModel>> sendSMSCode(User data) {
         return service.sendSMSCode(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -212,10 +243,11 @@ public class Api {
 
     /**
      * 发送邮箱验证码
+     *
      * @param data
      * @return
      */
-    public Observable<DetailResponse<BaseModel>> sendEmailCode(User data){
+    public Observable<DetailResponse<BaseModel>> sendEmailCode(User data) {
         return service.sendEmailCode(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -223,38 +255,41 @@ public class Api {
 
     /**
      * 用户详情接口
+     *
      * @param id
      * @param nickname
      * @return
      */
-    public Observable<DetailResponse<User>> userDetail(String id,String nickname){
+    public Observable<DetailResponse<User>> userDetail(String id, String nickname) {
         //添加查询参数
-        HashMap<String,String> data=new HashMap<>();
+        HashMap<String, String> data = new HashMap<>();
 
-        if (StringUtils.isNotBlank(nickname)){
+        if (StringUtils.isNotBlank(nickname)) {
             //如果昵称不为空才添加
-            data.put(Constant.NICKNAME,nickname);
+            data.put(Constant.NICKNAME, nickname);
         }
 
-        return service.userDetail(id,data)
+        return service.userDetail(id, data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * 用户详情
+     *
      * @param id
      * @return
      */
-    public Observable<DetailResponse<User>> userDetail(String id){
-        return userDetail(id,null);
+    public Observable<DetailResponse<User>> userDetail(String id) {
+        return userDetail(id, null);
     }
 
     /**
      * 单曲
+     *
      * @return
      */
-    public Observable<ListResponse<Song>> songs(){
+    public Observable<ListResponse<Song>> songs() {
         return service.songs()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -262,9 +297,10 @@ public class Api {
 
     /**
      * 广告列表
+     *
      * @return
      */
-    public Observable<ListResponse<Ad>> ads(){
+    public Observable<ListResponse<Ad>> ads() {
         return service.ads()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -272,10 +308,11 @@ public class Api {
 
     /**
      * 收藏歌单
+     *
      * @param id
      * @return
      */
-    public Observable<Response<Void>> collect(String id){
+    public Observable<Response<Void>> collect(String id) {
         return service.collect(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -284,10 +321,11 @@ public class Api {
 
     /**
      * 取消收藏歌单
+     *
      * @param id
      * @return
      */
-    public Observable<Response<Void>> deleteCollect(String id){
+    public Observable<Response<Void>> deleteCollect(String id) {
         return service.deleteCollect(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

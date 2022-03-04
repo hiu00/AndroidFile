@@ -4,8 +4,10 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.listener.Consumer;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
+import com.example.mymusic.util.ListUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,10 +101,18 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
      * 发布播放中状态
      */
     private void publishPlayingStatus(){
-        for (MusicPlayerListener listener:
-                listeners) {
-            listener.onPlaying(data);
-        }
+//        for (MusicPlayerListener listener:
+//                listeners) {
+//            listener.onPlaying(data);
+//        }
+
+        //使用重构后的方法
+        ListUtil.eachListener(listeners, new Consumer<MusicPlayerListener>() {
+            @Override
+            public void accept(MusicPlayerListener musicPlayerListener) {
+                musicPlayerListener.onPlaying(data);
+            }
+        });
     }
 
     /**
@@ -121,10 +131,13 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
             player.pause();
 
             //回调监听器
-            for (MusicPlayerListener listener:
-                    listeners) {
-                listener.onPaused(data);
-            }
+//            for (MusicPlayerListener listener:
+//                    listeners) {
+//                listener.onPaused(data);
+//            }
+
+            //使用重构后的方法
+            ListUtil.eachListener(listeners,listener -> listener.onPaused(data));
         }
     }
 

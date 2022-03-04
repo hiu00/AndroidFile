@@ -21,6 +21,8 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
@@ -62,6 +64,7 @@ public interface Service {
 
     /**
      * 登录接口
+     *
      * @param data
      * @return
      */
@@ -70,6 +73,7 @@ public interface Service {
 
     /**
      * 重置密码
+     *
      * @param data
      * @return
      */
@@ -78,6 +82,7 @@ public interface Service {
 
     /**
      * 发送短信验证码
+     *
      * @param data
      * @return
      */
@@ -86,6 +91,7 @@ public interface Service {
 
     /**
      * 发送邮箱验证码
+     *
      * @param data
      * @return
      */
@@ -94,15 +100,17 @@ public interface Service {
 
     /**
      * 用户详情
+     *
      * @param id
      * @param data
      * @return
      */
     @GET("v1/users/{id}")
-    Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String,String> data);
+    Observable<DetailResponse<User>> userDetail(@Path("id") String id, @QueryMap Map<String, String> data);
 
     /**
      * 单曲
+     *
      * @return
      */
     @GET("v1/songs")
@@ -110,6 +118,7 @@ public interface Service {
 
     /**
      * 广告列表
+     *
      * @return
      */
     @GET("v1/ads")
@@ -117,15 +126,21 @@ public interface Service {
 
     /**
      * 收藏歌单
+     *
      * @param id
      * @return
      */
     @FormUrlEncoded
     @POST("v1/collections")
+//    @Headers({
+//            "User:953",
+//            "Authorization:zxZDLIqbMqV4TbZAHmz16wm9gb93hsljuJjgxFA-XRk"
+//    })
     Observable<Response<Void>> collect(@Field("sheet_id") String id);
 
     /**
      * 取消收藏歌单
+     *
      * @param id
      * @return
      */
