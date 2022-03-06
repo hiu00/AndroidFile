@@ -78,6 +78,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
      * 音乐播放管理器
      */
     private MusicPlayerManager musicPlayerManager;
+
     private ListManager listManager;
 
     @Override
