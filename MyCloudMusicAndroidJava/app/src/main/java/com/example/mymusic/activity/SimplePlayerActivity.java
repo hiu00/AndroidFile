@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
@@ -77,6 +78,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
      * 音乐播放管理器
      */
     private MusicPlayerManager musicPlayerManager;
+    private ListManager listManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,17 +90,20 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     protected void initDatum() {
         super.initDatum();
 
+        //初始化列表管理器
+        listManager = MusicPlayerService.getListManager(getApplicationContext());
+
         //使用MusicPlayerService获取音乐播放管理器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getApplicationContext());
 
-        //测试播放音乐
-        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s1.mp3";
-
-        Song song = new Song();
-        song.setUri(songUrl);
-
-        //播放音乐
-        musicPlayerManager.play(songUrl,song);
+//        //测试播放音乐
+//        String songUrl = "http://dev-courses-misuc.ixuea.com/assets/s1.mp3";
+//
+//        Song song = new Song();
+//        song.setUri(songUrl);
+//
+//        //播放音乐
+//        musicPlayerManager.play(songUrl,song);
     }
 
     @Override
@@ -181,9 +186,9 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
      */
     private void playOrPause() {
         if (musicPlayerManager.isPlaying()) {
-            musicPlayerManager.pause();
+            listManager.pause();
         } else {
-            musicPlayerManager.resume();
+            listManager.resume();
 
         }
     }
