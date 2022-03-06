@@ -27,4 +27,28 @@ public interface ListManager {
     void pause();
 
     void resume();
+
+    /**
+     * 获取下一首音乐
+     * @return
+     */
+    Song next();
+
+    /**
+     * 获取上一首音乐
+     * @return
+     */
+    Song previous();
+
+    /**
+     * 更改循环模式
+     * @return
+     */
+    int changeLoopModel();
+
+    /**
+     * 获取循环模式
+     * @return
+     */
+    int getLoopModel();
 }

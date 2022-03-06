@@ -1,5 +1,9 @@
 package com.example.mymusic.manager.impl;
 
+import static com.example.mymusic.util.Constant.MODEL_LOOP_LIST;
+import static com.example.mymusic.util.Constant.MODEL_LOOP_ONE;
+import static com.example.mymusic.util.Constant.MODEL_LOOP_RANDOM;
+
 import android.content.Context;
 
 import com.example.mymusic.domain.Song;
@@ -11,6 +15,7 @@ import com.example.mymusic.util.ResourceUtil;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 列表管理器的默认实现类
@@ -48,6 +53,11 @@ public class ListManagerImpl implements ListManager {
      * 正在播放
      */
     private boolean isPlay;
+
+    /**
+     * 歌曲循环模式
+     */
+    private int model = MODEL_LOOP_LIST;
 
     /**
      * 构造方法
@@ -105,7 +115,7 @@ public class ListManagerImpl implements ListManager {
 
     @Override
     public void pause() {
-        LogUtil.d(TAG,"resume");
+        LogUtil.d(TAG,"pause");
 
         musicPlayerManager.pause();
     }
@@ -123,5 +133,120 @@ public class ListManagerImpl implements ListManager {
             //而这时内部其实还没有准备播放，所以应该调用播放
             play(data);
         }
+    }
+
+    @Override
+    public Song next() {
+
+        //音乐索引
+        int index = 0;
+
+        //判断循环模式
+        switch (model){
+            case MODEL_LOOP_RANDOM:
+                //随机循环
+
+                //在0~datum.size()中
+                //不包含datum.size()
+                index = new Random().nextInt(datum.size());
+                break;
+            default:
+                //找到当前音乐索引
+                index = datum.indexOf(data);
+
+                if (index!=-1){
+                    //找到了
+
+                    //如果当前播放是列表第一个
+                    if(index == datum.size()-1){
+                        //最后一首音乐
+
+                        //那就从0开始播放
+                        index = 0;
+                    }else {
+                        index++;
+                    }
+                }else {
+                    //抛出异常
+                    //因为正常情况下是能找到的
+                    throw new IllegalArgumentException("Cant'found current song");
+                }
+                break;
+        }
+        return datum.get(index);
+    }
+
+    @Override
+    public Song previous() {
+        //音乐索引
+        int index = 0;
+
+        //判断循环模式
+        switch (model) {
+            case MODEL_LOOP_RANDOM:
+                //随机循环
+
+                //在0~datum.size()中
+                //不包含datum.size()
+                index = new Random().nextInt(datum.size());
+                break;
+            default:
+                //找到当前音乐索引
+                index = datum.indexOf(data);
+
+                if (index != -1) {
+                    //找到了
+
+                    //如果当前播放是列表第一个
+                    if (index == 0) {
+                        //第一首音乐
+
+                        //那就从最后开始播放
+                        index = datum.size() - 1;
+                    } else {
+                        index--;
+                    }
+                } else {
+                    //抛出异常
+                    //因为正常情况下是能找到的
+                    throw new IllegalArgumentException("Cant't find current song");
+                }
+                break;
+        }
+
+        //获取音乐
+        return datum.get(index);
+    }
+
+    @Override
+    public int changeLoopModel() {
+        //循环模式+1
+        model++;
+
+        //判断循环模式边界
+        if (model > MODEL_LOOP_RANDOM) {
+            //如果当前循环模式
+            //大于最后一个循环模式
+            //就设置为第0个循环模式
+            model = MODEL_LOOP_LIST;
+        }
+
+        //判断是否是单曲循环
+        if(MODEL_LOOP_ONE == model){
+            //单曲循环模式
+            //设置到mediaPlay
+            musicPlayerManager.setLooping(true);
+        }else {
+            //其他模式关闭循环
+            musicPlayerManager.setLooping(false);
+        }
+
+        //返回最终的循环模式
+        return model;
+    }
+
+    @Override
+    public int getLoopModel() {
+        return model;
     }
 }
