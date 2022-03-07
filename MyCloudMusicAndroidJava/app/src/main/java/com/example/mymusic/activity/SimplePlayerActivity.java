@@ -14,10 +14,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.SimplePlayerAdapter;
 import com.example.mymusic.domain.Song;
@@ -140,6 +142,18 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
         super.initListeners();
         //设置进度条监听器
         sb_progress.setOnSeekBarChangeListener(this);
+
+        //设置Item点击事件
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                //获取这首音乐
+                Song data = listManager.getDatum().get(position);
+
+                //播放音乐
+                listManager.play(data);
+            }
+        });
     }
 
     /**
