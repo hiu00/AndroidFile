@@ -5,9 +5,11 @@ import static com.example.mymusic.util.Constant.MODEL_LOOP_ONE;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_RANDOM;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.listener.ListManager;
+import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.LogUtil;
@@ -20,7 +22,7 @@ import java.util.Random;
 /**
  * 列表管理器的默认实现类
  */
-public class ListManagerImpl implements ListManager {
+public class ListManagerImpl implements ListManager, MusicPlayerListener {
     private static final String TAG = "ListManagerImpl";
     /**
      * 实例对象
@@ -68,6 +70,9 @@ public class ListManagerImpl implements ListManager {
 
         //初始化列表管理器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(this.context);
+
+        //添加音乐监听器
+        musicPlayerManager.addMusicPlayerListener(this);
     }
 
     /**
@@ -249,4 +254,52 @@ public class ListManagerImpl implements ListManager {
     public int getLoopModel() {
         return model;
     }
+
+    @Override
+    public Song getData() {
+        return data;
+    }
+
+    //音乐播放管理器
+    @Override
+    public void onPaused(Song data) {
+
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer, Song data) {
+
+    }
+
+    @Override
+    public void onProgress(Song data) {
+
+    }
+
+    /**
+     * 播放完毕了回调
+     * @param mediaPlayer
+     */
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        if (MODEL_LOOP_ONE==getLoopModel()){
+            //如果是单曲循环
+            //就不会处理了
+            //因为我们使用了MediaPlayer的循环模式
+        }else {
+            //其他模式
+
+            //播放下一首音乐
+            Song data = next();
+            if (data!=null){
+                play(data);
+            }
+        }
+    }
+    //end音乐播放管理器
 }

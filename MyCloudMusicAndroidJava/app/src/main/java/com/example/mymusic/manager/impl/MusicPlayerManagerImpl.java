@@ -251,6 +251,11 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager, MediaPlayer.O
             return;
         }
 
+        if(!isPlaying()){
+            //没有播放音乐就不启动定时器
+            return;
+        }
+
         if (timerTask!=null){
             //已经启动了
             return;

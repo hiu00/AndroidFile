@@ -211,6 +211,9 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
         //设置播放监听器
         musicPlayerManager.addMusicPlayerListener(this);
 
+        //显示初始化数据
+        showInitData();
+
         //显示音乐时长
         showDuration();
 
@@ -337,8 +340,22 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     public void onPrepared(MediaPlayer mediaPlayer, Song data) {
         LogUtil.d(TAG, "onPrepared:" + data.getProgress()+","+data.getDuration());
 
+        //显示初始化数据
+        showInitData();
+
         //显示时长
         showDuration();
+    }
+
+    /**
+     * 显示初始化数据
+     */
+    private void showInitData() {
+        //获取当前正在播放的音乐
+        Song data = listManager.getData();
+
+        //显示标题
+        tv_title.setText(data.getTitle());
     }
 
     /**
