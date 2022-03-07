@@ -4,6 +4,7 @@ import static com.example.mymusic.util.Constant.MODEL_LOOP_LIST;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_RANDOM;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
@@ -18,6 +19,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.mymusic.R;
+import com.example.mymusic.adapter.SimplePlayerAdapter;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
@@ -84,11 +86,24 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     private MusicPlayerManager musicPlayerManager;
 
     private ListManager listManager;
+    private SimplePlayerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_player);
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+
+        //高度固定
+        rv.setHasFixedSize(true);
+
+        //布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getMainActivity());
+        rv.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -109,6 +124,15 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
 //
 //        //播放音乐
 //        musicPlayerManager.play(songUrl,song);
+        
+        //创建适配器
+        adapter = new SimplePlayerAdapter(android.R.layout.simple_list_item_1);
+
+        //设置到控件
+        rv.setAdapter(adapter);
+
+        //设置数据
+        adapter.replaceData(listManager.getDatum());
     }
 
     @Override
