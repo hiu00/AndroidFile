@@ -354,6 +354,15 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     }
 
     /**
+     * 音乐播放完毕了监听器
+     * @param mediaPlayer
+     */
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        LogUtil.d(TAG,"onCompletion");
+    }
+
+    /**
      * 显示播放进度
      */
     private void showProgress(){

@@ -29,7 +29,7 @@ import java.util.TimerTask;
 /**
  * 播放管理器默认实现
  */
-public class MusicPlayerManagerImpl implements MusicPlayerManager {
+public class MusicPlayerManagerImpl implements MusicPlayerManager, MediaPlayer.OnCompletionListener {
     private static final String TAG = "MusicPlayerManagerImpl";
 
     /**
@@ -100,6 +100,9 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
                 ListUtil.eachListener(listeners,listener -> listener.onPrepared(mediaPlayer,data));
             }
         });
+
+        //设置播放完毕监听器
+        player.setOnCompletionListener(this);
     }
 
     /**
@@ -336,4 +339,14 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager {
             }
         }
     };
+
+    /**
+     * 音乐播放完毕了监听器
+     * @param mediaPlayer
+     */
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        //回调完成监听器
+        ListUtil.eachListener(listeners,listener -> listener.onCompletion(mediaPlayer));
+    }
 }

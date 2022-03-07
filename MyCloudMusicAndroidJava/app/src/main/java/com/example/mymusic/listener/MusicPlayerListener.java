@@ -32,4 +32,10 @@ public interface MusicPlayerListener {
      * @param data
      */
     void onProgress(Song data);
+
+    /**
+     * 播放完毕了监听器
+     * @param mediaPlayer
+     */
+    void onCompletion(MediaPlayer mediaPlayer);
 }
