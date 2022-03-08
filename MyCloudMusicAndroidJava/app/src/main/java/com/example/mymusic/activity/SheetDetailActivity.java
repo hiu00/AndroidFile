@@ -568,6 +568,8 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
     public void onPlayControlSmallClick() {
         LogUtil.d(TAG, "onPlayControlSmallClick");
 
+        //简单播放器界面
+        SimplePlayerActivity.start(getMainActivity());
     }
 
     /**
@@ -576,6 +578,12 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
     @OnClick(R.id.iv_play_small_control)
     public void onPlaySmallClick() {
         LogUtil.d(TAG, "onPlaySmallClick");
+
+        if (musicPlayerManager.isPlaying()){
+            listManager.pause();
+        }else {
+            listManager.resume();
+        }
     }
 
     /**
@@ -584,6 +592,12 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
     @OnClick(R.id.iv_next_small_control)
     public void onNextSmallClick() {
         LogUtil.d(TAG, "onNextSmallClick");
+
+        //获取下一首音乐
+        Song data = listManager.next();
+
+        //播放
+        listManager.play(data);
     }
 
     /**
