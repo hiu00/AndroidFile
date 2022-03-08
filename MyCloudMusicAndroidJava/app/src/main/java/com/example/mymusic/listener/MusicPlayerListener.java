@@ -37,5 +37,5 @@ public interface MusicPlayerListener {
      * 播放完毕了监听器
      * @param mediaPlayer
      */
-    void onCompletion(MediaPlayer mediaPlayer);
+    default void onCompletion(MediaPlayer mediaPlayer){}
 }
