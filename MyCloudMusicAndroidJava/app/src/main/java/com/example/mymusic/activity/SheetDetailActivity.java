@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +38,7 @@ import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.listener.ListManager;
+import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.manager.impl.ListManagerImpl;
 import com.example.mymusic.service.MusicPlayerService;
@@ -55,7 +57,7 @@ import retrofit2.Response;
 /**
  * 歌单详情界面
  */
-public class SheetDetailActivity extends BaseTitleActivity implements View.OnClickListener {
+public class SheetDetailActivity extends BaseTitleActivity implements View.OnClickListener, MusicPlayerListener {
 
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -598,9 +600,22 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
+        //添加播放管理器监听器
+        musicPlayerManager.addMusicPlayerListener(this);
 
         //显示迷你播放控制器数据
         showSmallPlayControlData();
+    }
+
+    /**
+     * 界面隐藏了
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //移除播放管理器监听器
+        musicPlayerManager.removeMusicPlayerListener(this);
     }
 
     /**
@@ -684,5 +699,25 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
 
         //显示标题
         tv_title_small_control.setText(data.getTitle());
+    }
+
+    @Override
+    public void onPaused(Song data) {
+        showPlayStatus();
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+        showPauseStatus();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer, Song data) {
+        showInitData(data);
+    }
+
+    @Override
+    public void onProgress(Song data) {
+        showProgress(data);
     }
 }
