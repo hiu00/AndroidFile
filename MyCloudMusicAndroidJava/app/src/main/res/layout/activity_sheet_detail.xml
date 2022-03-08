@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".activity.SheetDetailActivity">
 
     <!--标题控件-->
@@ -12,16 +13,20 @@
 
     <!--内容布局-->
     <LinearLayout
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_weight="1"
+            />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!--包含迷你播放控制器-->
+        <include layout="@layout/play_controll_small" />
+    </LinearLayout>
+</LinearLayout>

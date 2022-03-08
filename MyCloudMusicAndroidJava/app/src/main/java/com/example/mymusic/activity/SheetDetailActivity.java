@@ -22,6 +22,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -47,6 +48,7 @@ import com.example.mymusic.util.ToastUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import retrofit2.Response;
 
 /**
@@ -56,6 +58,36 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
 
     @BindView(R.id.rv)
     RecyclerView rv;
+
+    /**
+     * 迷你播放控制器 容器
+     */
+    @BindView(R.id.ll_play_control_small)
+    LinearLayout ll_play_control_small;
+
+    /**
+     * 迷你播放控制器 封面
+     */
+    @BindView(R.id.iv_banner_small_control)
+    ImageView iv_banner_small_control;
+
+    /**
+     * 迷你播放控制器 标题
+     */
+    @BindView(R.id.tv_title_small_control)
+    TextView tv_title_small_control;
+
+    /**
+     * 迷你播放控制器 播放暂停按钮
+     */
+    @BindView(R.id.iv_play_small_control)
+    ImageView iv_play_small_control;
+
+    /**
+     * 迷你播放控制器 进度条
+     */
+    @BindView(R.id.pb_progress_small_control)
+    ProgressBar pb_progress_small_control;
 
     private static final String TAG = "SheetDetailActivity";
     /**
@@ -520,5 +552,38 @@ public class SheetDetailActivity extends BaseTitleActivity implements View.OnCli
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 迷你播放控制器 容器点击
+     */
+    @OnClick(R.id.ll_play_control_small)
+    public void onPlayControlSmallClick() {
+        LogUtil.d(TAG, "onPlayControlSmallClick");
+
+    }
+
+    /**
+     * 迷你播放控制器 播放暂停按钮点击
+     */
+    @OnClick(R.id.iv_play_small_control)
+    public void onPlaySmallClick() {
+        LogUtil.d(TAG, "onPlaySmallClick");
+    }
+
+    /**
+     * 迷你播放控制器 下一曲按钮点击
+     */
+    @OnClick(R.id.iv_next_small_control)
+    public void onNextSmallClick() {
+        LogUtil.d(TAG, "onNextSmallClick");
+    }
+
+    /**
+     * 迷你播放控制器 播放列表按钮点击
+     */
+    @OnClick(R.id.iv_list_small_control)
+    public void onListSmallClick() {
+        LogUtil.d(TAG, "onListSmallClick");
     }
 }
