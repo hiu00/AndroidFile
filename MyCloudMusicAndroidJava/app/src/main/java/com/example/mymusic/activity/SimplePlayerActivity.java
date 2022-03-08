@@ -260,6 +260,9 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
 
         //显示播放进度
         showProgress();
+
+        //选中当前音乐
+        scrollPosition();
     }
 
     /**
@@ -383,6 +386,30 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
 
         //显示时长
         showDuration();
+
+        //选中当前音乐
+        scrollPosition();
+    }
+
+    /**
+     * 滚动到当前音乐位置
+     */
+    private void scrollPosition() {
+        //选中当前播放的音乐
+        rv.post(new Runnable() {
+            @Override
+            public void run() {
+                //获取当前音乐的位置
+                int index = listManager.getDatum().indexOf(listManager.getData());
+                if (index != -1){
+                    //滚动到该位置
+                    rv.smoothScrollToPosition(index);
+
+                    //选中
+                    adapter.setSelectedIndex(index);
+                }
+            }
+        });
     }
 
     /**
