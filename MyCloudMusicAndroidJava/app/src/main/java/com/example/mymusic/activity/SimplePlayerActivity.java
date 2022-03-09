@@ -483,7 +483,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
     /**
      * 滚动到当前音乐位置
      */
-    private void scrollPosition() {
+    public void scrollPosition() {
         //选中当前播放的音乐
         rv.post(new Runnable() {
             @Override
