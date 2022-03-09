@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mymusic.R;
 import com.example.mymusic.activity.BaseCommonActivity;
+import com.example.mymusic.activity.BaseMusicPlayerActivity;
 import com.example.mymusic.activity.BaseTitleActivity;
 import com.example.mymusic.activity.SettingActivity;
 import com.example.mymusic.activity.WebViewActivity;
@@ -43,7 +44,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseTitleActivity {
+public class MainActivity extends BaseMusicPlayerActivity {
 
     /**
      * 找侧滑控件

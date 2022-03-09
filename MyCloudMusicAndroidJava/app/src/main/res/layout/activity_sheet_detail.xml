@@ -27,6 +27,6 @@
             />
 
         <!--包含迷你播放控制器-->
-        <include layout="@layout/play_controll_small" />
+        <include layout="@layout/play_control_small" />
     </LinearLayout>
 </LinearLayout>

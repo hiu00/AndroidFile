@@ -521,53 +521,6 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
     }
 
     /**
-     * 迷你播放控制器 容器点击
-     */
-    @OnClick(R.id.ll_play_control_small)
-    public void onPlayControlSmallClick() {
-        LogUtil.d(TAG, "onPlayControlSmallClick");
-
-        //简单播放器界面
-        SimplePlayerActivity.start(getMainActivity());
-    }
-
-    /**
-     * 迷你播放控制器 播放暂停按钮点击
-     */
-    @OnClick(R.id.iv_play_small_control)
-    public void onPlaySmallClick() {
-        LogUtil.d(TAG, "onPlaySmallClick");
-
-        if (musicPlayerManager.isPlaying()){
-            listManager.pause();
-        }else {
-            listManager.resume();
-        }
-    }
-
-    /**
-     * 迷你播放控制器 下一曲按钮点击
-     */
-    @OnClick(R.id.iv_next_small_control)
-    public void onNextSmallClick() {
-        LogUtil.d(TAG, "onNextSmallClick");
-
-        //获取下一首音乐
-        Song data = listManager.next();
-
-        //播放
-        listManager.play(data);
-    }
-
-    /**
-     * 迷你播放控制器 播放列表按钮点击
-     */
-    @OnClick(R.id.iv_list_small_control)
-    public void onListSmallClick() {
-        LogUtil.d(TAG, "onListSmallClick");
-    }
-
-    /**
      * 界面显示了
      */
     @Override
