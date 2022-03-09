@@ -5,15 +5,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 简单播放界面列表适配器
  */
-public class SimplePlayerAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
+public class SimplePlayerAdapter extends BaseItemDraggableAdapter<Song, BaseViewHolder> {
     /**
      * 选中索引
      */
@@ -24,8 +28,16 @@ public class SimplePlayerAdapter extends BaseQuickAdapter<Song, BaseViewHolder> 
      * @param layoutResId
      */
     public SimplePlayerAdapter(int layoutResId) {
-        super(layoutResId);
+        super(layoutResId,new ArrayList<>());
     }
+
+    /**
+     * 构造方法
+     * @param layoutResId
+     */
+//    public SimplePlayerAdapter(int layoutResId) {
+//        super(layoutResId);
+//    }
 
     /**
      * 显示数据

@@ -3,7 +3,9 @@ package com.example.mymusic.activity;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_LIST;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_RANDOM;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +14,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +23,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.SimplePlayerAdapter;
 import com.example.mymusic.domain.Song;
@@ -89,6 +94,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
 
     private ListManager listManager;
     private SimplePlayerAdapter adapter;
+    private ItemDragAndSwipeCallback itemDragAndSwipeCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +141,80 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
 
         //设置数据
         adapter.replaceData(listManager.getDatum());
+
+        //列表滑动删除
+
+        //Item拖拽和滑动回调
+        itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(adapter){
+            /**
+             * 获取移动参数
+             *
+             * 主要就是告诉他是否开启拖拽，滑动
+             * 什么方向可以拖拽，滑动
+             *
+             * @param recyclerView
+             * @param viewHolder
+             * @return
+             */
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                //第一个参数控制拖拽
+                //第二个参数控制滑动
+
+                //禁用了拖拽
+                //开启了从右边滑动到左边
+                return isViewCreateByAdapter(viewHolder)?makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE,ItemTouchHelper.ACTION_STATE_IDLE)
+                        :makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE,ItemTouchHelper.LEFT);
+            }
+        };
+
+        //Item触摸帮助类
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+
+        //将帮助类附加到RecyclerView
+        itemTouchHelper.attachToRecyclerView(rv);
+
+        // 开启滑动删除
+        adapter.enableSwipeItem();
+
+        //创建滑动监听器
+        OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener(){
+
+            @Override
+            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+
+            @Override
+            public void clearView(RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+
+            /**
+             * 当前侧滑完成时回调
+             *
+             * @param viewHolder
+             * @param i
+             */
+            @Override
+            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+                //这个框架内部
+                //已经从adapter对应的列表中移除了对应位置的数据
+            }
+
+            @Override
+            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float v, float v1, boolean b) {
+
+            }
+        };
+
+        //设置滑动监听器
+        adapter.setOnItemSwipeListener(onItemSwipeListener);
+    }
+
+    private boolean isViewCreateByAdapter(@NonNull RecyclerView.ViewHolder viewHolder) {
+        int type = viewHolder.getItemViewType();
+        return type == 273 || type == 546 || type == 819 || type == 1365;
     }
 
     @Override
