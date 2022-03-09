@@ -57,4 +57,10 @@ public interface ListManager {
      * @return
      */
     Song getData();
+
+    /**
+     * 删除音乐
+     * @param position
+     */
+    void delete(int position);
 }
