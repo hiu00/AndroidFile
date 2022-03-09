@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.PlayListAdapter;
 import com.example.mymusic.listener.ListManager;
@@ -108,12 +109,29 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
         listManager = MusicPlayerService.getListManager(getMainActivity());
 
         //创建适配器
-        adapter = new PlayListAdapter(R.layout.item_play_list);
+        adapter = new PlayListAdapter(R.layout.item_play_list,listManager);
 
         //设置适配器
         rv.setAdapter(adapter);
 
         //设置数据
         adapter.replaceData(listManager.getDatum());
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+
+        //设置item点击事件
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                //关闭dialog
+                dismiss();
+
+                //播放点击的这首音乐
+                listManager.play(listManager.getDatum().get(position));
+            }
+        });
     }
 }
