@@ -30,7 +30,7 @@
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_guide.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_login_or_register.xml" value="0.264" />
-        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_main.xml" value="0.43731778425655976" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_me_fragment.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_register.xml" value="0.1828125" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/activity_setting.xml" value="0.22395833333333334" />
@@ -43,15 +43,17 @@
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/content_home.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/divider_meddle.xml" value="0.20104166666666667" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/divider_small.xml" value="0.2" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/divider_small_vertical.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fill.xml" value="0.196875" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fill2.xml" value="0.1766304347826087" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fragment_dialog_play_list.xml" value="0.31314878892733566" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fragment_discovery.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fragment_friend.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fragment_guide.xml" value="0.14351851851851852" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fragment_me.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/fragment_video.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/header_discovery.xml" value="0.24021592442645073" />
-        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/header_sheet_detail.xml" value="0.2" />
+        <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/header_sheet_detail.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/item_sheet.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/item_song.xml" value="0.1" />
         <entry key="..\:/AndroidFile/MyCloudMusicAndroidJava/app/src/main/res/layout/item_song_detail.xml" value="0.20794392523364486" />

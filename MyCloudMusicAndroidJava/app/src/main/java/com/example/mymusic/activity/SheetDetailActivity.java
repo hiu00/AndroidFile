@@ -2,14 +2,11 @@ package com.example.mymusic.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.palette.graphics.Palette;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -22,14 +19,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.SongAdapter;
 import com.example.mymusic.api.Api;
@@ -37,12 +31,6 @@ import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.listener.HttpObserver;
-import com.example.mymusic.listener.ListManager;
-import com.example.mymusic.listener.MusicPlayerListener;
-import com.example.mymusic.manager.MusicPlayerManager;
-import com.example.mymusic.manager.impl.ListManagerImpl;
-import com.example.mymusic.service.MusicPlayerService;
-import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ResourceUtil;
@@ -51,7 +39,6 @@ import com.example.mymusic.util.ToastUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import retrofit2.Response;
 
 /**
@@ -467,7 +454,7 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
             //没有收藏
 
             //将按钮文字改为收藏
-            bt_collection.setText(getResources().getString(R.string.collection_all,data.getCollections_count()));
+            bt_collection.setText(getResources().getString(R.string.collection,data.getCollections_count()));
 
             //设置按钮颜色为主色调
             bt_collection.setBackgroundResource(R.drawable.selector_color_primary);

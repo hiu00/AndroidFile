@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.listener.ListManager;
@@ -256,5 +257,15 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
     @OnClick(R.id.iv_list_small_control)
     public void onListSmallClick() {
         LogUtil.d(TAG, "onListSmallClick");
+
+        //显示播放列表对话框
+        showPlayListDialog();
+    }
+
+    /**
+     * 显示播放列表对话框
+     */
+    private void showPlayListDialog() {
+        PlayListDialogFragment.show(getSupportFragmentManager());
     }
 }
