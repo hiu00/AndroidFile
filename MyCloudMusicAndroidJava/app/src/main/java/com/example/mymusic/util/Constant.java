@@ -84,4 +84,6 @@ public class Constant {
      */
     public static final int MODEL_LOOP_RANDOM = 2;
 
+    public static final String SHEET = "SHEET";
+    public static final String SONG = "SONG";
 }

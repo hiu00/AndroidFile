@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.mymusic.Fragment.SongMoreDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.SongAdapter;
 import com.example.mymusic.api.Api;
@@ -531,5 +532,8 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
     @Override
     public void onMoreClick(Song data) {
         LogUtil.d(TAG, "onMoreClick:" + data.getTitle());
+
+        //显示歌曲对话框
+        SongMoreDialogFragment.show(getSupportFragmentManager(),this.data,data);
     }
 }
