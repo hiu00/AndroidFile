@@ -1,5 +1,7 @@
 package com.example.mymusic.adapter;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,6 +13,20 @@ import com.example.mymusic.domain.Song;
  * 歌单详情-歌曲适配器
  */
 public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
+
+    /**
+     * 监听器
+     */
+    private SongListener songListener;
+
+    /**
+     * 设置音乐监听器
+     * @param songListener
+     */
+    public void setSongListener(SongListener songListener) {
+        this.songListener = songListener;
+    }
+
     /**
      * 构造方法
      * @param layoutResId 布局Id
@@ -34,5 +50,22 @@ public class SongAdapter extends BaseQuickAdapter<Song, BaseViewHolder> {
 
         //显示歌手信息
         helper.setText(R.id.tv_info,data.getSinger().getNickname());
+
+        //设置更多点击事件
+        View ib_more = helper.getView(R.id.ib_more);
+
+        //设置更多按钮点击事件
+        ib_more.setOnClickListener(view -> songListener.onMoreClick(data));
+    }
+
+    /**
+     * 定义监听器
+     */
+    public interface SongListener{
+        /**
+         * 音乐更多点击
+         * @param data
+         */
+        void onMoreClick(Song data);
     }
 }

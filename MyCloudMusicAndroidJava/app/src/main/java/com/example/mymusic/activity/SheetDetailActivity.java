@@ -44,7 +44,7 @@ import retrofit2.Response;
 /**
  * 歌单详情界面
  */
-public class SheetDetailActivity extends BaseMusicPlayerActivity implements View.OnClickListener{
+public class SheetDetailActivity extends BaseMusicPlayerActivity implements View.OnClickListener, SongAdapter.SongListener {
 
     @BindView(R.id.rv)
     RecyclerView rv;
@@ -177,6 +177,9 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
             //播放当前位置的音乐
             play(position);
         });
+
+        //设置音乐监听器
+        adapter.setSongListener(this);
     }
 
     /**
@@ -519,5 +522,14 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
     @Override
     public void onPrepared(MediaPlayer mediaPlayer, Song data) {
         super.onPrepared(mediaPlayer, data);
+    }
+
+    /**
+     * 音乐更多点击
+     * @param data
+     */
+    @Override
+    public void onMoreClick(Song data) {
+        LogUtil.d(TAG, "onMoreClick:" + data.getTitle());
     }
 }
