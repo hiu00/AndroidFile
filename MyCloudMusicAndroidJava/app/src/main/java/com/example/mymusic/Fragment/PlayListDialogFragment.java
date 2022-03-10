@@ -21,6 +21,7 @@ import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.EventBusUtil;
+import com.example.mymusic.util.PlayListUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -135,6 +136,12 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
 
         //设置数据
         adapter.replaceData(listManager.getDatum());
+
+        //显示循环模式
+        PlayListUtil.showLoopModel(listManager,tv_loop_model);
+
+        //显示音乐数据
+        tv_count.setText(String.format("(%d)",listManager.getDatum().size()));
     }
 
     @Override

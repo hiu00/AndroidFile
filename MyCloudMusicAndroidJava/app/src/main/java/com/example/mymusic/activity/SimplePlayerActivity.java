@@ -34,6 +34,7 @@ import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.NotificationUtil;
+import com.example.mymusic.util.PlayListUtil;
 import com.example.mymusic.util.TimeUtil;
 import com.example.mymusic.util.ToastUtil;
 
@@ -396,29 +397,7 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
         listManager.changeLoopModel();
 
         //显示循环模式
-        showLoopModel();
-    }
-
-    /**
-     * 显示循环模式
-     */
-    private void showLoopModel() {
-        ////获取当前循环模式
-        int model = listManager.getLoopModel();
-
-        //根据不同循环模式
-        //显示不同的提示
-        switch (model){
-            case MODEL_LOOP_LIST:
-                bt_loop_model.setText("列表循环");
-                break;
-            case MODEL_LOOP_RANDOM:
-                bt_loop_model.setText("随机模式");
-                break;
-            default:
-                bt_loop_model.setText("单曲循环");
-                break;
-        }
+        PlayListUtil.showLoopModel(listManager, bt_loop_model);
     }
 
     /**
