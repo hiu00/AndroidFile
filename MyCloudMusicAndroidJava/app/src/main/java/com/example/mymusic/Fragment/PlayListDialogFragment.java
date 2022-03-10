@@ -16,12 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.PlayListAdapter;
+import com.example.mymusic.domain.event.PlayListChangedEvent;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
+import com.example.mymusic.util.EventBusUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 迷你控制器 播放列表(即更多按钮)
@@ -72,6 +77,20 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
         return fragment;
     }
 
+    /**
+     * 删除所有按钮点击
+     */
+    @OnClick(R.id.ib_delete_all)
+    public void onDeleteAllClick(){
+        //关闭对话框
+        dismiss();
+
+        //删除全部音乐
+        listManager.deleteAll();
+
+        //发送音乐列表改变通知
+        EventBusUtil.postPlayListChangedEvent();
+    }
     /**
      * 显示对话框
      * @param fragmentManager
@@ -148,6 +167,9 @@ public class PlayListDialogFragment extends BaseBottomSheetDialogFragment {
 
                     //从列表管理器中删除
                     listManager.delete(position);
+
+                    //发送音乐列表改变通知
+                    EventBusUtil.postPlayListChangedEvent();
                 }
             }
         });

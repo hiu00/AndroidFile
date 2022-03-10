@@ -10,12 +10,17 @@ import android.widget.TextView;
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.event.PlayListChangedEvent;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -85,6 +90,9 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
 
         //显示迷你播放控制器数据
         showSmallPlayControlData();
+
+        //注册播放列表改变了监听
+        EventBus.getDefault().register(this);
     }
 
     /**
@@ -96,6 +104,20 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
 
         //移除播放管理器监听器
         musicPlayerManager.removeMusicPlayerListener(this);
+
+        //解除发布订阅框架注册
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 播放列表改变了事件
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPlayListChangedEvent(PlayListChangedEvent event){
+        //显示迷你播放控制器数据
+        showSmallPlayControlData();
     }
 
     /**

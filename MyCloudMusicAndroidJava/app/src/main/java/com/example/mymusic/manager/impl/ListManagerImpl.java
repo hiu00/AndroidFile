@@ -296,6 +296,16 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
             datum.remove(song);
     }
 
+    @Override
+    public void deleteAll() {
+        //如果在播放音乐就暂停
+        if (musicPlayerManager.isPlaying()){
+            pause();
+        }
+        //清空列表
+        datum.clear();
+    }
+
     //音乐播放管理器
     @Override
     public void onPaused(Song data) {
