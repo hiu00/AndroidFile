@@ -10,6 +10,7 @@ import android.os.IBinder;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.manager.impl.ListManagerImpl;
+import com.example.mymusic.manager.impl.MusicNotificationManager;
 import com.example.mymusic.manager.impl.MusicPlayerManagerImpl;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.NotificationUtil;
@@ -21,6 +22,7 @@ import com.google.android.material.tabs.TabLayout;
  */
 public class MusicPlayerService extends Service {
     private static final String TAG = "MusicPlayerService";
+    private MusicNotificationManager musicNotificationManager;
 
 
     /**
@@ -63,6 +65,9 @@ public class MusicPlayerService extends Service {
     public void onCreate() {
         super.onCreate();
         LogUtil.d(TAG,"onCreate");
+
+        //初始化音乐通知管理器
+        musicNotificationManager = MusicNotificationManager.getInstance(getApplicationContext());
     }
 
     /**
