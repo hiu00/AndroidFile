@@ -86,4 +86,9 @@ public class Constant {
 
     public static final String SHEET = "SHEET";
     public static final String SONG = "SONG";
+
+    /**
+     * 音乐播放通知id
+     */
+    public static final int NOTIFICATION_MUSIC_ID = 10000;
 }
