@@ -271,7 +271,7 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager, MediaPlayer.O
                     return;
                 }
 
-                LogUtil.d(TAG, "time task progress");
+                //LogUtil.d(TAG, "time task progress");
 
                 //这里是子线程
                 //不能直接操作UI

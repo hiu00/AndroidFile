@@ -35,6 +35,8 @@
     <dimen name="avatar_width_meddle">40dp</dimen>
     <dimen name="banner_height_small">35dp</dimen>
     <dimen name="progress_bar_height_small">2dp</dimen>
+    <dimen name="notification_height_meddle">120dp</dimen>
+    <dimen name="icon_height">24dp</dimen>
 
     <!--行高比例-->
     <item name="line_spacing_multiplier" type="dimen" format="float">1.2</item>
