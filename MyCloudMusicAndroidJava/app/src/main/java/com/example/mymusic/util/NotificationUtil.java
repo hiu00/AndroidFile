@@ -10,6 +10,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.example.mymusic.R;
+import com.example.mymusic.domain.Song;
 
 /**
  * 通知工具类
@@ -19,6 +20,7 @@ public class NotificationUtil {
      * 通知渠道
      */
     private static final String IMPORTANCE_LOW_CHANNEL_ID = "IMPORTANCE_LOW_CHANNEL_ID";
+    private static final String TAG = "NotificationUtil";
 
     /**
      * 通知管理器实例
@@ -47,10 +49,10 @@ public class NotificationUtil {
         //内容随便写
         Notification notification = new NotificationCompat.Builder(context, IMPORTANCE_LOW_CHANNEL_ID)
                 //通知标题
-                .setContentTitle("我们是爱学啊")
+                .setContentTitle("我是晏传利")
 
                 //通知内容
-                .setContentText("人生苦短，我们只做好课！")
+                .setContentText("好好学习，天天向上！")
 
                 //通知小图标
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -81,5 +83,15 @@ public class NotificationUtil {
      */
     public static void showNotification(int id, Notification notification) {
         notificationManager.notify(id,notification);
+    }
+
+    /**
+     * 显示音乐通知
+     * @param context
+     * @param data
+     * @param isPlaying
+     */
+    public static void showMusicNotification(Context context, Song data, boolean isPlaying) {
+        LogUtil.d(TAG, "showMusicNotification:" + data.getTitle() + "," + isPlaying);
     }
 }
