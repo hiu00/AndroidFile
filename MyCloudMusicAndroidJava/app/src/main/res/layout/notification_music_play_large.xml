@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/notification_height_meddle"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
@@ -27,7 +28,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/text"
-            android:text="这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称"
+            tools:text="这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -38,7 +39,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/light_grey"
-            android:text="这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称"
+            tools:text="这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称这是歌曲名称"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

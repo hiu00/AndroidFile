@@ -106,15 +106,18 @@ public class NotificationUtil {
         //创建通知渠道
         createNotificationChannel();
 
-        //这个布局的根View的尺寸不能引用dimen文件
-        //要写死
-
         //创建RemoteView
         //显示自定义通知固定写法
         RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_music_play);
 
+        //显示数据
+        setData(data, contentView, isPlaying);
+
         //创建大通知
         RemoteViews contentBigView = new RemoteViews(context.getPackageName(), R.layout.notification_music_play_large);
+
+        //显示数据
+        setData(data, contentBigView, isPlaying);
 
         //创建NotificationCompat.Builder
         //这是构建者设计模式
@@ -137,6 +140,29 @@ public class NotificationUtil {
 
         //显示通知
         NotificationUtil.notify(context,Constant.NOTIFICATION_MUSIC_ID,builder.build());
+    }
+
+    /**
+     * 显示数据
+     * @param data
+     * @param contentView
+     * @param isPlaying
+     */
+    private static void setData(Song data, RemoteViews contentView, boolean isPlaying) {
+        //TODO 封面
+
+        //标题
+        contentView.setTextViewText(R.id.tv_title,data.getTitle());
+
+        //信息
+        //由于服务端没有实现专辑
+        //所以就显示测试信息
+        contentView.setTextViewText(R.id.tv_info,String.format("%s - 这是专辑1",data.getSinger().getNickname()));
+
+        //显示播放按钮
+        int playButtonResourceId = isPlaying?R.drawable.ic_music_notification_pause:R.drawable.ic_music_notification_play;
+
+        contentView.setImageViewResource(R.id.iv_play,playButtonResourceId);
     }
 
     /**
