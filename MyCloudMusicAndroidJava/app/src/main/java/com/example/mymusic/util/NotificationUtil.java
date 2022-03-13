@@ -4,12 +4,20 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.widget.RemoteViews;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 
@@ -103,6 +111,42 @@ public class NotificationUtil {
     public static void showMusicNotification(Context context, Song data, boolean isPlaying) {
         LogUtil.d(TAG, "showMusicNotification:" + data.getTitle() + "," + isPlaying);
 
+        //先加载图片
+        //因为我们的图片是在线的
+        //而显示通知时没法直接显示网络图片
+        //所以需要我们先把图片下载下来
+
+        //创建请求选项
+        RequestOptions options = ImageUtil.getCommonRequestOptions();
+
+        //下载图片
+        Glide.with(context)
+                .asBitmap()
+                .load(ResourceUtil.resourceUri(data.getBanner()))
+                .apply(options)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        //图片下载完成
+                        showMusicNotification(context,data,isPlaying,resource);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
+
+    }
+
+    /**
+     * 显示音乐通知
+     * @param context
+     * @param data
+     * @param isPlaying
+     * @param resource
+     */
+    public static void showMusicNotification(Context context, Song data, boolean isPlaying, Bitmap resource) {
         //创建通知渠道
         createNotificationChannel();
 
@@ -111,13 +155,13 @@ public class NotificationUtil {
         RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_music_play);
 
         //显示数据
-        setData(data, contentView, isPlaying);
+        setData(data, contentView, isPlaying,resource);
 
         //创建大通知
         RemoteViews contentBigView = new RemoteViews(context.getPackageName(), R.layout.notification_music_play_large);
 
         //显示数据
-        setData(data, contentBigView, isPlaying);
+        setData(data, contentBigView, isPlaying,resource);
 
         //创建NotificationCompat.Builder
         //这是构建者设计模式
@@ -147,9 +191,11 @@ public class NotificationUtil {
      * @param data
      * @param contentView
      * @param isPlaying
+     * @param resource
      */
-    private static void setData(Song data, RemoteViews contentView, boolean isPlaying) {
-        //TODO 封面
+    private static void setData(Song data, RemoteViews contentView, boolean isPlaying, Bitmap resource) {
+        //封面
+        contentView.setImageViewBitmap(R.id.iv_banner,resource);
 
         //标题
         contentView.setTextViewText(R.id.tv_title,data.getTitle());
