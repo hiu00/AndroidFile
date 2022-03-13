@@ -30,6 +30,7 @@ import com.example.mymusic.adapter.SongAdapter;
 import com.example.mymusic.api.Api;
 import com.example.mymusic.domain.Sheet;
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.event.CollectSongClickEvent;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.util.ImageUtil;
@@ -38,6 +39,8 @@ import com.example.mymusic.util.ResourceUtil;
 import com.example.mymusic.util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import retrofit2.Response;
@@ -535,5 +538,14 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
 
         //显示歌曲对话框
         SongMoreDialogFragment.show(getSupportFragmentManager(),this.data,data);
+    }
+
+    /**
+     * 收藏歌曲到歌单点击回调事件
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCollectSongClickEvent(CollectSongClickEvent event){
+        LogUtil.d(TAG, "onCollectSongClickEvent:" + event.getData().getTitle());
     }
 }

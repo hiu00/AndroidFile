@@ -29,6 +29,7 @@
 
             <!--封面-->
             <ImageView
+                android:id="@+id/iv_banner"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/placeholder"
                 android:layout_width="@dimen/button_height"
@@ -46,6 +47,7 @@
 
             <!--标题-->
             <TextView
+                android:id="@+id/tv_title"
                 android:textColor="@color/text"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -55,6 +57,7 @@
 
             <!--歌手信息-->
             <TextView
+                android:id="@+id/tv_info"
                 tools:text="这是歌手信息"
                 android:textColor="@color/light_grey"
                 android:textSize="@dimen/text_small"
