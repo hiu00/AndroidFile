@@ -290,4 +290,11 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
     private void showPlayListDialog() {
         PlayListDialogFragment.show(getSupportFragmentManager());
     }
+
+    /**
+     * 进入音乐播放界面
+     */
+    protected void startMusicPlayerActivity() {
+        SimplePlayerActivity.start(getMainActivity());
+    }
 }

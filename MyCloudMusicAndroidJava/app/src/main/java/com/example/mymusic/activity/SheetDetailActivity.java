@@ -201,7 +201,7 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
         listManager.play(data);
 
         //跳转到简单播放器界面
-        SimplePlayerActivity.start(getMainActivity());
+        startMusicPlayerActivity();
     }
 
     /**

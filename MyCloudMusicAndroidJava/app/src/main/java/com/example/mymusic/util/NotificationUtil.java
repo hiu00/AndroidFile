@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.mymusic.MainActivity;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 
@@ -182,6 +183,17 @@ public class NotificationUtil {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         contentBigView.setOnClickPendingIntent(R.id.iv_previous, previousPendingIntent);
 
+        //设置通知点击后启动的界面
+        Intent intent = new Intent(context, MainActivity.class);
+
+        //传递一个动作
+        intent.setAction(Constant.ACTION_MUSIC_PLAY_CLICK);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        //创建通知点击的PendingIntent
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(context, Constant.ACTION_MUSIC_PLAY_CLICK.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         //创建NotificationCompat.Builder
         //这是构建者设计模式
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, IMPORTANCE_LOW_CHANNEL_ID)
@@ -199,7 +211,10 @@ public class NotificationUtil {
                 .setCustomContentView(contentView)
 
                 //设置大内容view
-                .setCustomBigContentView(contentBigView);
+                .setCustomBigContentView(contentBigView)
+
+                //点击后执行的动作
+                .setContentIntent(contentPendingIntent);
 
         //显示通知
         NotificationUtil.notify(context,Constant.NOTIFICATION_MUSIC_ID,builder.build());

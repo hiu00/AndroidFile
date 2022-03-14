@@ -33,6 +33,7 @@
         <activity
             android:name=".activity.SimplePlayerActivity"
             android:exported="false"
+            android:launchMode="singleTop"
             android:label="@string/activity_simple_player" />
         <activity
             android:name=".activity.UserDetailActivity"

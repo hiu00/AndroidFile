@@ -294,6 +294,11 @@ public class MainActivity extends BaseMusicPlayerActivity {
 
             //显示广告界面
             WebViewActivity.start(getMainActivity(),"活动详情",intent.getStringExtra(Constant.URL));
+        }else if (Constant.ACTION_MUSIC_PLAY_CLICK.equals(intent.getAction())){
+            //音乐点击
+
+            //进入音乐播放界面
+            startMusicPlayerActivity();
         }
     }
 
