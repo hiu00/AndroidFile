@@ -16,6 +16,7 @@ import com.facebook.stetho.Stetho;
 import org.greenrobot.eventbus.EventBus;
 
 import es.dmoral.toasty.Toasty;
+import io.realm.Realm;
 
 /**
  * 全局Application
@@ -53,6 +54,9 @@ public class AppContext extends MultiDexApplication {
         //初始化Stetho抓包
         //使用默认参数初始化
         Stetho.initializeWithDefaults(this);
+
+        //初始化Realm数据库
+        Realm.init(context);
     }
 
     public void login(PreferenceUtil sp, Session data){

@@ -3,6 +3,9 @@ plugins {
     id 'com.android.application'
 }
 
+//realm数据库
+apply plugin: 'realm-android'
+
 //ShareSDK
 //apply plugin: 'com.mob.sdk'
 
