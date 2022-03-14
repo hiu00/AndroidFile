@@ -3,7 +3,9 @@ package com.example.mymusic.util;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -157,11 +159,28 @@ public class NotificationUtil {
         //显示数据
         setData(data, contentView, isPlaying,resource);
 
+        //设置通知点击事件
+        setClick(context, contentView);
+
         //创建大通知
         RemoteViews contentBigView = new RemoteViews(context.getPackageName(), R.layout.notification_music_play_large);
 
         //显示数据
         setData(data, contentBigView, isPlaying,resource);
+
+        //设置通知点击事件
+        setClick(context, contentBigView);
+
+        //点赞
+        PendingIntent likePendingIntent = PendingIntent.getBroadcast(context, Constant.ACTION_LIKE.hashCode(), new Intent(Constant.ACTION_LIKE), PendingIntent.FLAG_UPDATE_CURRENT);
+        contentBigView.setOnClickPendingIntent(R.id.iv_like,likePendingIntent);
+
+        //上一首
+        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(context,
+                Constant.ACTION_PREVIOUS.hashCode(),
+                new Intent(Constant.ACTION_PREVIOUS),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        contentBigView.setOnClickPendingIntent(R.id.iv_previous, previousPendingIntent);
 
         //创建NotificationCompat.Builder
         //这是构建者设计模式
@@ -184,6 +203,26 @@ public class NotificationUtil {
 
         //显示通知
         NotificationUtil.notify(context,Constant.NOTIFICATION_MUSIC_ID,builder.build());
+    }
+
+    /**
+     * 设置通知点击事件
+     * @param context
+     * @param contentView
+     */
+    private static void setClick(Context context, RemoteViews contentView) {
+        //播放按钮点击事件
+        PendingIntent playPendingIntent = PendingIntent.getBroadcast(context, Constant.ACTION_PLAY.hashCode(), new Intent(Constant.ACTION_PLAY), PendingIntent.FLAG_UPDATE_CURRENT);
+        //设置到播放按钮
+        contentView.setOnClickPendingIntent(R.id.iv_play,playPendingIntent);
+
+        //下一曲点击事件
+        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(context, Constant.ACTION_NEXT.hashCode(), new Intent(Constant.ACTION_NEXT), PendingIntent.FLAG_UPDATE_CURRENT);
+        contentView.setOnClickPendingIntent(R.id.iv_next,nextPendingIntent);
+
+        //歌词点击事件
+        PendingIntent lyricPendingIntent = PendingIntent.getBroadcast(context, Constant.ACTION_LYRIC.hashCode(), new Intent(Constant.ACTION_LYRIC), PendingIntent.FLAG_UPDATE_CURRENT);
+        contentView.setOnClickPendingIntent(R.id.iv_lyric,lyricPendingIntent);
     }
 
     /**
