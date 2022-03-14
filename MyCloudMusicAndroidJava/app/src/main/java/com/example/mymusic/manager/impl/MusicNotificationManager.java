@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
@@ -30,6 +31,7 @@ public class MusicNotificationManager implements MusicPlayerListener {
     private final Context context;
     private final MusicPlayerManager musicPlayerManager;
     private BroadcastReceiver musicNotificationBroadcastReceiver;
+    private final ListManager listManager;
 
     /**
      * 构造方法
@@ -37,6 +39,8 @@ public class MusicNotificationManager implements MusicPlayerListener {
      */
     public MusicNotificationManager(Context context) {
         this.context=context.getApplicationContext();
+        //初始化列表管理器
+        listManager = MusicPlayerService.getListManager(this.context);
 
         //初始化音乐播放管理器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(this.context);
@@ -69,12 +73,22 @@ public class MusicNotificationManager implements MusicPlayerListener {
                 }else if (Constant.ACTION_PREVIOUS.equals(action)) {
                     //上一曲
                     LogUtil.d(TAG, "previous");
+
+                    listManager.play(listManager.previous());
                 } else if (Constant.ACTION_PLAY.equals(action)) {
                     //播放
                     LogUtil.d(TAG, "play");
+
+                    if (musicPlayerManager.isPlaying()){
+                        listManager.pause();
+                    }else {
+                        listManager.resume();
+                    }
                 } else if (Constant.ACTION_NEXT.equals(action)) {
                     //下一曲
                     LogUtil.d(TAG, "next");
+
+                    listManager.play(listManager.next());
                 } else if (Constant.ACTION_LYRIC.equals(action)) {
                     //歌词
                     LogUtil.d(TAG, "lyric");
