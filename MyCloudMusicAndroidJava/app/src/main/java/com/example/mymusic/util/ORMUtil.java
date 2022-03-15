@@ -166,4 +166,33 @@ public class ORMUtil {
 
         return songs;
     }
+
+    /**
+     * 删除音乐
+     * @param data
+     */
+    public void deleteSong(Song data) {
+        //获取数据库对象
+        Realm realm = getInstance();
+
+        //要先查询到要删除的数据
+        //然后在删除
+        SongLocal songLocal = realm.where(SongLocal.class)
+                .equalTo("playList", true)
+                .and()
+                .equalTo("id", data.getId())
+                .findFirst();
+
+        //开启事务
+        realm.beginTransaction();
+
+        //设置播放列表标准
+        songLocal.setPlayList(false);
+
+        //提交事务
+        realm.commitTransaction();
+
+        //关闭数据库
+        realm.close();
+    }
 }

@@ -381,6 +381,9 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
         }
             //直接删除
             datum.remove(song);
+
+        //从数据库中删除
+        orm.deleteSong(song);
     }
 
     @Override
