@@ -394,6 +394,11 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
         }
         //清空列表
         datum.clear();
+
+        //从数据库中删除
+        orm.deleteAll();
+
+
     }
 
     //音乐播放管理器

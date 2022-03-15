@@ -137,12 +137,21 @@ public class ORMUtil {
         Realm realm = getInstance();
 
         //查询播放列表
-        RealmResults<SongLocal> songLocals = realm.where(SongLocal.class)
-                .equalTo("playList", true)
-                .findAll();
+        RealmResults<SongLocal> songLocals = queryPlayListSongLocals(realm);
 
         //返回数据
         return tosongs(songLocals,realm);
+    }
+
+    /**
+     * 查询本地播放列表音乐
+     * @return
+     * @param realm
+     */
+    private RealmResults<SongLocal> queryPlayListSongLocals(Realm realm) {
+        return realm.where(SongLocal.class)
+                .equalTo("playList", true)
+                .findAll();
     }
 
     /**
@@ -188,6 +197,33 @@ public class ORMUtil {
 
         //设置播放列表标准
         songLocal.setPlayList(false);
+
+        //提交事务
+        realm.commitTransaction();
+
+        //关闭数据库
+        realm.close();
+    }
+
+    /**
+     * 删除所有播放列表
+     */
+    public void deleteAll() {
+        //获取数据库对象
+        Realm realm = getInstance();
+
+        //查询所有播放列表数据
+        RealmResults<SongLocal> songLocals = queryPlayListSongLocals(realm);
+
+        //开启事务
+        realm.beginTransaction();
+
+        //遍历音乐
+        for (SongLocal songLocal : songLocals
+        ) {
+            //更改播放列表标志
+            songLocal.setPlayList(false);
+        }
 
         //提交事务
         realm.commitTransaction();
