@@ -62,6 +62,16 @@ public class Song extends BaseMultiItemEntity {
      */
     private long progress;
 
+    /**
+     * 受否在播放列表
+     */
+    private boolean playList;
+
+    /**
+     * 来源
+     */
+    private  int source;
+
     public String getTitle() {
         return title;
     }
@@ -150,8 +160,57 @@ public class Song extends BaseMultiItemEntity {
         this.progress = progress;
     }
 
+    public boolean isPlayList() {
+        return playList;
+    }
+
+    public void setPlayList(boolean playList) {
+        this.playList = playList;
+    }
+
+    public int getSource() {
+        return source;
+    }
+
+    public void setSource(int source) {
+        this.source = source;
+    }
+
     @Override
     public int getItemType() {
         return TYPE_SONG;
+    }
+
+    /**
+     * 将Song转为SongLocal对象
+     * @return
+     */
+    public SongLocal toSongLocal() {
+        //创建对象
+        SongLocal songLocal = new SongLocal();
+
+        //赋值
+        songLocal.setId(getId());
+        songLocal.setTitle(title);
+        songLocal.setBanner(banner);
+        songLocal.setUri(uri);
+
+        //歌手
+        songLocal.setSinger_id(singer.getId());
+        songLocal.setSinger_nickname(singer.getNickname());
+        songLocal.setSinger_avatar(singer.getAvatar());
+
+        //是否在播放列表
+        songLocal.setPlayList(playList);
+
+        //来源
+        songLocal.setSource(source);
+
+        //音乐时长
+        songLocal.setDuration(duration);
+
+        //播放进度
+        songLocal.setProgress(progress);
+        return songLocal;
     }
 }

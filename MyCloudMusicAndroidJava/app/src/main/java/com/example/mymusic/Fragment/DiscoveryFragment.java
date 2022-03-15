@@ -149,7 +149,7 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
         //请求轮播图数据
         fetchBannerData();
 
-        orm.saveSong(new Song());
+        //orm.saveSong(new Song());
     }
 
     @Override

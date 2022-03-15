@@ -12,7 +12,9 @@ import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
+import com.example.mymusic.util.DataUtil;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.ORMUtil;
 import com.example.mymusic.util.ResourceUtil;
 
 import java.util.LinkedList;
@@ -60,6 +62,7 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
      * 歌曲循环模式
      */
     private int model = MODEL_LOOP_LIST;
+    private final ORMUtil orm;
 
     /**
      * 构造方法
@@ -73,6 +76,9 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
         //添加音乐监听器
         musicPlayerManager.addMusicPlayerListener(this);
+
+        //初始化数据库
+        orm = ORMUtil.getInstance(this.context);
     }
 
     /**
@@ -91,11 +97,23 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
     public void setDatum(List<Song> datum) {
         LogUtil.d(TAG,"setDatum");
 
+        //将原来数据playList标志设置为false
+        DataUtil.changePlayListFlag(this.datum, false);
+
+        //保存到数据库
+        saveAll();
+
         //清空原来的数据
         this.datum.clear();
 
         //添加新的数据
         this.datum.addAll(datum);
+
+        //更改播放列表标志
+        DataUtil.changePlayListFlag(this.datum, true);
+
+        //保存到数据库
+        saveAll();
     }
 
     @Override
@@ -348,4 +366,11 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
         }
     }
     //end音乐播放管理器
+
+    /**
+     * 保存播放列表
+     */
+    private void saveAll() {
+        orm.saveAll(datum);
+    }
 }

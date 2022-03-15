@@ -3,6 +3,9 @@ package com.example.mymusic.util;
 import android.content.Context;
 
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.SongLocal;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -11,6 +14,7 @@ import io.realm.RealmConfiguration;
  * 数据库工具类
  */
 public class ORMUtil {
+    private static final String TAG = "ORMUtil";
     /**
      * 单例
      */
@@ -50,11 +54,28 @@ public class ORMUtil {
      * @param data
      */
     public void saveSong(Song data){
+        //将Song转为SongLocal对象
+        SongLocal songLocal = data.toSongLocal();
+
         //获取数据库对象
         Realm realm = getInstance();
 
+        //开启事务
+        realm.beginTransaction();
+
+        //新增或者更新
+        realm.copyToRealmOrUpdate(songLocal);
+
+        //提交事务
+        realm.commitTransaction();
+
         //关闭数据库
         realm.close();
+
+        //关闭数据库
+        realm.close();
+
+        LogUtil.d(TAG,"saveSong:"+songLocal.getTitle());
     }
 
     /**
@@ -76,5 +97,32 @@ public class ORMUtil {
      */
     public static void destroy() {
         instance = null;
+    }
+
+    /**
+     * 保存所有音乐
+     * @param datum
+     */
+    public void saveAll(List<Song> datum) {
+        //获取数据库对象
+        Realm realm = getInstance();
+
+        //开启事务
+        realm.beginTransaction();
+
+        SongLocal songLocal = null;
+        for (Song data : datum) {
+            //将Song转为SongLocal对象
+            songLocal = data.toSongLocal();
+
+            //新增或者更新
+            realm.copyToRealmOrUpdate(songLocal);
+        }
+
+        //提交事务
+        realm.commitTransaction();
+
+        //关闭数据库
+        realm.close();
     }
 }
