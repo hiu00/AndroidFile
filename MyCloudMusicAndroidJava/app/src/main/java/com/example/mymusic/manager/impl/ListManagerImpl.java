@@ -19,6 +19,8 @@ import com.example.mymusic.util.ORMUtil;
 import com.example.mymusic.util.PreferenceUtil;
 import com.example.mymusic.util.ResourceUtil;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -90,6 +92,59 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
         //初始化偏好设置工具类
         sp = PreferenceUtil.getInstance(this.context);
+
+        //初始化播放列表
+        initPlayList();
+    }
+
+    /**
+     * 初始化播放列表
+     */
+    private void initPlayList() {
+        //查询播放列表
+        List<Song> datum = orm.queryPlayList();
+
+        if (datum.size()>0){
+            //添加到现在的播放列表
+            this.datum.clear();
+            this.datum.addAll(datum);
+
+            //获取最后播放音乐id
+            String id = sp.getLastPlaySongId();
+
+            if (StringUtils.isNotBlank(id)){
+                //有最后播放音乐的id
+
+                //在播放列表中找到该音乐
+                for (Song s :
+                        datum) {
+                    if (s.getId().equals(id)){
+                        //找到了
+                        data=s;
+                        break;
+                    }
+                }
+
+                if (data==null){
+                    //表示没找到
+                    //可能各种原因
+                    defaultPlaySong();
+                }else {
+                    //找到了
+                }
+            }else {
+                //如果没有最后播放音乐id
+                //默认就是第一首
+                defaultPlaySong();
+            }
+        }
+    }
+
+    /**
+     * 设置默认播放音乐
+     */
+    private void defaultPlaySong() {
+        data=datum.get(0);
     }
 
     /**

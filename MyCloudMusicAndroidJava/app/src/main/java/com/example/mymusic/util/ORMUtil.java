@@ -5,10 +5,12 @@ import android.content.Context;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.SongLocal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * 数据库工具类
@@ -124,5 +126,44 @@ public class ORMUtil {
 
         //关闭数据库
         realm.close();
+    }
+
+    /**
+     * 从数据库中查询播放列表
+     * @return
+     */
+    public List<Song> queryPlayList(){
+        //获取数据库对象
+        Realm realm = getInstance();
+
+        //查询播放列表
+        RealmResults<SongLocal> songLocals = realm.where(SongLocal.class)
+                .equalTo("playList", true)
+                .findAll();
+
+        //返回数据
+        return tosongs(songLocals,realm);
+    }
+
+    /**
+     * 将本地音乐对象转为音乐对象
+     * @param songLocals
+     * @param realm
+     * @return
+     */
+    private List<Song> tosongs(RealmResults<SongLocal> songLocals, Realm realm) {
+        //创建列表
+        List<Song> songs = new ArrayList<>();
+
+        //遍历每一个对象
+        for (SongLocal songlocal : songLocals) {
+            //转为song对象
+            songs.add(songlocal.toSong());
+        }
+
+        //关闭数据库
+        realm.close();
+
+        return songs;
     }
 }
