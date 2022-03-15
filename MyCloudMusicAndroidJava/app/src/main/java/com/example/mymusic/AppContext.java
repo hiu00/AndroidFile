@@ -9,6 +9,7 @@ import androidx.multidex.MultiDexApplication;
 import com.example.mymusic.activity.LoginOrRegisterActivity;
 import com.example.mymusic.domain.Session;
 import com.example.mymusic.domain.event.LoginSuccessEvent;
+import com.example.mymusic.util.ORMUtil;
 import com.example.mymusic.util.PreferenceUtil;
 import com.example.mymusic.util.ToastUtil;
 import com.facebook.stetho.Stetho;
@@ -109,6 +110,7 @@ public class AppContext extends MultiDexApplication {
      * 退出了通知
      */
     private void onLogout() {
-
+        //销毁数据库管理器
+        ORMUtil.destroy();
     }
 }

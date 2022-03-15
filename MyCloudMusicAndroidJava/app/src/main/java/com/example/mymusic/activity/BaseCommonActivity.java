@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.mymusic.util.Constant;
+import com.example.mymusic.util.ORMUtil;
 import com.example.mymusic.util.PreferenceUtil;
 
 import butterknife.ButterKnife;
@@ -20,6 +21,11 @@ public class BaseCommonActivity extends BaseActivity{
 
     //偏好设置实例
     protected PreferenceUtil sp;
+
+    /**
+     * 数据库对象
+     */
+    protected ORMUtil orm;
 
     @Override
     protected void initViews() {
@@ -53,6 +59,9 @@ public class BaseCommonActivity extends BaseActivity{
     protected void initDatum() {
         super.initDatum();
         sp = PreferenceUtil.getInstance(getMainActivity());
+
+        //数据库工具类
+        orm = ORMUtil.getInstance(getApplicationContext());
     }
 
     /**

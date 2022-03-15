@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.example.mymusic.activity.BaseCommonActivity;
 import com.example.mymusic.util.Constant;
+import com.example.mymusic.util.ORMUtil;
 import com.example.mymusic.util.PreferenceUtil;
 
 import butterknife.ButterKnife;
@@ -16,6 +17,11 @@ import butterknife.ButterKnife;
 public abstract class BaseCommonFragment extends BaseFragment{
 
     private PreferenceUtil sp;
+
+    /**
+     * 数据库对象
+     */
+    protected ORMUtil orm;
 
     @Override
     protected void initViews() {
@@ -50,6 +56,9 @@ public abstract class BaseCommonFragment extends BaseFragment{
 
         //初始化偏好工具类
         sp = PreferenceUtil.getInstance(getMainActivity());
+
+        //初始化数据库对象
+        orm = ORMUtil.getInstance(getMainActivity());
     }
 
     /**
