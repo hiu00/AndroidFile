@@ -224,6 +224,14 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
             //到这里，是应用开启后，第一次点继续播放
             //而这时内部其实还没有准备播放，所以应该调用播放
             play(data);
+
+            //判断是否需要继续播放
+            if (data.getProgress() > 0) {
+                //有播放进度
+
+                //就从上一次位置开始播放
+                musicPlayerManager.seekTo((int) data.getProgress());
+            }
         }
     }
 
