@@ -16,6 +16,7 @@ import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.DataUtil;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ORMUtil;
+import com.example.mymusic.util.PreferenceUtil;
 import com.example.mymusic.util.ResourceUtil;
 
 import java.util.LinkedList;
@@ -69,6 +70,7 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
      * 最后保持播放进度时间
      */
     private long lastTime;
+    private final PreferenceUtil sp;
 
     /**
      * 构造方法
@@ -85,6 +87,9 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
         //初始化数据库
         orm = ORMUtil.getInstance(this.context);
+
+        //初始化偏好设置工具类
+        sp = PreferenceUtil.getInstance(this.context);
     }
 
     /**
@@ -140,6 +145,9 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
         //播放音乐
         musicPlayerManager.play(ResourceUtil.resourceUri(data.getUri()),data);
+
+        //设置最后播放音乐的Id
+        sp.setLastPlaySongId(data.getId());
     }
 
     @Override

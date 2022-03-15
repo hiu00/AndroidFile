@@ -29,6 +29,11 @@ public class PreferenceUtil {
      */
     private static final String USER_ID = "USER_ID";
 
+    /**
+     * 最后播放音乐id key
+     */
+    private static final String LAST_PLAY_SONG_ID = "LAST_PLAY_SONG_ID";
+
 
     /**
      * 实例
@@ -162,5 +167,20 @@ public class PreferenceUtil {
         return !TextUtils.isEmpty(getSession());
     }
 
+    /**
+     * 获取最后播放的音乐Id
+     * @return
+     */
+    public String getLastPlaySongId(){
+        return preference.getString(LAST_PLAY_SONG_ID,null);
+    }
 
+    /**
+     * 设置当前播放音乐的id
+     * @param data
+     */
+    public void setLastPlaySongId(String data){
+        //putString(LAST_PLAY_SONG_ID,data);
+        preference.edit().putString(LAST_PLAY_SONG_ID, data).apply();
+    }
 }
