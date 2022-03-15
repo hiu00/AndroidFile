@@ -12,6 +12,7 @@ import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
+import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.DataUtil;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ORMUtil;
@@ -63,6 +64,11 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
      */
     private int model = MODEL_LOOP_LIST;
     private final ORMUtil orm;
+
+    /**
+     * 最后保持播放进度时间
+     */
+    private long lastTime;
 
     /**
      * 构造方法
@@ -342,7 +348,15 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
     @Override
     public void onProgress(Song data) {
+        //保存当前音乐播放进度
+        //当前时间戳
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis-lastTime > Constant.SAVE_PROGRESS_TIME){
+            //保存数据
+            orm.saveSong(data);
 
+            lastTime=currentTimeMillis;
+        }
     }
 
     /**
