@@ -547,5 +547,11 @@ public class SimplePlayerActivity extends BaseTitleActivity implements SeekBar.O
         bt_play.setText("暂停");
 
     }
+
+    @Override
+    public void onLyricChanged(Song data) {
+        LogUtil.d(TAG, "onLyricChanged:" + data.getLyric());
+    }
+
     //--end播放管理器监听器
 }

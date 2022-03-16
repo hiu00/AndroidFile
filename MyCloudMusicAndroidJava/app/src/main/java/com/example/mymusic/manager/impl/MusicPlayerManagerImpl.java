@@ -11,8 +11,11 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
+import com.example.mymusic.api.Api;
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.listener.Consumer;
+import com.example.mymusic.listener.HttpObserver;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.util.Constant;
@@ -144,11 +147,50 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager, MediaPlayer.O
 
             //启动播放进度通知
             startPublishProgress();
+
+            //如果是本地音乐
+            //就不获取歌词了
+            if (data.isLocal()){
+                return;
+            }
+
+            //歌词处理
+            if (data.getLyric()==null){
+                //没有歌词才请求
+                Api.getInstance()
+                        .songDetail(data.getId())
+                        .subscribe(new HttpObserver<DetailResponse<Song>>() {
+                            @Override
+                            public void onSucceeded(DetailResponse<Song> songDetailResponse) {
+                                if (songDetailResponse != null && songDetailResponse.getData() != null){
+                                    //将数据设置到歌曲对象上
+                                    data.setStyle(songDetailResponse.getData().getStyle());
+                                    data.setLyric(songDetailResponse.getData().getLyric());
+                                }
+                                //通知歌词改变了
+                                onLyricChanged();
+                            }
+                        });
+            }else {
+                //通知歌词改变了
+                onLyricChanged();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             //发生错误了
             //TODO 处理错误
         }
+    }
+
+    /**
+     * 通知歌词改变了
+     */
+    public void onLyricChanged() {
+        //这里只是通知歌词数据改变了
+        //但不一定有歌词
+
+        //不管有没有歌词都要回调
+        ListUtil.eachListener(listeners,listener -> listener.onLyricChanged(data));
     }
 
     /**

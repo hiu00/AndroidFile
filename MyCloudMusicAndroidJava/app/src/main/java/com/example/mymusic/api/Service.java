@@ -117,6 +117,14 @@ public interface Service {
     Observable<ListResponse<Song>> songs();
 
     /**
+     * 单曲详情
+     * @param id
+     * @return
+     */
+    @GET("v1/songs/{id}")
+    Observable<DetailResponse<Song>> songDetail(@Path("id") String id);
+
+    /**
      * 广告列表
      *
      * @return

@@ -4,6 +4,8 @@ import static com.example.mymusic.util.Constant.TYPE_SONG;
 
 import android.content.Intent;
 
+import com.example.mymusic.util.Constant;
+
 public class Song extends BaseMultiItemEntity {
     /**
      * 标题
@@ -212,5 +214,13 @@ public class Song extends BaseMultiItemEntity {
         //播放进度
         songLocal.setProgress(progress);
         return songLocal;
+    }
+
+    /**
+     * 是否是本地音乐
+     * @return
+     */
+    public boolean isLocal() {
+        return source== SongLocal.SOURCE_LOCAL;
     }
 }
