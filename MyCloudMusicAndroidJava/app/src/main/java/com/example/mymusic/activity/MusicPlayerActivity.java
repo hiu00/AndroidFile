@@ -24,6 +24,7 @@ import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.ResourceUtil;
+import com.example.mymusic.util.SwitchDrawableUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -123,7 +124,16 @@ public class MusicPlayerActivity extends BaseTitleActivity {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         //设置到背景控件上
-                        iv_background.setImageDrawable(resource);
+                        //iv_background.setImageDrawable(resource);
+
+                        //创建切换动画工具类
+                        SwitchDrawableUtil switchDrawableUtil = new SwitchDrawableUtil(iv_background.getDrawable(), resource);
+
+                        //设置drawable
+                        iv_background.setImageDrawable(switchDrawableUtil.getDrawable());
+
+                        //开始动画
+                        switchDrawableUtil.start();
                     }
 
                     @Override
