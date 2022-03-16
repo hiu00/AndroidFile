@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mymusic">
-
     <!-- 网络权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- 读存储卡权限 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!--有前台服务-->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 读存储卡权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 有前台服务 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".AppContext"
@@ -20,21 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".activity.MusicPlayerActivity"
+            android:exported="false" />
         <!-- 播放音乐的服务 -->
         <service
             android:name=".service.MusicPlayerService"
             android:enabled="true"
             android:exported="false">
             android:priority="1000"
-            android:persistent="true"
-        </service>
+            android:persistent="true"</service>
 
         <activity
             android:name=".activity.SimplePlayerActivity"
             android:exported="false"
-            android:launchMode="singleTop"
-            android:label="@string/activity_simple_player" />
+            android:label="@string/activity_simple_player"
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.UserDetailActivity"
             android:exported="false"

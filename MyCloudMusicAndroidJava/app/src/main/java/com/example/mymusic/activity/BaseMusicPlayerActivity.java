@@ -242,7 +242,10 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
         LogUtil.d(TAG, "onPlayControlSmallClick");
 
         //简单播放器界面
-        SimplePlayerActivity.start(getMainActivity());
+        //SimplePlayerActivity.start(getMainActivity());
+
+        //黑胶唱片播放界面
+        MusicPlayerActivity.start(getMainActivity());
     }
 
     /**
@@ -295,6 +298,9 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
      * 进入音乐播放界面
      */
     public void startMusicPlayerActivity() {
-        SimplePlayerActivity.start(getMainActivity());
+        //SimplePlayerActivity.start(getMainActivity());
+
+        //黑胶唱片播放界面
+        MusicPlayerActivity.start(getMainActivity());
     }
 }
