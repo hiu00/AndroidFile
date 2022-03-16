@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.R;
+import com.example.mymusic.activity.BaseMusicPlayerActivity;
 import com.example.mymusic.activity.SheetDetailActivity;
 import com.example.mymusic.activity.WebViewActivity;
 import com.example.mymusic.adapter.DiscoveryAdapter;
@@ -29,6 +30,8 @@ import com.example.mymusic.domain.Title;
 import com.example.mymusic.domain.response.DetailResponse;
 import com.example.mymusic.domain.response.ListResponse;
 import com.example.mymusic.listener.HttpObserver;
+import com.example.mymusic.listener.ListManager;
+import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
@@ -180,6 +183,25 @@ public class DiscoveryFragment extends BaseCommonFragment implements OnBannerLis
 
                     //使用重构后的方法
                     startActivityExtraId(SheetDetailActivity.class,sheet.getId());
+                }else if (data instanceof Song){
+                    //单曲
+
+                    //创建一个列表
+                    List<Song> datum = new ArrayList<>();
+                    Song song = (Song) data;
+                    datum.add(song);
+
+                    //获取播放列表管理器
+                    ListManager listManager = MusicPlayerService.getListManager(getMainActivity());
+
+                    //设置到播放列表
+                    listManager.setDatum(datum);
+
+                    //播放这首音乐
+                    listManager.play(song);
+
+                    //进入播放界面
+                    ((BaseMusicPlayerActivity) getMainActivity()).startMusicPlayerActivity();
                 }
             }
         });

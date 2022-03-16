@@ -184,6 +184,9 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
 
         //设置音乐监听器
         adapter.setSongListener(this);
+
+        //设置播放全部监听器
+        ll_play_all_container.setOnClickListener(this);
     }
 
     /**
@@ -231,6 +234,10 @@ public class SheetDetailActivity extends BaseMusicPlayerActivity implements View
             case R.id.ll_user:
                 //用户容器点击了
                 startActivityExtraId(UserDetailActivity.class,data.getUser().getId());
+                break;
+            case R.id.ll_play_all_container:
+                //播放全部容器点击
+                play(0);
                 break;
         }
     }
