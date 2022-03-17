@@ -25,6 +25,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.listener.ListManager;
@@ -189,6 +190,8 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     @OnClick(R.id.ib_list)
     public void onListClick() {
         LogUtil.d(TAG, "onListClick");
+
+        PlayListDialogFragment.show(getSupportFragmentManager());
     }
 
     /**
