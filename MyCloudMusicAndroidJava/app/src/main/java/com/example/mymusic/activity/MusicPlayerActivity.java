@@ -47,7 +47,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 /**
  * 黑胶唱片界面
  */
-public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener {
+public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener {
     private static final String TAG = "MusicPlayerActivity";
     /**
      * 背景
@@ -253,6 +253,38 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //初始化播放管理器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getApplicationContext());
+    }
+
+    @Override
+    protected void initListeners() {
+        super.initListeners();
+
+        //设置拖拽进度控件监听器
+        sb_progress.setOnSeekBarChangeListener(this);
+    }
+
+    /**
+     * 进度改变了回调
+     * @param seekBar
+     * @param progress 当前进度
+     * @param fromUser 是否是用户触发的
+     */
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if (fromUser){
+            //跳转到该位置开始播放
+            musicPlayerManager.seekTo(progress);
+        }
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
     }
 
     /**
