@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.listener.ListManager;
+import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.ImageUtil;
@@ -42,7 +44,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 /**
  * 黑胶唱片界面
  */
-public class MusicPlayerActivity extends BaseTitleActivity {
+public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener {
     private static final String TAG = "MusicPlayerActivity";
     /**
      * 背景
@@ -125,6 +127,20 @@ public class MusicPlayerActivity extends BaseTitleActivity {
     @OnClick(R.id.ib_play)
     public void onPlayClick() {
         LogUtil.d(TAG, "onPlayClick");
+
+        //播放或暂停
+        playOrPause();
+    }
+
+    /**
+     * 播放或暂停
+     */
+    private void playOrPause() {
+        if (musicPlayerManager.isPlaying()){
+            listManager.pause();
+        }else {
+            listManager.resume();
+        }
     }
 
     /**
@@ -280,5 +296,41 @@ public class MusicPlayerActivity extends BaseTitleActivity {
 
         //显示初始化数据
         showInitData();
+
+        //添加播放监听器
+        musicPlayerManager.addMusicPlayerListener(this);
     }
+
+    /**
+     * 界面隐藏了
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //移除播放监听器
+        musicPlayerManager.removeMusicPlayerListener(this);
+    }
+
+    //播放器回调
+    @Override
+    public void onPaused(Song data) {
+
+    }
+
+    @Override
+    public void onPlaying(Song data) {
+
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer, Song data) {
+
+    }
+
+    @Override
+    public void onProgress(Song data) {
+
+    }
+    //播放器回调end
 }
