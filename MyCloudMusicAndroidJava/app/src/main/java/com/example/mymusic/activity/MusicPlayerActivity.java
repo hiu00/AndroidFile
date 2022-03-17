@@ -403,6 +403,29 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //注册发布订阅框架
         EventBus.getDefault().register(this);
+
+        //滚动到当前音乐位置
+        scrollPosition();
+    }
+
+    /**
+     * 滚动到当前音乐位置
+     */
+    private void scrollPosition() {
+        //选中当前播放的音乐
+        //异步执行
+        vp.post(new Runnable() {
+            @Override
+            public void run() {
+                //indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+                //如果要检索的字符串值没有出现，则该方法返回 -1
+                int index = listManager.getDatum().indexOf(listManager.getData());
+                if (index!=-1){
+                    //滚动到该位置
+                    vp.setCurrentItem(index,false);
+                }
+            }
+        });
     }
 
     /**
@@ -464,6 +487,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //显示时长
         showDuration();
+
+        //滚动到当前音乐位置
+        scrollPosition();
     }
 
     @Override

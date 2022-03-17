@@ -9,6 +9,8 @@ import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.ORMUtil;
 import com.example.mymusic.util.PreferenceUtil;
 
+import java.io.Serializable;
+
 import butterknife.ButterKnife;
 
 /**
@@ -109,5 +111,12 @@ public abstract class BaseCommonFragment extends BaseFragment{
         getActivity().finish();
     }
 
+    /**
+     * 获取data对象
+     * @return
+     */
+    protected Serializable extraData(){
+        return getArguments().getSerializable(Constant.DATA);
+    }
 
 }
