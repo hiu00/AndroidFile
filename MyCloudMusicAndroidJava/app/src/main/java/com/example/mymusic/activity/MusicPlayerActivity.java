@@ -4,7 +4,6 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,10 +28,10 @@ import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
-import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ResourceUtil;
 import com.example.mymusic.util.SwitchDrawableUtil;
+import com.example.mymusic.util.TimeUtil;
 import com.example.mymusic.util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
@@ -297,8 +296,28 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
         //显示初始化数据
         showInitData();
 
+        //显示音乐时长
+        showDuration();
+
+        //显示播放进度
+        showProgress();
+
+        //显示播放状态
+        showMusicPlayStatus();
+
         //添加播放监听器
         musicPlayerManager.addMusicPlayerListener(this);
+    }
+
+    /**
+     * 显示播放状态
+     */
+    private void showMusicPlayStatus() {
+        if (musicPlayerManager.isPlaying()){
+            showPauseStatus();
+        }else {
+            showPlayStatus();
+        }
     }
 
     /**
@@ -315,22 +334,71 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     //播放器回调
     @Override
     public void onPaused(Song data) {
-
+        //显示播放状态
+        showPlayStatus();
     }
 
     @Override
     public void onPlaying(Song data) {
-
+        //显示暂停状态
+        showPauseStatus();
     }
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer, Song data) {
+        //显示初始化数据
+        showInitData();
 
+        //显示时长
+        showDuration();
     }
 
     @Override
     public void onProgress(Song data) {
+        //显示播放进度
+        showProgress();
+    }
 
+    /**
+     * 显示播放状态
+     */
+    private void showPlayStatus() {
+        ib_play.setImageResource(R.drawable.ic_music_play);
+    }
+
+    /**
+     * 显示暂停状态
+     */
+    private void showPauseStatus() {
+        ib_play.setImageResource(R.drawable.ic_music_pause);
+    }
+
+    /**
+     * 显示时长
+     */
+    private void showDuration() {
+        //获取播放时长
+        long duration = listManager.getData().getDuration();
+
+        //格式化
+        tv_end.setText(TimeUtil.formatMinuteSecond((int) duration));
+
+        //设置到进度条
+        sb_progress.setMax((int) duration);
+    }
+
+    /**
+     * 显示播放进度
+     */
+    private void showProgress() {
+        //获取播放进度
+        long progress = listManager.getData().getProgress();
+
+        //格式化进度
+        tv_start.setText(TimeUtil.formatMinuteSecond((int) progress));
+
+        //设置到进度条
+        sb_progress.setProgress((int) progress);
     }
     //播放器回调end
 }
