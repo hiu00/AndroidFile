@@ -28,6 +28,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.event.PlayListChangedEvent;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
@@ -39,6 +40,9 @@ import com.example.mymusic.util.TimeUtil;
 import com.example.mymusic.util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -378,6 +382,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //添加播放监听器
         musicPlayerManager.addMusicPlayerListener(this);
+
+        //注册发布订阅框架
+        EventBus.getDefault().register(this);
     }
 
     /**
@@ -400,6 +407,23 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //移除播放监听器
         musicPlayerManager.removeMusicPlayerListener(this);
+
+        //解除注册发布订阅框架
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 播放列表改变了事件
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPlayListChangedEvent(PlayListChangedEvent event){
+        if (listManager.getDatum().size() == 0) {
+            //没有音乐了
+
+            //关闭播放界面
+            finish();
+        }
     }
 
     //播放器回调
