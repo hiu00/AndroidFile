@@ -7,6 +7,7 @@ import static com.example.mymusic.util.Constant.MODEL_LOOP_RANDOM;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.mymusic.Fragment.MusicPlayerAdapter;
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
@@ -58,6 +60,12 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      */
     @BindView(R.id.iv_background)
     ImageView iv_background;
+
+    /**
+     * 黑胶唱片列表控件
+     */
+    @BindView(R.id.vp)
+    ViewPager vp;
 
     /**
      * 下载按钮
@@ -97,6 +105,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
     private ListManager listManager;
     private MusicPlayerManager musicPlayerManager;
+    private MusicPlayerAdapter recordAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,6 +266,15 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //初始化播放管理器
         musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getApplicationContext());
+
+        //创建黑胶唱片列表适配器
+        recordAdapter = new MusicPlayerAdapter(getMainActivity(), getSupportFragmentManager());
+
+        //设置到控件
+        vp.setAdapter(recordAdapter);
+
+        //设置数据
+        recordAdapter.setDatum(listManager.getDatum());
     }
 
     @Override
