@@ -25,7 +25,15 @@ public class SwitchDrawableUtil {
      */
     private static final int DURATION_ANIMATION = 300;
     private static final String TAG = "SwitchDrawableUtil";
+
+    /**
+     * 多层drawable
+     */
     private final LayerDrawable layerDrawable;
+
+    /**
+     * 属性动画
+     */
     private ValueAnimator animator;
 
     /**
@@ -37,9 +45,19 @@ public class SwitchDrawableUtil {
         //创建数据
         Drawable[] drawables=new Drawable[2];
 
-        //添加drawable
-        drawables[INDEX_BACKGROUND]=backgroundDrawable;
-        drawables[INDEX_FOREGROUND]=foregroundDrawable;
+        if (backgroundDrawable == null) {
+            //添加drawable
+            drawables[INDEX_BACKGROUND] = foregroundDrawable;
+            drawables[INDEX_FOREGROUND] = foregroundDrawable;
+        } else {
+            //添加drawable
+            drawables[INDEX_BACKGROUND] = backgroundDrawable;
+            drawables[INDEX_FOREGROUND] = foregroundDrawable;
+        }
+
+//        //添加drawable
+//        drawables[INDEX_BACKGROUND]=backgroundDrawable;
+//        drawables[INDEX_FOREGROUND]=foregroundDrawable;
 
         //创建多层drawable
         layerDrawable = new LayerDrawable(drawables);
@@ -67,10 +85,10 @@ public class SwitchDrawableUtil {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             /**
              * 每次回调方法
-             * @param valueAnimator
+             * @param animator
              */
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            public void onAnimationUpdate(ValueAnimator animator) {
                 //获取动画值
                 float foregroundAlpha= (float) animator.getAnimatedValue();
 

@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +27,7 @@ import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.ResourceUtil;
 import com.example.mymusic.util.SwitchDrawableUtil;
+import com.example.mymusic.util.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -47,6 +50,39 @@ public class MusicPlayerActivity extends BaseTitleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player);
+    }
+
+    /**
+     * 创建菜单方法
+     *
+     * 有点类似显示布局要写到onCreate方法一样
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //加载布局文件
+        getMenuInflater().inflate(R.menu.menu_music_player,menu);
+        return true;
+    }
+
+    /**
+     * 菜单点击了回调
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //获取点击的菜单按钮
+        int id = item.getItemId();
+
+        if (R.id.action_share==id){
+            //分享按钮点击了
+            ToastUtil.successShortToast("你点击了分享按钮！");
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -125,6 +161,7 @@ public class MusicPlayerActivity extends BaseTitleActivity {
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         //设置到背景控件上
                         //iv_background.setImageDrawable(resource);
+
 
                         //创建切换动画工具类
                         SwitchDrawableUtil switchDrawableUtil = new SwitchDrawableUtil(iv_background.getDrawable(), resource);

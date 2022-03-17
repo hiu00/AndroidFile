@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activity.MusicPlayerActivity">
 
+    <!--默认背景-->
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_album"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <!--背景
     用ImageView是因为要用他的图片缩放模式-->
     <ImageView
         android:id="@+id/iv_background"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_album"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
