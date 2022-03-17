@@ -33,6 +33,8 @@ import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.event.OnPlayEvent;
+import com.example.mymusic.domain.event.OnStartRecordEvent;
+import com.example.mymusic.domain.event.OnStopRecordEvent;
 import com.example.mymusic.domain.event.PlayListChangedEvent;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
@@ -383,7 +385,13 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      * 开始滚动
      */
     private void startRecordRotate() {
+        //获取当前播放的音乐
+        Song data = listManager.getData();
+
         LogUtil.d(TAG,"startRecordRotate");
+
+        //发送通知
+        EventBus.getDefault().post(new OnStartRecordEvent(data));
     }
 
     /**
@@ -400,7 +408,13 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      * 指针回到暂停状态
      */
     private void stopRecordRotate() {
+        //获取当前播放的音乐
+        Song data = listManager.getData();
+
         LogUtil.d(TAG,"stopRecordRotate");
+
+        //发送通知
+        EventBus.getDefault().post(new OnStopRecordEvent(data));
     }
     //end滚动事件改变了回调
 
