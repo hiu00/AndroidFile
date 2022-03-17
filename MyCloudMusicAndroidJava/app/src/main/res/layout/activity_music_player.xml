@@ -47,12 +47,155 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!--真正布局内容-->
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:text="这是真实内容布局"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--黑胶唱片布局-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!--迷你控制容器-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_control_height">
+
+            <!--点赞按钮-->
+            <ImageButton
+                android:src="@drawable/ic_like"
+                android:background="@null"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_control_height" />
+
+            <!--下载按钮-->
+            <ImageButton
+                android:id="@+id/ib_download"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_control_height"
+                android:src="@drawable/ic_download"
+                android:background="@null" />
+
+            <!--均衡器按钮-->
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_control_height"
+                android:src="@drawable/ic_eq"
+                android:background="@null" />
+
+            <!--评论按钮-->
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_control_height"
+                android:src="@drawable/ic_comment_count"
+                android:background="@null" />
+
+            <!--更多按钮-->
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_control_height"
+                android:src="@drawable/ic_music_more"
+                android:background="@null" />
+        </LinearLayout>
+
+        <!--进度容器-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <!--开始位置-->
+            <TextView
+                android:id="@+id/tv_start"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="@dimen/text_small" />
+
+            <!--进度条-->
+            <SeekBar
+                android:id="@+id/sb_progress"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_meddle"
+                android:layout_marginRight="@dimen/padding_meddle"
+                android:maxHeight="@dimen/music_seek_bar_height"
+                android:minHeight="@dimen/music_seek_bar_height"
+                android:progressDrawable="@drawable/shape_seek_bar" />
+
+            <!--结束位置-->
+            <TextView
+                android:id="@+id/tv_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <!--控制容器-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--循环模式-->
+            <ImageButton
+                android:id="@+id/ib_loop_model"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_play_height"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_music_repeat_list" />
+
+            <!--上一曲-->
+            <ImageButton
+                android:id="@+id/ib_previous"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_play_height"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_music_previous" />
+
+            <!--播放按钮-->
+            <ImageButton
+                android:id="@+id/ib_play"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_play_height"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_music_play" />
+
+            <!--下一曲-->
+            <ImageButton
+                android:id="@+id/ib_next"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_play_height"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_music_next" />
+
+            <!--播放列表-->
+            <ImageButton
+                android:id="@+id/ib_list"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_play_height"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_music_list" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
