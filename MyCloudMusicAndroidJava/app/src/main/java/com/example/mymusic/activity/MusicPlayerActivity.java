@@ -12,7 +12,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -25,6 +28,7 @@ import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.ImageUtil;
+import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ResourceUtil;
 import com.example.mymusic.util.SwitchDrawableUtil;
 import com.example.mymusic.util.ToastUtil;
@@ -32,17 +36,56 @@ import com.example.mymusic.util.ToastUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * 黑胶唱片界面
  */
 public class MusicPlayerActivity extends BaseTitleActivity {
+    private static final String TAG = "MusicPlayerActivity";
     /**
      * 背景
      */
     @BindView(R.id.iv_background)
     ImageView iv_background;
+
+    /**
+     * 下载按钮
+     */
+    @BindView(R.id.ib_download)
+    ImageButton ib_download;
+
+    /**
+     * 开始位置
+     */
+    @BindView(R.id.tv_start)
+    TextView tv_start;
+
+    /**
+     * 进度条
+     */
+    @BindView(R.id.sb_progress)
+    SeekBar sb_progress;
+
+    /**
+     * 结束位置
+     */
+    @BindView(R.id.tv_end)
+    TextView tv_end;
+
+    /**
+     * 循环模式按钮
+     */
+    @BindView(R.id.ib_loop_model)
+    ImageButton ib_loop_model;
+
+    /**
+     * 播放按钮
+     */
+    @BindView(R.id.ib_play)
+    ImageButton ib_play;
+
     private ListManager listManager;
     private MusicPlayerManager musicPlayerManager;
 
@@ -50,6 +93,54 @@ public class MusicPlayerActivity extends BaseTitleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player);
+    }
+
+    /**
+     * 下载按钮点击
+     */
+    @OnClick(R.id.ib_download)
+    public void onDownloadClick() {
+        LogUtil.d(TAG, "onDownloadClick");
+    }
+
+    /**
+     * 循环模式按钮点击
+     */
+    @OnClick(R.id.ib_loop_model)
+    public void onLoopModelClick() {
+        LogUtil.d(TAG, "onLoopModelClick");
+    }
+
+    /**
+     * 上一曲按钮点击
+     */
+    @OnClick(R.id.ib_previous)
+    public void onPreviousClick() {
+        LogUtil.d(TAG, "onPreviousClick");
+    }
+
+    /**
+     * 播放按钮点击
+     */
+    @OnClick(R.id.ib_play)
+    public void onPlayClick() {
+        LogUtil.d(TAG, "onPlayClick");
+    }
+
+    /**
+     * 下一曲按钮点击
+     */
+    @OnClick(R.id.ib_next)
+    public void onNextClick() {
+        LogUtil.d(TAG, "onNextClick");
+    }
+
+    /**
+     * 播放列表按钮点击
+     */
+    @OnClick(R.id.ib_list)
+    public void onListClick() {
+        LogUtil.d(TAG, "onListClick");
     }
 
     /**
