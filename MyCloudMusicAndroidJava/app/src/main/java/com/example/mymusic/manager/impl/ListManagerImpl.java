@@ -8,6 +8,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.event.OnPlayEvent;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
@@ -20,6 +21,7 @@ import com.example.mymusic.util.PreferenceUtil;
 import com.example.mymusic.util.ResourceUtil;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -191,6 +193,11 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
     @Override
     public void play(Song song) {
         LogUtil.d(TAG,"play");
+
+        //播放音乐前发送通知
+        //目的是黑胶唱片接收到通知
+        //先停止原来的黑胶唱片
+        EventBus.getDefault().post(new OnPlayEvent());
 
         //标记已经播放了
         isPlay = true;

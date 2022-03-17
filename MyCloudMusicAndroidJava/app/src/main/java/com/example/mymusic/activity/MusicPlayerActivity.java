@@ -1,5 +1,7 @@
 package com.example.mymusic.activity;
 
+import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_DRAGGING;
+import static androidx.viewpager.widget.ViewPager.SCROLL_STATE_IDLE;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_LIST;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_ONE;
@@ -30,6 +32,7 @@ import com.example.mymusic.Fragment.MusicPlayerAdapter;
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.event.OnPlayEvent;
 import com.example.mymusic.domain.event.PlayListChangedEvent;
 import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
@@ -53,7 +56,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 /**
  * 黑胶唱片界面
  */
-public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener {
+public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener {
     private static final String TAG = "MusicPlayerActivity";
     /**
      * 背景
@@ -255,6 +258,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //显示亮色状态栏
         lightStatusBar();
+
+        //缓存页面数量
+        vp.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -283,6 +289,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //设置拖拽进度控件监听器
         sb_progress.setOnSeekBarChangeListener(this);
+
+        //添加滚动监听事件
+        vp.addOnPageChangeListener(this);
     }
 
     /**
@@ -308,6 +317,92 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
+    //滚动事件改变了回调
+
+    /**
+     * 滚动中
+     * @param position
+     * @param positionOffset
+     * @param positionOffsetPixels
+     */
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    /**
+     * 滚动完成了
+     * @param position
+     */
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    /**
+     * 滚动状态改变了
+     *
+     * @param state 滚动状态
+     *
+     * @see ViewPager#SCROLL_STATE_IDLE：空闲
+     * @see ViewPager#SCROLL_STATE_DRAGGING：正在拖拽
+     * @see ViewPager#SCROLL_STATE_SETTLING：滚动完成后
+     */
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        LogUtil.d(TAG, "onPageScrollStateChanged:" + state);
+
+        if (SCROLL_STATE_DRAGGING==state){
+            //拖拽状态
+
+            //停止当前item滚动
+            stopRecordRotate();
+        }else if (SCROLL_STATE_IDLE == state){
+            //空闲状态
+
+            //判断黑胶唱片位置对应的音乐是否和现在播放的是一首
+            Song song = listManager.getDatum().get(vp.getCurrentItem());
+            if (listManager.getData().getId().equals(song.getId())){
+                //一样
+
+                //判断播放状态
+                if (musicPlayerManager.isPlaying()){
+                    startRecordRotate();
+                }
+            }else {
+                //不一样
+
+                //播放当前位置的音乐
+                listManager.play(song);
+            }
+        }
+    }
+
+    /**
+     * 开始滚动
+     */
+    private void startRecordRotate() {
+        LogUtil.d(TAG,"startRecordRotate");
+    }
+
+    /**
+     * 播放器回调
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPlayEvent(OnPlayEvent event){
+        //停止黑胶唱片滚动
+        stopRecordRotate();
+    }
+
+    /**
+     * 停止当前item滚动
+     * 指针回到暂停状态
+     */
+    private void stopRecordRotate() {
+        LogUtil.d(TAG,"stopRecordRotate");
+    }
+    //end滚动事件改变了回调
 
     /**
      * 显示初始化数据
@@ -424,6 +519,13 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
                     //滚动到该位置
                     vp.setCurrentItem(index,false);
                 }
+
+                //判断是否需要旋转黑胶唱片
+                if (musicPlayerManager.isPlaying()){
+                    startRecordRotate();
+                }else {
+                    stopRecordRotate();
+                }
             }
         });
     }
@@ -472,12 +574,18 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     public void onPaused(Song data) {
         //显示播放状态
         showPlayStatus();
+
+        //停止黑胶唱片滚动
+        stopRecordRotate();
     }
 
     @Override
     public void onPlaying(Song data) {
         //显示暂停状态
         showPauseStatus();
+
+        //开始黑胶唱片滚动
+        startRecordRotate();
     }
 
     @Override
@@ -539,5 +647,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
         //设置到进度条
         sb_progress.setProgress((int) progress);
     }
+
+
     //播放器回调end
 }
