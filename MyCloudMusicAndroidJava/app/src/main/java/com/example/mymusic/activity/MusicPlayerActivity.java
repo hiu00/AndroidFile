@@ -6,6 +6,7 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_LIST;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_ONE;
 import static com.example.mymusic.util.Constant.MODEL_LOOP_RANDOM;
+import static com.example.mymusic.util.Constant.THUMB_ROTATION_PAUSE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -306,13 +307,13 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //从暂停到播放状态动画
         //从-25到0
-        playThumbAnimator = ObjectAnimator.ofFloat(iv_record_thumb, "rotation", Constant.THUMB_ROTATION_PAUSE, Constant.THUMB_ROTATION_PLAY);
+        playThumbAnimator = ObjectAnimator.ofFloat(iv_record_thumb, "rotation", THUMB_ROTATION_PAUSE, Constant.THUMB_ROTATION_PLAY);
 
         //设置执行时间
         playThumbAnimator.setDuration(Constant.THUMB_DURATION);
 
         //从播放到暂停状态动画
-        pauseThumbAnimator = ValueAnimator.ofFloat(Constant.THUMB_ROTATION_PLAY, Constant.THUMB_ROTATION_PAUSE);
+        pauseThumbAnimator = ValueAnimator.ofFloat(Constant.THUMB_ROTATION_PLAY, THUMB_ROTATION_PAUSE);
 
         //设置执行时间
         pauseThumbAnimator.setDuration(Constant.THUMB_DURATION);
@@ -341,6 +342,21 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      * 黑胶唱片指针旋转-25度动画（暂停状态）
      */
     public void stopRecordThumbRotate(){
+        //获取黑胶唱片指针旋转的角度
+        float thumbRotation = iv_record_thumb.getRotation();
+
+        LogUtil.d(TAG, "stopRecordThumbRotate:" + thumbRotation);
+
+        //如果不判断
+        //当前已经停止了
+        //还会执行动画
+        //就有跳动问题
+        if (THUMB_ROTATION_PAUSE == thumbRotation) {
+            //已经是停止状态了
+
+            //就返回
+            return;
+        }
         pauseThumbAnimator.start();
     }
 
