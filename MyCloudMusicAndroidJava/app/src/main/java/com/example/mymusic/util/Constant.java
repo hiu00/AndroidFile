@@ -114,4 +114,19 @@ public class Constant {
      */
     public static final int KSC = 10;
     public static final String DATA = "DATA";
+
+    /**
+     * 黑胶唱片指针暂停角度
+     */
+    public static final float THUMB_ROTATION_PAUSE = -25F;
+
+    /**
+     * 黑胶唱片指针播放角度
+     */
+    public static final float THUMB_ROTATION_PLAY = 0F;
+
+    /**
+     * 黑胶唱片指针动画执行时间
+     */
+    public static final long THUMB_DURATION = 300;
 }

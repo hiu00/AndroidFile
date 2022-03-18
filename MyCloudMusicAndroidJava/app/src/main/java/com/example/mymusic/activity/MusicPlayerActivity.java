@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -40,6 +42,7 @@ import com.example.mymusic.listener.ListManager;
 import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
+import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ResourceUtil;
 import com.example.mymusic.util.SwitchDrawableUtil;
@@ -58,7 +61,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 /**
  * 黑胶唱片界面
  */
-public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener {
+public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener, ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = "MusicPlayerActivity";
     /**
      * 背景
@@ -71,6 +74,12 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      */
     @BindView(R.id.vp)
     ViewPager vp;
+
+    /**
+     * 指针
+     */
+    @BindView(R.id.iv_record_thumb)
+    ImageView iv_record_thumb;
 
     /**
      * 下载按钮
@@ -111,6 +120,8 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     private ListManager listManager;
     private MusicPlayerManager musicPlayerManager;
     private MusicPlayerAdapter recordAdapter;
+    private ObjectAnimator playThumbAnimator;
+    private ValueAnimator pauseThumbAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,6 +294,45 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //设置数据
         recordAdapter.setDatum(listManager.getDatum());
+
+        //从暂停到播放状态动画
+        //从-25到0
+        playThumbAnimator = ObjectAnimator.ofFloat(iv_record_thumb, "rotation", Constant.THUMB_ROTATION_PAUSE, Constant.THUMB_ROTATION_PLAY);
+
+        //设置执行时间
+        playThumbAnimator.setDuration(Constant.THUMB_DURATION);
+
+        //从播放到暂停状态动画
+        pauseThumbAnimator = ValueAnimator.ofFloat(Constant.THUMB_ROTATION_PLAY, Constant.THUMB_ROTATION_PAUSE);
+
+        //设置执行时间
+        pauseThumbAnimator.setDuration(Constant.THUMB_DURATION);
+
+        //设置更新监听器
+        pauseThumbAnimator.addUpdateListener(this);
+    }
+
+    /**
+     * 更新监听器
+     * @param animator
+     */
+    @Override
+    public void onAnimationUpdate(ValueAnimator animator) {
+        iv_record_thumb.setRotation((Float) animator.getAnimatedValue());
+    }
+
+    /**
+     * 黑胶唱片指针默认状态动画（播放状态）
+     */
+    public void startRecordThumbRotate(){
+        playThumbAnimator.start();
+    }
+
+    /**
+     * 黑胶唱片指针旋转-25度动画（暂停状态）
+     */
+    public void stopRecordThumbRotate(){
+        pauseThumbAnimator.start();
     }
 
     @Override
@@ -385,6 +435,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      * 开始滚动
      */
     private void startRecordRotate() {
+        //旋转黑胶唱片指针
+        startRecordThumbRotate();
+
         //获取当前播放的音乐
         Song data = listManager.getData();
 
@@ -408,6 +461,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      * 指针回到暂停状态
      */
     private void stopRecordRotate() {
+        //停止旋转黑胶唱片指针
+        stopRecordThumbRotate();
+
         //获取当前播放的音乐
         Song data = listManager.getData();
 
@@ -661,7 +717,6 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
         //设置到进度条
         sb_progress.setProgress((int) progress);
     }
-
 
     //播放器回调end
 }
