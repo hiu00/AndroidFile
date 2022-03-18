@@ -43,6 +43,7 @@ import com.example.mymusic.listener.MusicPlayerListener;
 import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.Constant;
+import com.example.mymusic.util.DensityUtil;
 import com.example.mymusic.util.LogUtil;
 import com.example.mymusic.util.ResourceUtil;
 import com.example.mymusic.util.SwitchDrawableUtil;
@@ -274,6 +275,14 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //缓存页面数量
         vp.setOffscreenPageLimit(3);
+
+        //黑胶唱片指针旋转点
+        //旋转点为15dp
+        //而设置需要单位为px
+        //所以要先转换
+        int rotate = DensityUtil.dip2px(getMainActivity(), 15);
+        iv_record_thumb.setPivotX(rotate);
+        iv_record_thumb.setPivotY(rotate);
     }
 
     @Override
