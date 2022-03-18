@@ -113,6 +113,7 @@ public class Constant {
      * KSC歌词
      */
     public static final int KSC = 10;
+
     public static final String DATA = "DATA";
 
     /**

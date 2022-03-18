@@ -1,5 +1,7 @@
 package com.example.mymusic.util.lyric;
 
+import static com.example.mymusic.util.Constant.KSC;
+
 import com.example.mymusic.domain.Lyric.Lyric;
 
 /**
@@ -14,7 +16,12 @@ public class LyricParser {
      * @return 解析后的歌词对象
      */
     public static Lyric parse(int type, String content) {
-        //默认解析LRC歌词
-        return LRCLyricParser.parse(content);
+        switch (type) {
+            case KSC:
+                return KSCLyricParser.parse(content);
+            default:
+                //默认为LRC歌词
+                return LRCLyricParser.parse(content);
+        }
     }
 }

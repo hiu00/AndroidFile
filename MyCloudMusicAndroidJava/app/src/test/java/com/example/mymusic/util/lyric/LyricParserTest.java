@@ -1,5 +1,6 @@
 package com.example.mymusic.util.lyric;
 
+import static com.example.mymusic.util.Constant.KSC;
 import static com.example.mymusic.util.Constant.LRC;
 
 import static org.junit.Assert.assertNotNull;
@@ -45,5 +46,38 @@ public class LyricParserTest {
 
         //歌词内容也不为空
         assertNotNull(lyric.getDatum().get(10).getData());
+    }
+
+    /**
+     * 测试KSC歌词歌词
+     */
+    @Test
+    public void testKSCParse() {
+        //解析歌词
+        Lyric lyric= LyricParser.parse(KSC, kscLyric);
+
+        //确认返回的数组大于0
+        //因为我们给的数据是正确的
+        //所以结果肯定大于0才正确
+        assertTrue(lyric.getDatum().size()>0);
+
+        //不太好判断歌词是否解析正确
+        //所以就判断第10行歌词的开始时间必须大于0
+        //第10行歌词必须有内容
+        //因为我们提供的歌词是正确的
+        assertTrue(lyric.getDatum().get(10).getStartTime()>0);
+
+        //必须有内容
+        assertNotNull(lyric.getDatum().get(10).getData());
+
+        //歌词字数
+        //每个字时间数
+        //都要大于0
+        assertTrue(lyric.getDatum().get(10).getWords().length>0);
+
+        assertTrue(lyric.getDatum().get(10).getWordDurations().length>0);
+
+        //歌词字数和每个字时间数相等
+        assertTrue(lyric.getDatum().get(10).getWords().length == lyric.getDatum().get(10).getWordDurations().length);
     }
 }

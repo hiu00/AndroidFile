@@ -17,6 +17,21 @@ public class Line extends BaseModel {
      */
     private long startTime = 0;
 
+    /**
+     * 每一个字
+     */
+    private String[] words;
+
+    /**
+     * 每一个字对应的时间
+     */
+    private Integer[] wordDurations;
+
+    /**
+     * 结束时间
+     */
+    private long endTime;
+
     public String getData() {
         return data;
     }
@@ -31,5 +46,29 @@ public class Line extends BaseModel {
 
     public void setStartTime(long startTime) {
         this.startTime = startTime;
+    }
+
+    public String[] getWords() {
+        return words;
+    }
+
+    public void setWords(String[] words) {
+        this.words = words;
+    }
+
+    public Integer[] getWordDurations() {
+        return wordDurations;
+    }
+
+    public void setWordDurations(Integer[] wordDurations) {
+        this.wordDurations = wordDurations;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 }
