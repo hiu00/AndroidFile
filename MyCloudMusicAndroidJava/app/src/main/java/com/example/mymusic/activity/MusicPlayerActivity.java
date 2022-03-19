@@ -66,6 +66,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,6 +77,11 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
  */
 public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener, ValueAnimator.AnimatorUpdateListener, BaseQuickAdapter.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = "MusicPlayerActivity";
+    /**
+     * 歌词填充多个占位数据
+     */
+    private int lyricPlaceholderSize = 4;
+
     /**
      * 背景
      */
@@ -689,9 +695,20 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
             //清空原来的歌词
             lyricAdapter.replaceData(new ArrayList<>());
         } else {
+            //创建列表
+            ArrayList<Object> datum = new ArrayList<>();
+
+            //添加占位数据
+            addLyricFillData(datum);
+
+            //添加真实数据
+            datum.addAll(data.getParsedLyric().getDatum());
+
+            //添加占位数据
+            addLyricFillData(datum);
 
             //设置歌词数据到歌词控件
-            lyricAdapter.replaceData(data.getParsedLyric().getDatum());
+            lyricAdapter.replaceData(datum);
         }
     }
 
@@ -812,7 +829,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
             return;
         }
         //获取当前时间对应的歌词索引
-        int newLineNumber = LyricUtil.getLineNumber(lyric, progress);
+        int newLineNumber = LyricUtil.getLineNumber(lyric, progress)+lyricPlaceholderSize;
 
         if (newLineNumber!=lineNumber){
             //滚动到当前行
@@ -931,4 +948,14 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     }
 
     //播放器回调end
+
+    /**
+     * 添加歌词占位数据
+     * @param datum
+     */
+    private void addLyricFillData(List<Object> datum) {
+        for (int i = 0; i < lyricPlaceholderSize; i++) {
+            datum.add("fill");
+        }
+    }
 }

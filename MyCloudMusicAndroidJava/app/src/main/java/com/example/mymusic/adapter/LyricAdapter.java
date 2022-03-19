@@ -10,7 +10,7 @@ import com.example.mymusic.domain.Lyric.Line;
 /**
  * 播放界面-歌词列表适配器
  */
-public class LyricAdapter extends BaseQuickAdapter<Line, BaseViewHolder> {
+public class LyricAdapter extends BaseQuickAdapter<Object, BaseViewHolder> {
     /**
      * 选中索引
      */
@@ -32,16 +32,20 @@ public class LyricAdapter extends BaseQuickAdapter<Line, BaseViewHolder> {
         super(layoutResId);
     }
 
-    /**
-     * 绑定数据
-     * @param helper
-     * @param item
-     */
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, Line item) {
+    protected void convert(@NonNull BaseViewHolder helper, Object item) {
         //使用TextView实现
-        //显示歌词
-        helper.setText(R.id.tv,item.getData());
+        if (item instanceof String) {
+            //字符串
+            //用来填充占位符
+            helper.setText(R.id.tv,"");
+        } else {
+            //真实数据
+            Line data= (Line) item;
+
+            //显示歌词
+            helper.setText(R.id.tv,data.getData());
+        }
 
         //处理选中状态
         if (selectedIndex==helper.getAdapterPosition()){
