@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -73,7 +74,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 /**
  * 黑胶唱片界面
  */
-public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener, ValueAnimator.AnimatorUpdateListener, BaseQuickAdapter.OnItemClickListener {
+public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener, ValueAnimator.AnimatorUpdateListener, BaseQuickAdapter.OnItemClickListener, ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = "MusicPlayerActivity";
     /**
      * 背景
@@ -154,6 +155,8 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     private ValueAnimator pauseThumbAnimator;
     private LyricAdapter lyricAdapter;
     private int lineNumber;
+    private int lyricOffsetX;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -319,7 +322,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
         rv.setHasFixedSize(true);
 
         //设置布局管理器
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getMainActivity());
+        layoutManager = new LinearLayoutManager(getMainActivity());
         rv.setLayoutManager(layoutManager);
     }
 
@@ -418,6 +421,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //设置歌词点击事件
         lyricAdapter.setOnItemClickListener(this);
+
+        //添加布局监听器
+        rv.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     /**
@@ -828,8 +834,17 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
                 //选中当前行歌词
                 lyricAdapter.setSelectedIndex(lineNumber);
 
-                //滚动到顶部
-                rv.smoothScrollToPosition(lineNumber);
+                //该方法会将指定item滚动到顶部
+                //offset是滚动到顶部后，在向下(+)偏移多少
+                //如果我们想让一个Item在RecyclerView中间
+                //那么偏移为RecyclerView.height/2
+
+                //动态获取RecyclerView.height
+                //兼容性更好
+                if (lyricOffsetX > 0) {
+                    //大于0才滚动
+                    layoutManager.scrollToPositionWithOffset(lineNumber, lyricOffsetX);
+                }
             }
         });
     }
@@ -900,6 +915,19 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //隐藏歌词
         rl_lyric.setVisibility(View.GONE);
+    }
+
+    /**
+     * 布局改变了
+     */
+    @Override
+    public void onGlobalLayout() {
+        //获取控件高度
+        lyricOffsetX = vp.getHeight() / 2 - (DensityUtil.dip2px(getMainActivity(), 40) / 2);
+
+        //用完以后要移出
+        //因为界面会一直变动
+        vp.getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
 
     //播放器回调end
