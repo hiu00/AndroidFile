@@ -163,25 +163,30 @@ public class MusicRecordFragment extends BaseCommonFragment {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                //如果旋转的角度大于等于360
-                if (recordRotation >= 360) {
-                    //就设置为0
-                    recordRotation = 0;
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //如果旋转的角度大于等于360
+                        if (recordRotation >= 360) {
+                            //就设置为0
+                            recordRotation = 0;
+                        }
 
-                //每次加旋转的偏移
-                recordRotation += ROTATION_PER;
+                        //每次加旋转的偏移
+                        recordRotation += ROTATION_PER;
 
-                //旋转
-                cl_content.setRotation(recordRotation);
+                        //旋转
+                        cl_content.setRotation(recordRotation);
+                    }
+                });
+
+                //创建定时器
+                timer = new Timer();
+
+                //启动任务
+                timer.schedule(timerTask, 0, 16);
             }
         };
-
-        //创建定时器
-        timer = new Timer();
-
-        //启动任务
-        timer.schedule(timerTask, 0, 16);
     }
 
     /**
