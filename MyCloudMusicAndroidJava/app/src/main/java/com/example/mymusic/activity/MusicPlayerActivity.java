@@ -10,6 +10,8 @@ import static com.example.mymusic.util.Constant.THUMB_ROTATION_PAUSE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ObjectAnimator;
@@ -21,6 +23,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -34,6 +37,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.mymusic.Fragment.MusicPlayerAdapter;
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
+import com.example.mymusic.adapter.LyricAdapter;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.event.OnPlayEvent;
 import com.example.mymusic.domain.event.OnStartRecordEvent;
@@ -56,6 +60,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -70,6 +76,24 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      */
     @BindView(R.id.iv_background)
     ImageView iv_background;
+
+    /**
+     * 歌词容器
+     */
+    @BindView(R.id.rl_lyric)
+    View rl_lyric;
+
+    /**
+     * 歌词列表控件
+     */
+    @BindView(R.id.rv)
+    RecyclerView rv;
+
+    /**
+     * 黑胶唱片容器
+     */
+    @BindView(R.id.cl_record)
+    View cl_record;
 
     /**
      * 黑胶唱片列表控件
@@ -124,6 +148,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     private MusicPlayerAdapter recordAdapter;
     private ObjectAnimator playThumbAnimator;
     private ValueAnimator pauseThumbAnimator;
+    private LyricAdapter lyricAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,6 +309,13 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
         int rotate = DensityUtil.dip2px(getMainActivity(), 15);
         iv_record_thumb.setPivotX(rotate);
         iv_record_thumb.setPivotY(rotate);
+
+        //尺寸固定
+        rv.setHasFixedSize(true);
+
+        //设置布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getMainActivity());
+        rv.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -320,6 +352,15 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //设置更新监听器
         pauseThumbAnimator.addUpdateListener(this);
+
+        //创建歌词列表适配器
+        lyricAdapter = new LyricAdapter(R.layout.item_lyric);
+
+        //设置歌词点击事件
+        //lyricAdapter.setOnItemClickListener(this);
+
+        //设置适配器
+        rv.setAdapter(lyricAdapter);
     }
 
     /**
@@ -596,6 +637,26 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //滚动到当前音乐位置
         scrollPosition();
+
+        //显示歌词
+        showLyricData();
+    }
+
+    /**
+     * 显示歌词
+     */
+    private void showLyricData() {
+        //获取当前播放的音乐
+        Song data = listManager.getData();
+
+        if (data == null || data.getParsedLyric() == null) {
+            //清空原来的歌词
+            lyricAdapter.replaceData(new ArrayList<>());
+        } else {
+
+            //设置歌词数据到歌词控件
+            lyricAdapter.replaceData(data.getParsedLyric().getDatum());
+        }
     }
 
     /**
@@ -699,6 +760,16 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     public void onProgress(Song data) {
         //显示播放进度
         showProgress();
+    }
+
+    /**
+     * 歌词改变了
+     * @param data
+     */
+    @Override
+    public void onLyricChanged(Song data) {
+        //显示歌词
+        showLyricData();
     }
 
     /**

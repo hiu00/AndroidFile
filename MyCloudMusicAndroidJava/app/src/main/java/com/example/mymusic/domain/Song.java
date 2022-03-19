@@ -4,6 +4,7 @@ import static com.example.mymusic.util.Constant.TYPE_SONG;
 
 import android.content.Intent;
 
+import com.example.mymusic.domain.Lyric.Lyric;
 import com.example.mymusic.util.Constant;
 
 public class Song extends BaseMultiItemEntity {
@@ -41,6 +42,11 @@ public class Song extends BaseMultiItemEntity {
      * 歌词内容
      */
     private  String lyric;
+
+    /**
+     * 解析后的歌词
+     */
+    private Lyric parsedLyric;
 
     /**
      * 创建该音乐的人
@@ -176,6 +182,14 @@ public class Song extends BaseMultiItemEntity {
 
     public void setSource(int source) {
         this.source = source;
+    }
+
+    public Lyric getParsedLyric() {
+        return parsedLyric;
+    }
+
+    public void setParsedLyric(Lyric parsedLyric) {
+        this.parsedLyric = parsedLyric;
     }
 
     @Override

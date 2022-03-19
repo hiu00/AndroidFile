@@ -22,6 +22,9 @@ import com.example.mymusic.util.Constant;
 import com.example.mymusic.util.HandlerUtil;
 import com.example.mymusic.util.ListUtil;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.lyric.LyricParser;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -189,8 +192,14 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager, MediaPlayer.O
         //这里只是通知歌词数据改变了
         //但不一定有歌词
 
+       if (StringUtils.isNotBlank(data.getLyric())){
+           //有歌词
+           //解析歌词
+           data.setParsedLyric(LyricParser.parse(data.getStyle(),data.getLyric()));
+       }
         //不管有没有歌词都要回调
         ListUtil.eachListener(listeners,listener -> listener.onLyricChanged(data));
+
     }
 
     /**
