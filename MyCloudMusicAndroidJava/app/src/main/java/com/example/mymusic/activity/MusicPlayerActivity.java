@@ -34,12 +34,15 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.mymusic.Fragment.MusicPlayerAdapter;
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.LyricAdapter;
+import com.example.mymusic.domain.Lyric.Lyric;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.event.OnPlayEvent;
+import com.example.mymusic.domain.event.OnRecordClickEvent;
 import com.example.mymusic.domain.event.OnStartRecordEvent;
 import com.example.mymusic.domain.event.OnStopRecordEvent;
 import com.example.mymusic.domain.event.PlayListChangedEvent;
@@ -54,6 +57,7 @@ import com.example.mymusic.util.ResourceUtil;
 import com.example.mymusic.util.SwitchDrawableUtil;
 import com.example.mymusic.util.TimeUtil;
 import com.example.mymusic.util.ToastUtil;
+import com.example.mymusic.util.lyric.LyricUtil;
 
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -69,7 +73,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 /**
  * 黑胶唱片界面
  */
-public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener, ValueAnimator.AnimatorUpdateListener {
+public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlayerListener, SeekBar.OnSeekBarChangeListener, ViewPager.OnPageChangeListener, ValueAnimator.AnimatorUpdateListener, BaseQuickAdapter.OnItemClickListener {
     private static final String TAG = "MusicPlayerActivity";
     /**
      * 背景
@@ -149,6 +153,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     private ObjectAnimator playThumbAnimator;
     private ValueAnimator pauseThumbAnimator;
     private LyricAdapter lyricAdapter;
+    private int lineNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -410,6 +415,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //添加滚动监听事件
         vp.addOnPageChangeListener(this);
+
+        //设置歌词点击事件
+        lyricAdapter.setOnItemClickListener(this);
     }
 
     /**
@@ -523,9 +531,31 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     }
 
     /**
-     * 停止当前item滚动
-     * 指针回到暂停状态
+     * 黑胶唱片点击事件
      */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRecordClickEvent(OnRecordClickEvent event) {
+        if (isLyricEmpty()){
+            //没有歌词
+            ToastUtil.errorShortToast(R.string.lyric_empty);
+            return;
+        }
+
+        //隐藏黑胶唱片
+        cl_record.setVisibility(View.GONE);
+
+        //显示歌词
+        rl_lyric.setVisibility(View.VISIBLE);
+    }
+
+    private boolean isLyricEmpty() {
+        return lyricAdapter.getItemCount()==0;
+    }
+
+    /**
+         * 停止当前item滚动
+         * 指针回到暂停状态
+         */
     private void stopRecordRotate() {
         //停止旋转黑胶唱片指针
         stopRecordThumbRotate();
@@ -760,6 +790,45 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     public void onProgress(Song data) {
         //显示播放进度
         showProgress();
+
+        //显示歌词进度
+        showLyricProgress(listManager.getData().getProgress());
+    }
+
+    /**
+     * 显示歌词进度
+     *
+     * @param progress
+     */
+    private void showLyricProgress(long progress) {
+        Lyric lyric = listManager.getData().getParsedLyric();
+        if (lyric==null){
+            return;
+        }
+        //获取当前时间对应的歌词索引
+        int newLineNumber = LyricUtil.getLineNumber(lyric, progress);
+
+        if (newLineNumber!=lineNumber){
+            //滚动到当前行
+            scrollLyricPosition(newLineNumber);
+
+            lineNumber=newLineNumber;
+        }
+    }
+
+    /**
+     * 滚动到当前歌词行
+     *
+     * @param lineNumber
+     */
+    private void scrollLyricPosition(int lineNumber) {
+        rv.post(new Runnable() {
+            @Override
+            public void run() {
+                //滚动到顶部
+                rv.smoothScrollToPosition(lineNumber);
+            }
+        });
     }
 
     /**
@@ -812,6 +881,22 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //设置到进度条
         sb_progress.setProgress((int) progress);
+    }
+
+    /**
+     * 歌词点击事件
+     *
+     * @param adapter
+     * @param view
+     * @param position
+     */
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        //显示黑胶唱片
+        cl_record.setVisibility(View.VISIBLE);
+
+        //隐藏歌词
+        rl_lyric.setVisibility(View.GONE);
     }
 
     //播放器回调end

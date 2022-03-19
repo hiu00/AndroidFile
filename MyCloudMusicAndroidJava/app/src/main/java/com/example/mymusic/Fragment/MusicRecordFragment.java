@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.mymusic.R;
 import com.example.mymusic.domain.Song;
+import com.example.mymusic.domain.event.OnRecordClickEvent;
 import com.example.mymusic.domain.event.OnStartRecordEvent;
 import com.example.mymusic.domain.event.OnStopRecordEvent;
 import com.example.mymusic.util.Constant;
@@ -26,12 +27,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 音乐黑胶唱片界面
  */
-public class MusicRecordFragment extends BaseCommonFragment{
+public class MusicRecordFragment extends BaseCommonFragment {
 
     private static final String TAG = "MusicRecordFragment";
 
@@ -57,10 +59,12 @@ public class MusicRecordFragment extends BaseCommonFragment{
      * 旋转角度
      */
     private float recordRotation;
+
     private Timer timer;
 
     /**
      * 返回要显示的布局
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -68,11 +72,12 @@ public class MusicRecordFragment extends BaseCommonFragment{
      */
     @Override
     protected View getLayoutView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_record_music,container,false);
+        return inflater.inflate(R.layout.fragment_record_music, container, false);
     }
 
     /**
      * 创建方法
+     *
      * @param data
      * @return
      */
@@ -81,7 +86,7 @@ public class MusicRecordFragment extends BaseCommonFragment{
         Bundle args = new Bundle();
 
         //传递数据
-        args.putSerializable(Constant.DATA,data);
+        args.putSerializable(Constant.DATA, data);
 
         MusicRecordFragment fragment = new MusicRecordFragment();
         fragment.setArguments(args);
@@ -91,7 +96,7 @@ public class MusicRecordFragment extends BaseCommonFragment{
     @Override
     protected void initDatum() {
         super.initDatum();
-        if (!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             //注册发布订阅框架
             EventBus.getDefault().register(this);
         }
@@ -100,7 +105,7 @@ public class MusicRecordFragment extends BaseCommonFragment{
         data = (Song) extraData();
 
         //显示封面
-        ImageUtil.show(getMainActivity(),iv_banner,data.getBanner());
+        ImageUtil.show(getMainActivity(), iv_banner, data.getBanner());
     }
 
     /**
@@ -109,7 +114,7 @@ public class MusicRecordFragment extends BaseCommonFragment{
     @Override
     public void onDestroy() {
 
-        if (EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
             //取消注册
             EventBus.getDefault().unregister(this);
         }
@@ -118,15 +123,16 @@ public class MusicRecordFragment extends BaseCommonFragment{
 
     /**
      * 黑胶唱片开始滚动事件
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onStartRecordEvent(OnStartRecordEvent event){
+    public void onStartRecordEvent(OnStartRecordEvent event) {
         //通过事件传递当前音乐
         //如果当前音乐匹配
         //当前Fragment就是操作当前fragment
-        if (event.getData()==data){
-            LogUtil.d(TAG,"onStartRecordEvent:"+data.getTitle());
+        if (event.getData() == data) {
+            LogUtil.d(TAG, "onStartRecordEvent:" + data.getTitle());
 
             startRecordRotate();
         }
@@ -134,6 +140,7 @@ public class MusicRecordFragment extends BaseCommonFragment{
 
     /**
      * 黑胶唱片停止事件
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -149,7 +156,7 @@ public class MusicRecordFragment extends BaseCommonFragment{
      * 开始旋转
      */
     private void startRecordRotate() {
-        if (timerTask!=null){
+        if (timerTask != null) {
             //已经启动了
             return;
         }
@@ -157,13 +164,13 @@ public class MusicRecordFragment extends BaseCommonFragment{
             @Override
             public void run() {
                 //如果旋转的角度大于等于360
-                if (recordRotation>=360){
+                if (recordRotation >= 360) {
                     //就设置为0
-                    recordRotation=0;
+                    recordRotation = 0;
                 }
 
                 //每次加旋转的偏移
-                recordRotation+=ROTATION_PER;
+                recordRotation += ROTATION_PER;
 
                 //旋转
                 cl_content.setRotation(recordRotation);
@@ -174,7 +181,7 @@ public class MusicRecordFragment extends BaseCommonFragment{
         timer = new Timer();
 
         //启动任务
-        timer.schedule(timerTask,0,16);
+        timer.schedule(timerTask, 0, 16);
     }
 
     /**
@@ -192,6 +199,17 @@ public class MusicRecordFragment extends BaseCommonFragment{
             timer.cancel();
             timer = null;
         }
+    }
+
+    /**
+     * 黑胶唱片点击事件
+     */
+    @OnClick(R.id.cl_container)
+    public void onRecordClick() {
+        LogUtil.d(TAG, "onRecordClick");
+
+        //发布事件
+        EventBus.getDefault().post(new OnRecordClickEvent());
     }
 }
 

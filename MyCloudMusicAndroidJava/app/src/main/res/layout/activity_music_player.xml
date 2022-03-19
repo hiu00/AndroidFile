@@ -56,7 +56,7 @@
             <!--歌词容器-->
             <RelativeLayout
                 android:id="@+id/rl_lyric"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -70,7 +70,7 @@
 
             <!--黑胶唱片容器-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:clickable="true"
                 android:id="@+id/cl_record"
                 android:layout_width="match_parent"
