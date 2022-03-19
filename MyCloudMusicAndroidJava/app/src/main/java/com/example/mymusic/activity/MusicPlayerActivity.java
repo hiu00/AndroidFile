@@ -67,6 +67,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -80,7 +82,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     /**
      * 歌词填充多个占位数据
      */
-    private int lyricPlaceholderSize = 4;
+    private int lyricPlaceholderSize;
 
     /**
      * 背景
@@ -93,6 +95,12 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      */
     @BindView(R.id.rl_lyric)
     View rl_lyric;
+
+    /**
+     * 歌词拖拽容器
+     */
+    @BindView(R.id.ll_lyric_drag)
+    View ll_lyric_drag;
 
     /**
      * 歌词列表控件
@@ -163,6 +171,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     private int lineNumber;
     private int lyricOffsetX;
     private LinearLayoutManager layoutManager;
+    private boolean isDrag;
+    private TimerTask lyricTimerTask;
+    private Timer lyricTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -430,6 +441,106 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
 
         //添加布局监听器
         rv.getViewTreeObserver().addOnGlobalLayoutListener(this);
+
+        //添加歌词列表滚动事件
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            /**
+             * 滚动状态改变了
+             * 状态ViewPager一样
+             *
+             * @param recyclerView
+             * @param newState
+             */
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (SCROLL_STATE_DRAGGING == newState) {
+                    //拖拽状态
+                    showDragView();
+                } else if (SCROLL_STATE_IDLE == newState) {
+                    //空闲状态
+                    prepareScrollLyricView();
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+    }
+
+    /**
+     * 准备滚动歌词
+     */
+    private void prepareScrollLyricView() {
+        //延迟几秒钟后隐藏
+
+        //取消隐藏歌词拖拽效果原来的任务
+        cancelLyricTask();
+
+        //创建任务
+        //转换到主线程
+        lyricTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                //转换到主线程
+                vp.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        enableScrollLyric();
+                    }
+                });
+            }
+        };
+
+        //创建定时器
+        lyricTimer = new Timer();
+
+        //开启一个倒计时
+        lyricTimer.schedule(lyricTimerTask, Constant.LYRIC_HIDE_DRAG_TIME);
+
+    }
+
+    /**
+     * 开始歌词滚动
+     */
+    private void enableScrollLyric() {
+        isDrag = false;
+
+        //隐藏歌词拖拽效果
+        ll_lyric_drag.setVisibility(View.GONE);
+    }
+
+    /**
+     * 取消隐藏歌词拖拽效果原来的任务
+     */
+    private void cancelLyricTask() {
+        if (lyricTimerTask!=null){
+            lyricTimerTask.cancel();
+            lyricTimerTask=null;
+        }
+
+        if (lyricTimer!=null){
+            lyricTimer.cancel();
+            lyricTimer=null;
+        }
+    }
+
+    /**
+     * 显示歌词拖拽控件
+     */
+    private void showDragView() {
+        if (isLyricEmpty()) {
+            //没有歌词不能拖拽
+            return;
+        }
+
+        //拖拽状态
+        isDrag = true;
+
+        //显示歌词拖拽控件
+        ll_lyric_drag.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -688,6 +799,33 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      * 显示歌词
      */
     private void showLyricData() {
+        if (lyricPlaceholderSize > 0) {
+            //已经计算了填充数量
+            next();
+        } else{
+            //还没有计算
+
+            //使用异步任务获取
+            vp.post(new Runnable() {
+                @Override
+                public void run() {
+                    //计算占位数
+                    int height = vp.getMeasuredHeight();
+
+                    lyricPlaceholderSize= (int) Math.ceil(height / 1.0 / 2 / DensityUtil.dip2px(getMainActivity(), 40));
+
+                    //执行下一步操作
+                    next();
+                }
+            });
+        }
+
+    }
+
+    /**
+     * 设置歌词数据
+     */
+    private void next() {
         //获取当前播放的音乐
         Song data = listManager.getData();
 
@@ -826,6 +964,9 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     private void showLyricProgress(long progress) {
         Lyric lyric = listManager.getData().getParsedLyric();
         if (lyric==null){
+            return;
+        }
+        if (isDrag){
             return;
         }
         //获取当前时间对应的歌词索引

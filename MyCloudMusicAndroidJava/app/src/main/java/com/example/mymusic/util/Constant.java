@@ -130,4 +130,5 @@ public class Constant {
      * 黑胶唱片指针动画执行时间
      */
     public static final long THUMB_DURATION = 300;
+    public static final long LYRIC_HIDE_DRAG_TIME = 4000;
 }
