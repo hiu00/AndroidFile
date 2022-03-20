@@ -416,6 +416,16 @@ public class ListManagerImpl implements ListManager, MusicPlayerListener {
 
     }
 
+    @Override
+    public void seekTo(int progress) {
+        //如果暂停了就继续播放
+        if (!musicPlayerManager.isPlaying()) {
+            resume();
+        }
+
+        musicPlayerManager.seekTo(progress);
+    }
+
     //音乐播放管理器
     @Override
     public void onPaused(Song data) {

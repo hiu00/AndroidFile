@@ -40,6 +40,7 @@ import com.example.mymusic.Fragment.MusicPlayerAdapter;
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.LyricAdapter;
+import com.example.mymusic.domain.Lyric.Line;
 import com.example.mymusic.domain.Lyric.Lyric;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.event.OnPlayEvent;
@@ -101,6 +102,12 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
      */
     @BindView(R.id.ll_lyric_drag)
     View ll_lyric_drag;
+
+    /**
+     * 当前歌词时间控件
+     */
+    @BindView(R.id.tv_lyric_time)
+    TextView tv_lyric_time;
 
     /**
      * 歌词列表控件
@@ -174,6 +181,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
     private boolean isDrag;
     private TimerTask lyricTimerTask;
     private Timer lyricTimer;
+    private Line scrollSelectedLyricLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -466,6 +474,45 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                //这里的dy是当前这一次滚动的距离
+                //向上滚动+
+                //向下滚动-
+
+                //当前RecyclerView可视的第一个Item位置
+                //+填充占位数
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition() + lyricPlaceholderSize;
+
+                LogUtil.d(TAG, "onPageScrolled dy:" + dy + ",firstVisibleItemPosition:" + firstVisibleItemPosition);
+
+                if (isDrag) {
+                    //只有拖拽的时候才处理
+                    Object data = lyricAdapter.getItem(firstVisibleItemPosition);
+
+                    if (data instanceof String) {
+                        //填充数据
+
+                        //判断是开始还是末尾
+                        if (firstVisibleItemPosition < lyricPlaceholderSize) {
+                            //开始位置的填充
+
+                            //第一行歌词
+                            scrollSelectedLyricLine = (Line) lyricAdapter.getItem(lyricPlaceholderSize);
+                        } else {
+                            //末尾的填充
+
+                            //最后一行歌词
+                            int index = lyricAdapter.getItemCount() - 1 - lyricPlaceholderSize;
+                            scrollSelectedLyricLine = (Line) lyricAdapter.getItem(index);
+                        }
+                    } else {
+                        //真实数据
+                        scrollSelectedLyricLine = (Line) data;
+                    }
+
+                    //显示当前歌词开始时间
+                    tv_lyric_time.setText(TimeUtil.formatMinuteSecond((int) scrollSelectedLyricLine.getStartTime()));
+                }
             }
         });
     }
@@ -1098,5 +1145,22 @@ public class MusicPlayerActivity extends BaseTitleActivity implements MusicPlaye
         for (int i = 0; i < lyricPlaceholderSize; i++) {
             datum.add("fill");
         }
+    }
+
+    /**
+     * 点击了歌词前面的播放按钮
+     */
+    @OnClick(R.id.ib_lyric_play)
+    public void onLyricPlayClick() {
+        LogUtil.d(TAG,"onLyricPlayClick");
+
+        //取消显示歌词定时器
+        cancelLyricTask();
+
+        //从该位置播放
+        listManager.seekTo((int) scrollSelectedLyricLine.getStartTime());
+
+        //马上显示歌词滚动
+        enableScrollLyric();
     }
 }
