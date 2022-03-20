@@ -35,4 +35,12 @@ public class LyricUtil {
         //默认第0行
         return 0;
     }
+
+    public static Line getLyricLine(Lyric data, long progress) {
+        //获取当前时间的行
+        int lineNumber = LyricUtil.getLineNumber(data, progress);
+
+        //获取当前时间歌词行
+        return data.getDatum().get(lineNumber);
+    }
 }

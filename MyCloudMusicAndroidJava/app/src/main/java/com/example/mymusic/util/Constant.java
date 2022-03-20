@@ -131,4 +131,5 @@ public class Constant {
      */
     public static final long THUMB_DURATION = 300;
     public static final long LYRIC_HIDE_DRAG_TIME = 4000;
+    public static final int REQUEST_OVERLAY_PERMISSION = 100;
 }

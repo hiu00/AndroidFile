@@ -1,5 +1,7 @@
 package com.example.mymusic;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -8,7 +10,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -88,14 +93,14 @@ public class MainActivity extends BaseMusicPlayerActivity {
      */
     @OnClick(R.id.ll_user)
     public void onUserClick() {
-        LogUtil.d(TAG,"onUserClick");
+        LogUtil.d(TAG, "onUserClick");
     }
 
     /**
      * 设置点击了
      */
     @OnClick(R.id.ll_setting)
-    public void onSettingClick(){
+    public void onSettingClick() {
         startActivity(SettingActivity.class);
 
         //关闭抽屉
@@ -115,7 +120,7 @@ public class MainActivity extends BaseMusicPlayerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LogUtil.d(TAG,"onCreate");
+        LogUtil.d(TAG, "onCreate");
 
         //处理动作
         processIntent(getIntent());
@@ -154,7 +159,7 @@ public class MainActivity extends BaseMusicPlayerActivity {
 
         //将指示器和ViewPager关联起来
         //创建通用的指示器
-        CommonNavigator commonNavigator= new CommonNavigator(getMainActivity());
+        CommonNavigator commonNavigator = new CommonNavigator(getMainActivity());
 
         /**
          * 设置适配器
@@ -271,11 +276,12 @@ public class MainActivity extends BaseMusicPlayerActivity {
 
     /**
      * 显示数据
+     *
      * @param data
      */
     private void next(User data) {
         //显示头像
-        ImageUtil.showAvatar(getMainActivity(),iv_avatar,data.getAvatar());
+        ImageUtil.showAvatar(getMainActivity(), iv_avatar, data.getAvatar());
 
         //显示昵称
         tv_nickname.setText(data.getNickname());
@@ -283,18 +289,19 @@ public class MainActivity extends BaseMusicPlayerActivity {
         //显示描述
         tv_description.setText(data.getDescriptionFormat());
     }
+
     /**
      * 处理动作
      *
      * @param intent
      */
     private void processIntent(Intent intent) {
-        if (Constant.ACTION_AD.equals(intent.getAction())){
+        if (Constant.ACTION_AD.equals(intent.getAction())) {
             //广告点击
 
             //显示广告界面
-            WebViewActivity.start(getMainActivity(),"活动详情",intent.getStringExtra(Constant.URL));
-        }else if (Constant.ACTION_MUSIC_PLAY_CLICK.equals(intent.getAction())){
+            WebViewActivity.start(getMainActivity(), "活动详情", intent.getStringExtra(Constant.URL));
+        } else if (Constant.ACTION_MUSIC_PLAY_CLICK.equals(intent.getAction())) {
             //音乐点击
 
             //进入音乐播放界面
@@ -315,5 +322,64 @@ public class MainActivity extends BaseMusicPlayerActivity {
 
         //处理动作
         processIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //只有6.0及以上版本才需要请求
+        //低版本默认就有该权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //检查是否有悬浮权限
+            requestDrawOverlays();
+        }
+    }
+
+    /**
+     * 请求悬浮权限
+     *
+     * @return
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private boolean requestDrawOverlays() {
+        if (!Settings.canDrawOverlays(getMainActivity())) {
+            //如果没有显示浮窗的权限
+            //就跳转到设置界面
+
+            //真实项目中
+            //应该在使用的位置在请求
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getMainActivity().getPackageName()));
+            startActivityForResult(intent, Constant.REQUEST_OVERLAY_PERMISSION);
+
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 使用startActivityForResult启动界面后的回调
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case Constant.REQUEST_OVERLAY_PERMISSION:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (requestDrawOverlays()) {
+                        //授权成功
+                        LogUtil.d(TAG, "onActivityResult DrawOverlays success");
+                    } else {
+                        //授权失败
+                        LogUtil.d(TAG, "onActivityResult DrawOverlays failed");
+                    }
+                }
+                break;
+        }
     }
 }

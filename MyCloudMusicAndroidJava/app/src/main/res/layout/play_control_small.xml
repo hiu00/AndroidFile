@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/ll_play_control_small"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <!--分割线-->
     <include layout="@layout/divider_small"/>
@@ -51,11 +51,13 @@
 
             <!--歌词-->
             <TextView
+                android:id="@+id/llyric"
                 android:textSize="@dimen/text_small"
-                android:textColor="@color/light_grey"
-                android:text="这是歌词内容"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorPrimary"
+                android:text="听你想听！"
+
+                android:layout_width="match_parent"
+                android:layout_height="14dp"/>
         </LinearLayout>
 
         <!--播放暂停按钮-->

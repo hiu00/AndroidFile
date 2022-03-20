@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.mymusic.Fragment.PlayListDialogFragment;
 import com.example.mymusic.R;
+import com.example.mymusic.domain.Lyric.Line;
+import com.example.mymusic.domain.Lyric.Lyric;
 import com.example.mymusic.domain.Song;
 import com.example.mymusic.domain.event.PlayListChangedEvent;
 import com.example.mymusic.listener.ListManager;
@@ -17,6 +19,7 @@ import com.example.mymusic.manager.MusicPlayerManager;
 import com.example.mymusic.service.MusicPlayerService;
 import com.example.mymusic.util.ImageUtil;
 import com.example.mymusic.util.LogUtil;
+import com.example.mymusic.util.lyric.LyricUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -55,6 +58,12 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
      */
     @BindView(R.id.tv_title_small_control)
     TextView tv_title_small_control;
+
+    /**
+     * 迷你播放控制器 歌词
+     */
+    @BindView(R.id.llyric)
+    TextView llyric;
 
     /**
      * 迷你播放控制器 播放暂停按钮
@@ -144,11 +153,39 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
                 showProgress(data);
 
                 //显示播放状态
-                showMusicPlayStatus();;
+                showMusicPlayStatus();
+
+                //显示歌词
+                 showLyricData();
             }
         }else{
             //隐藏迷你控制器
             ll_play_control_small.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 显示歌词
+     */
+    private void showLyricData() {
+        //获取当前播放的音乐
+        Song data = listManager.getData();
+
+        Lyric lyric = data.getParsedLyric();
+
+        if (lyric==null){
+            //清空原来的歌词
+            llyric.setText(null);
+        }else {
+            //设置歌词数据到歌词控件
+            //获取当前播放进度对应的歌词行
+            //int number = LyricUtil.getLineNumber(lyric, data.getProgress());
+           Line line= LyricUtil.getLyricLine(lyric,data.getProgress());
+
+
+            //设置数据
+            llyric.setText(line.getData());
+
         }
     }
 
@@ -227,10 +264,32 @@ public class BaseMusicPlayerActivity extends BaseTitleActivity implements MusicP
     @Override
     public void onProgress(Song data) {
         showProgress(data);
+        showLyricData();
+//        //获取当前音乐歌词
+//        Lyric lyric = data.getParsedLyric();
+//
+//        if (lyric == null) {
+//            //没有歌词
+//            return;
+//        }
+//
+//        long progress = data.getProgress();
+//
+//        //获取当前进度对应的歌词行
+//        Line line = LyricUtil.getLyricLine(lyric, progress);
+
+
+
+
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onLyricChanged(Song data) {
 
     }
 

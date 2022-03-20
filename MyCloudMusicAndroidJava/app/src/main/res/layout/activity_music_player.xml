@@ -68,6 +68,7 @@
 
                 <!--歌词拖拽容器-->
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/ll_lyric_drag"
                     android:gravity="center_vertical"
                     android:layout_centerVertical="true"
