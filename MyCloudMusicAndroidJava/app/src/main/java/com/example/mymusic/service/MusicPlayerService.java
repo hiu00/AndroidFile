@@ -8,7 +8,9 @@ import android.os.Build;
 import android.os.IBinder;
 
 import com.example.mymusic.listener.ListManager;
+import com.example.mymusic.manager.GlobalLyricManager;
 import com.example.mymusic.manager.MusicPlayerManager;
+import com.example.mymusic.manager.impl.GlobalLyricManagerImpl;
 import com.example.mymusic.manager.impl.ListManagerImpl;
 import com.example.mymusic.manager.impl.MusicNotificationManager;
 import com.example.mymusic.manager.impl.MusicPlayerManagerImpl;
@@ -68,6 +70,9 @@ public class MusicPlayerService extends Service {
 
         //初始化音乐通知管理器
         musicNotificationManager = MusicNotificationManager.getInstance(getApplicationContext());
+
+        //初始化全局歌词管理器
+        GlobalLyricManager globalLyricManager = GlobalLyricManagerImpl.getInstance(getApplicationContext());
     }
 
     /**
