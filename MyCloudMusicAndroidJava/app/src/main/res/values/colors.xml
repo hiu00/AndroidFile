@@ -32,4 +32,5 @@
     ff:完全不透明-->
     <color name="tab_normal">#aaffffff</color>
     <color name="lyric_text_color">#eee</color>
+    <color name="global_lyric_bakcground">cc000000</color>
 </resources>
